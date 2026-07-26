@@ -1,43 +1,43 @@
 {
   "resources/js/home-v2.js": {
-    "file": "assets/home-v22.js",
+    "file": "assets/home-v2-DZbhg_Gc.js",
     "name": "home-v2",
     "src": "resources/js/home-v2.js",
     "isEntry": true
   },
   "resources/js/superdong.js": {
-    "file": "assets/superdong2.js",
+    "file": "assets/superdong-DG7JpOZo.js",
     "name": "superdong",
     "src": "resources/js/superdong.js",
     "isEntry": true
   },
   "resources/sources/admin/print.scss": {
-    "file": "assets/print2.css",
+    "file": "assets/print-DO44N9c-.css",
     "src": "resources/sources/admin/print.scss",
     "isEntry": true
   },
   "resources/sources/admin/style.scss": {
-    "file": "assets/style2.css",
+    "file": "assets/style-BavLq1RY.css",
     "src": "resources/sources/admin/style.scss",
     "isEntry": true
   },
   "resources/sources/main/home-v2.scss": {
-    "file": "assets/superdong.css",
+    "file": "assets/superdong-MIRqavTq.css",
     "src": "resources/sources/superdong.scss",
     "isEntry": true
   },
   "resources/sources/main/print.scss": {
-    "file": "assets/print.css",
+    "file": "assets/print-CTg6hC0N.css",
     "src": "resources/sources/main/print.scss",
     "isEntry": true
   },
   "resources/sources/main/style.scss": {
-    "file": "assets/style.css",
+    "file": "assets/style-CnyehCqv.css",
     "src": "resources/sources/main/style.scss",
     "isEntry": true
   },
   "resources/sources/superdong.scss": {
-    "file": "assets/superdong.css",
+    "file": "assets/superdong-MIRqavTq.css",
     "src": "resources/sources/superdong.scss",
     "isEntry": true
   }

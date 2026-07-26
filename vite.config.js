@@ -49,13 +49,14 @@ export default defineConfig({
         manifest: 'manifest.json',
         rollupOptions: {
             output: {
-                entryFileNames: 'assets/[name].js',
-                chunkFileNames: 'assets/[name].js',
+                // Thêm [hash] để browser cache tự hết hiệu lực khi deploy
+                entryFileNames: 'assets/[name]-[hash].js',
+                chunkFileNames: 'assets/[name]-[hash].js',
                 assetFileNames: ({ name }) => {
                     if (/\.css$/.test(name ?? '')) {
-                        return 'assets/[name].css';
+                        return 'assets/[name]-[hash].css';
                     }
-                    return 'assets/[name].[ext]';
+                    return 'assets/[name]-[hash].[ext]';
                 },
             },
         },
