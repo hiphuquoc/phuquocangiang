@@ -5,8 +5,58 @@
 @if(!empty($routes))
 <div class="sd-ship-route">
   @foreach($routes as $route)
+    @php
+      $detailHref = $route['detailHref'] ?? null;
+      $bookingHref = $route['bookingHref'] ?? ($route['href'] ?? '#booking');
+      $hasDetail = !empty($detailHref) && $detailHref !== '#' && $detailHref !== '';
+      $title = $route['title'] ?? trim(($route['from'] ?? '') . ' → ' . ($route['to'] ?? ''));
+      $image = $route['image'] ?? '';
+    @endphp
     <article class="sd-ship-route__item">
+      @if($image !== '' || $hasDetail)
+        <div class="sd-ship-route__media">
+          @if($hasDetail)
+            <a href="{{ $detailHref }}" class="sd-ship-route__media-link" tabindex="-1" aria-hidden="true">
+              <img
+                src="{{ $image !== '' ? $image : config('admin.images.default_750x460') }}"
+                alt="{{ $route['imageAlt'] ?? $title }}"
+                width="640"
+                height="360"
+                loading="lazy"
+                decoding="async"
+              >
+            </a>
+          @elseif($image !== '')
+            <img
+              src="{{ $image }}"
+              alt="{{ $route['imageAlt'] ?? $title }}"
+              width="640"
+              height="360"
+              loading="lazy"
+              decoding="async"
+            >
+          @endif
+
+          @if(!empty($route['priceFrom']))
+            <span class="sd-ship-route__price-badge">
+              {{ t('price_from') }}
+              <strong>{{ $route['priceFrom'] }}<span>₫</span></strong>
+            </span>
+          @endif
+        </div>
+      @endif
+
       <header class="sd-ship-route__head">
+        @if($title !== '')
+          <h3 class="sd-ship-route__title">
+            @if($hasDetail)
+              <a href="{{ $detailHref }}">{{ $title }}</a>
+            @else
+              {{ $title }}
+            @endif
+          </h3>
+        @endif
+
         <div class="sd-ship-route__journey">
           <div class="sd-ship-route__port">
             <strong>{{ $route['from'] }}</strong>
@@ -97,16 +147,29 @@
       @endif
 
       <footer class="sd-ship-route__foot">
-        <a href="#booking" class="sd-ship-route__cta" @if(!empty($route['href']) && $route['href'] !== '#booking') data-route-url="{{ $route['href'] }}" @endif>
-          <span class="sd-ship-route__cta-shine" aria-hidden="true"></span>
-          <span class="sd-ship-route__cta-inner">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M2 21c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.5 0 2.5 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/>
-              <path d="M13 4v8m0 0 3-3m-3 3-3-3"/>
-            </svg>
-            <span class="sd-ship-route__cta-label">{{ t('ship_book_mobile') }}</span>
-          </span>
-        </a>
+        <div class="sd-ship-route__actions{{ $hasDetail ? '' : ' sd-ship-route__actions--solo' }}">
+          @if($hasDetail)
+            <a href="{{ $detailHref }}" class="sd-ship-route__detail">
+              {{ t('view_more') ?? 'Xem chi tiết' }}
+            </a>
+          @endif
+          <a
+            href="{{ $bookingHref }}"
+            class="sd-ship-route__cta"
+            @if(!empty($bookingHref) && $bookingHref !== '#booking' && !str_starts_with((string) $bookingHref, 'http') && !str_starts_with((string) $bookingHref, '/'))
+              data-route-url="{{ $bookingHref }}"
+            @endif
+          >
+            <span class="sd-ship-route__cta-shine" aria-hidden="true"></span>
+            <span class="sd-ship-route__cta-inner">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M2 21c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.5 0 2.5 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/>
+                <path d="M13 4v8m0 0 3-3m-3 3-3-3"/>
+              </svg>
+              <span class="sd-ship-route__cta-label">{{ t('ship_book_mobile') }}</span>
+            </span>
+          </a>
+        </div>
       </footer>
     </article>
   @endforeach

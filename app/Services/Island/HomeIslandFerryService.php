@@ -152,13 +152,100 @@ class HomeIslandFerryService
         }
 
         $minAdult = $this->minPriceField($allPrices, 'price_adult');
+        $detailHref = $this->detailUrl($anchor);
+        $bookingHref = $this->bookingUrl($anchor);
 
         return array_merge($fromLabels, $toLabels, [
+            'title' => (string) ($anchor->name ?: ($anchor->seo->title ?? ($fromLabels['from'] . ' → ' . ($toLabels['to'] ?? '')))),
+            'image' => $this->context->coverImage($anchor->seo, 'small'),
+            'imageAlt' => (string) ($anchor->name ?: ($anchor->seo->title ?? '')),
             'duration' => $this->resolveDuration($ships),
             'schedules' => $this->resolveSchedules($allPrices),
             'fareGroups' => $fareGroups,
-            'href' => $this->context->categoryUrl($anchor->seo ?? $shipLocation->seo, 'booking', route('main.home') . '#booking'),
+            'priceFrom' => $this->context->formatPrice($minAdult),
+            'detailHref' => $detailHref,
+            'bookingHref' => $bookingHref,
+            'href' => $bookingHref,
             '_sort_price' => $minAdult ?? PHP_INT_MAX,
+        ]);
+    }
+
+    /**
+     * Card từng tàu cho trang danh mục ship location (1 card = 1 tuyến/vé).
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    public function shipCardsForLocation(ShipLocation $shipLocation, string $islandName): array
+    {
+        $cards = [];
+
+        foreach ($shipLocation->ships ?? [] as $ship) {
+            if (!$ship instanceof Ship || !$this->shipHasBookablePrice($ship)) {
+                continue;
+            }
+
+            $prices = ($ship->prices ?? collect())
+                ->filter(fn (ShipPrice $price) => (float) ($price->price_adult ?? 0) > 0)
+                ->values();
+
+            if ($prices->isEmpty()) {
+                continue;
+            }
+
+            $fareGroups = $this->resolveFareGroups($prices);
+            if ($fareGroups === []) {
+                continue;
+            }
+
+            $fromLabels = $this->resolveFromLabels($ship);
+            $toLabels = $this->resolveToLabels($ship, $shipLocation, $islandName);
+            $minAdult = $this->minPriceField($prices, 'price_adult');
+            $title = (string) ($ship->name ?: ($ship->seo->title ?? ($fromLabels['from'] . ' → ' . $toLabels['to'])));
+
+            $cards[] = array_merge($fromLabels, $toLabels, [
+                'title' => $title,
+                'image' => $this->context->coverImage($ship->seo, 'small'),
+                'imageAlt' => $title,
+                'duration' => $this->resolveDuration(collect([$ship])),
+                'schedules' => $this->resolveSchedules($prices),
+                'fareGroups' => $fareGroups,
+                'priceFrom' => $this->context->formatPrice($minAdult),
+                'detailHref' => $this->detailUrl($ship),
+                'bookingHref' => $this->bookingUrl($ship),
+                'href' => $this->bookingUrl($ship),
+                '_sort_price' => $minAdult ?? PHP_INT_MAX,
+            ]);
+        }
+
+        usort($cards, fn (array $a, array $b) => ($a['_sort_price'] ?? PHP_INT_MAX) <=> ($b['_sort_price'] ?? PHP_INT_MAX));
+
+        return array_map(function (array $card) {
+            unset($card['_sort_price']);
+
+            return $card;
+        }, $cards);
+    }
+
+    private function detailUrl(Ship $ship): string
+    {
+        $seo = $ship->seo ?? null;
+        if ($seo === null) {
+            return '#';
+        }
+
+        $path = trim((string) seo_url($seo));
+        if ($path !== '' && $path !== '/') {
+            return $path;
+        }
+
+        return $this->context->pageUrl($seo, '#');
+    }
+
+    private function bookingUrl(Ship $ship): string
+    {
+        return booking_route('shipBooking.form', [
+            'ship_port_departure_id' => $ship->ship_port_departure_id,
+            'ship_port_location_id' => $ship->ship_port_location_id,
         ]);
     }
 

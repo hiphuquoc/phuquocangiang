@@ -365,7 +365,7 @@ class RoutingController extends Controller {
             ->where('seo_id', $itemSeo->id)
             ->with(['files'     => fn($q) => $q->where('relation_table', 'ship_info')])
             ->with(['questions' => fn($q) => $q->where('relation_table', 'ship_info')])
-            ->with('seo', 'partners.infoPartner.seo', 'portDeparture', 'portLocation', 'location')
+            ->with('seo', 'partners.infoPartner.seo', 'portDeparture', 'portLocation', 'location', 'departure', 'prices.times')
             ->first();
         if (!$item) return null;
 

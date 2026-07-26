@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -64,6 +65,7 @@ class AppServiceProvider extends ServiceProvider
         $this->registerRouteMiddlewareAliases();
 
         $this->forceCanonicalUrl();
+        $this->bootViteAssetCacheBust();
         $this->bootMultilingualAutoPersist();
         $this->bootDefaultLocaleSeoSync();
         $this->bootSeoContentAdminPersist();
@@ -135,6 +137,21 @@ class AppServiceProvider extends ServiceProvider
         if (str_starts_with($appUrl, 'https://')) {
             URL::forceScheme('https');
         }
+    }
+
+    /**
+     * Gắn ?v= vào URL Vite (CSS/JS) để tránh browser cache khi đang cập nhật UI.
+     * @see config('app.asset_cache_bust')
+     */
+    private function bootViteAssetCacheBust(): void
+    {
+        if (!config('app.asset_cache_bust')) {
+            return;
+        }
+
+        Vite::createAssetPathsUsing(function (string $path, ?bool $secure = null): string {
+            return asset_bust_url(URL::asset($path, $secure));
+        });
     }
 
     /**

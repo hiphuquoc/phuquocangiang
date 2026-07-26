@@ -60,6 +60,24 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Asset cache bust (CSS/JS Vite)
+    |--------------------------------------------------------------------------
+    |
+    | Khi đang cập nhật giao diện nhiều, bật ASSET_CACHE_BUST=true để gắn ?v=
+    | vào URL build — trình duyệt không giữ CSS/JS cũ.
+    |
+    | ASSET_BUST_MODE:
+    |   - time     : mỗi request dùng timestamp (luôn tải lại; phù hợp lúc dev dày)
+    |   - manifest : theo filemtime public/build/manifest.json (đổi sau mỗi vite build)
+    |   - fixed    : dùng ASSET_VERSION cố định
+    |
+    */
+    'asset_cache_bust' => (bool) env('ASSET_CACHE_BUST', false),
+    'asset_bust_mode' => env('ASSET_BUST_MODE', 'time'),
+    'asset_version' => env('ASSET_VERSION'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Timezone
     |--------------------------------------------------------------------------
     |

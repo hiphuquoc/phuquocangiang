@@ -454,3 +454,48 @@ if (!function_exists('booking_route')) {
         return $prefix . '/' . $path . (empty($parameters) ? '' : '?' . http_build_query($parameters));
     }
 }
+
+if (!function_exists('asset_bust_version')) {
+    /**
+     * Version cache-bust cho CSS/JS (@vite).
+     * Trả về chuỗi rỗng khi ASSET_CACHE_BUST=false.
+     */
+    function asset_bust_version(): string
+    {
+        if (!config('app.asset_cache_bust')) {
+            return '';
+        }
+
+        $mode = (string) config('app.asset_bust_mode', 'time');
+
+        return match ($mode) {
+            'fixed' => (string) (config('app.asset_version') ?: ''),
+            'manifest' => (function (): string {
+                $manifest = public_path('build/manifest.json');
+                if (!is_file($manifest)) {
+                    return (string) time();
+                }
+
+                return (string) filemtime($manifest);
+            })(),
+            default => (string) time(),
+        };
+    }
+}
+
+if (!function_exists('asset_bust_url')) {
+    /**
+     * Gắn ?v= / &v= vào URL asset.
+     */
+    function asset_bust_url(string $url): string
+    {
+        $version = asset_bust_version();
+        if ($version === '' || $url === '') {
+            return $url;
+        }
+
+        $separator = str_contains($url, '?') ? '&' : '?';
+
+        return $url . $separator . 'v=' . rawurlencode($version);
+    }
+}

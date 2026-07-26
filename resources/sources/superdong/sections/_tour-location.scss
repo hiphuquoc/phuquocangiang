@@ -192,9 +192,17 @@
       .sd-booking__submit {
         flex: 0 0 auto;
         width: auto;
-        align-self: stretch;
+        align-self: end;
+        height: 52px;
+        min-height: 52px;
+        max-height: 52px;
         padding-inline: 1.45rem;
         white-space: nowrap;
+      }
+
+      /* Vé tàu: route có thể cao hơn 1 hàng — nút luôn neo đáy, không kéo full height */
+      .sd-booking__body--ship {
+        align-items: end;
       }
     }
 

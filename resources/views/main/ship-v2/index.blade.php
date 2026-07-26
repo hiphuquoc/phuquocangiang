@@ -31,6 +31,25 @@
     'galleryId' => 'ship-intro',
   ])
 
+  @if(!empty($page['routeCard']))
+    <section class="sd-section sd-ship-detail-fares" id="ship-fares" aria-labelledby="ship-fares-title">
+      <div class="sd-section__inner">
+        @include('superdong.ui.section-head', [
+          'eyebrow' => t('kicker_ship'),
+          'title' => t('ship_price_label') . ' & ' . t('ship_depart_arrive'),
+          'desc' => '',
+          'titleId' => 'ship-fares-title',
+          'titleTag' => 'h2',
+          'reveal' => false,
+          'compact' => true,
+        ])
+        @include('superdong.sections.listing.ferry-routes', [
+          'routes' => [$page['routeCard']],
+        ])
+      </div>
+    </section>
+  @endif
+
   @if(!empty($schedule))
     @include('main.listing-v2.sections.content-prose', [
       'content' => '',
@@ -83,6 +102,7 @@
 @include('main.product-v2.sections.sticky-book', [
   'bookingHref' => $page['bookingHref'] ?? '#',
   'ctaLabel' => t('ship_book_mobile'),
+  'priceFormatted' => $page['intro']['priceFormatted'] ?? null,
 ])
 
 @if(!empty($page['gallery']))

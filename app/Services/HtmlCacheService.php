@@ -504,7 +504,35 @@ class HtmlCacheService
 
     private function prepareHtmlForServe(string $html): string
     {
-        return $this->prepareHtmlForCache($html);
+        $html = $this->prepareHtmlForCache($html);
+
+        return $this->refreshAssetBustQuery($html);
+    }
+
+    /**
+     * Cập nhật ?v= trên URL /build/ mỗi lần serve (kể cả HTML cache)
+     * để CSS/JS không bị giữ bản cũ khi ASSET_CACHE_BUST=true.
+     */
+    private function refreshAssetBustQuery(string $html): string
+    {
+        if (!config('app.asset_cache_bust') || !function_exists('asset_bust_version')) {
+            return $html;
+        }
+
+        $version = asset_bust_version();
+        if ($version === '') {
+            return $html;
+        }
+
+        $v = rawurlencode($version);
+
+        return preg_replace_callback(
+            '#(\s(?:href|src)=["\'])([^"\']*?/build/[^"\'?\s]+)(?:\?[^"\']*)?(["\'])#i',
+            static function (array $m) use ($v): string {
+                return $m[1] . $m[2] . '?v=' . $v . $m[3];
+            },
+            $html
+        ) ?? $html;
     }
 
     /**
@@ -598,10 +626,10 @@ class HtmlCacheService
             if (empty($manifest[$entry]['file'])) {
                 continue;
             }
-            $href = $prefix . '/build/' . ltrim((string) $manifest[$entry]['file'], '/');
+            $href = asset_bust_url($prefix . '/build/' . ltrim((string) $manifest[$entry]['file'], '/'));
             $tags .= '<link rel="stylesheet" href="' . htmlspecialchars($href, ENT_QUOTES, 'UTF-8') . '" />' . "\n";
             foreach ($manifest[$entry]['css'] ?? [] as $cssFile) {
-                $cssHref = $prefix . '/build/' . ltrim((string) $cssFile, '/');
+                $cssHref = asset_bust_url($prefix . '/build/' . ltrim((string) $cssFile, '/'));
                 $tags .= '<link rel="stylesheet" href="' . htmlspecialchars($cssHref, ENT_QUOTES, 'UTF-8') . '" />' . "\n";
             }
         }

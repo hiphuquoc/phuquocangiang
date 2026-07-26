@@ -91,7 +91,7 @@ class ShipLocationPageService
                 'title' => t('ship_detail_title', ['name' => $name]),
                 'desc' => strip_tags((string) ($item->description ?: t('ship_schedule_intro', ['brand' => config('main.name')]))),
             ],
-            'items' => $this->ferry->routesForShipLocation($item, $name),
+            'items' => $this->ferry->shipCardsForLocation($item, $name),
         ];
     }
 
