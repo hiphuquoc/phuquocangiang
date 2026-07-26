@@ -16,6 +16,12 @@ class IslandNavigationService
         private readonly IslandContextService $context,
     ) {}
 
+    /** @var array{links: array<string, string>, items: array<int, array<string, mixed>>}|null */
+    private ?array $mainMenuCache = null;
+
+    /** @var array<int, array{key: string, label: string, href: string, children: array<int, array<string, mixed>>}>|null */
+    private ?array $blogCategoriesCache = null;
+
     /**
      * @return array<string, string>
      */
@@ -34,8 +40,12 @@ class IslandNavigationService
      */
     public function mainMenu(?string $currentPath = null): array
     {
+        if ($this->mainMenuCache !== null && $currentPath === null) {
+            return $this->mainMenuCache;
+        }
+
         $home = route('main.home');
-        $location = $this->context->location();
+        $location = $this->context->locationForNav();
         $blogCategories = $this->blogCategories($location);
         $blogHref = $blogCategories[0]['href'] ?? ($home . '#blog');
 
@@ -43,10 +53,16 @@ class IslandNavigationService
             $links = $this->homeAnchors($home);
             $links['blog'] = $blogHref;
 
-            return [
+            $payload = [
                 'links' => $links,
                 'items' => $this->buildItems($links, $blogCategories, $currentPath, null),
             ];
+
+            if ($currentPath === null) {
+                $this->mainMenuCache = $payload;
+            }
+
+            return $payload;
         }
 
         $links = [
@@ -62,10 +78,16 @@ class IslandNavigationService
             'faq' => $home . '#faq',
         ];
 
-        return [
+        $payload = [
             'links' => $links,
             'items' => $this->buildItems($links, $blogCategories, $currentPath, $location),
         ];
+
+        if ($currentPath === null) {
+            $this->mainMenuCache = $payload;
+        }
+
+        return $payload;
     }
 
     /**
@@ -180,7 +202,12 @@ class IslandNavigationService
      */
     public function blogCategories(?TourLocation $location = null): array
     {
-        $location ??= $this->context->location();
+        $useCache = func_num_args() === 0;
+        if ($useCache && $this->blogCategoriesCache !== null) {
+            return $this->blogCategoriesCache;
+        }
+
+        $location ??= $this->context->locationForNav();
         $categories = collect();
 
         if ($location instanceof TourLocation) {
@@ -213,7 +240,7 @@ class IslandNavigationService
         }
 
         if ($categories->isEmpty()) {
-            return [];
+            return $useCache ? ($this->blogCategoriesCache = []) : [];
         }
 
         $parentSeoIds = $categories
@@ -232,7 +259,7 @@ class IslandNavigationService
                 ->groupBy(fn (Category $child) => (int) ($child->seo->parent ?? 0));
         }
 
-        return $categories->map(function (Category $cat) use ($childGroups) {
+        $result = $categories->map(function (Category $cat) use ($childGroups) {
             $seo = $cat->seo;
             $label = (string) ($cat->name ?: ($seo->title ?? ''));
             $parentSeoId = (int) ($seo->id ?? 0);
@@ -253,6 +280,12 @@ class IslandNavigationService
                 'children' => $children,
             ];
         })->values()->all();
+
+        if ($useCache) {
+            $this->blogCategoriesCache = $result;
+        }
+
+        return $result;
     }
 
     /**

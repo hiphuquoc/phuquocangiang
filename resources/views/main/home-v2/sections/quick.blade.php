@@ -14,12 +14,17 @@
 
     @if(!empty($quickCards))
       <div class="sd-quick__grid">
-        @foreach($quickCards as $card)
+        @foreach($quickCards as $index => $card)
+          @php $imageUrl = $card['image'] ?? ''; @endphp
           <a
             class="sd-quick__card{{ !empty($card['large']) ? ' sd-quick__card--lg' : '' }}"
             href="{{ $card['href'] ?? '#' }}"
             data-reveal
-            style="--sd-img:url('{{ $card['image'] ?? '' }}')"
+            @if($index < 2 && $imageUrl !== '')
+              style="--sd-img:url('{{ $imageUrl }}')"
+            @elseif($imageUrl !== '')
+              data-lazy-bg="{{ $imageUrl }}"
+            @endif
           >
             <span class="sd-quick__top">
               <span class="sd-quick__tag">{{ $card['tag'] ?? '' }}</span>

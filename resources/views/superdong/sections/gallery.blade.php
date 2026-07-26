@@ -48,7 +48,8 @@
           >
             <figure class="sd-gallery__frame">
               <img
-                src="{{ $item['image'] }}"
+                src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                data-lazy-src="{{ $item['image'] }}"
                 alt="{{ $item['alt'] }}"
                 width="800"
                 height="600"

@@ -42,6 +42,15 @@ return [
     /** Bật giao diện mới cho trang cẩm nang (guide_info). */
     'use_guide_v2' => true,
 
+    /** Bật giao diện mới cho trang chi tiết tour (tour_info). */
+    'use_tour_v2' => true,
+
+    /** Bật giao diện mới cho trang chi tiết vé tàu (ship_info). */
+    'use_ship_v2' => true,
+
+    /** Bật giao diện mới cho trang chi tiết vé vui chơi (service_info). */
+    'use_service_v2' => true,
+
     'enabled' => [
         'tour'         => true,
         'tour_foreign' => false,

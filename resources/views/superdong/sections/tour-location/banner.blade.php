@@ -13,6 +13,7 @@
         height="1080"
         class="is-active"
         loading="eager"
+        fetchpriority="high"
         decoding="async"
       >
     </div>

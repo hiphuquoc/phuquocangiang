@@ -79,11 +79,19 @@ class AppServiceProvider extends ServiceProvider
             'superdong.chrome.mobile-nav',
             'superdong.chrome.nav',
         ], function ($view): void {
-            $navService = app(\App\Services\Island\IslandNavigationService::class);
-            $menu = $navService->mainMenu();
-            $view->with('islandNav', $menu['links']);
-            $view->with('islandMenu', $menu['items']);
-            $view->with('islandBlogCategories', $navService->blogCategoryLinks());
+            static $shared = null;
+
+            if ($shared === null) {
+                $navService = app(\App\Services\Island\IslandNavigationService::class);
+                $menu = $navService->mainMenu();
+                $shared = [
+                    'islandNav' => $menu['links'],
+                    'islandMenu' => $menu['items'],
+                    'islandBlogCategories' => $navService->blogCategoryLinks(),
+                ];
+            }
+
+            $view->with($shared);
         });
     }
 

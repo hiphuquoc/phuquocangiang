@@ -76,6 +76,12 @@
 @include('superdong.chrome.footer')
 @include('superdong.chrome.float')
 
+@include('main.product-v2.sections.sticky-book', [
+  'bookingHref' => $page['intro']['roomsAnchor'] ?? '#hotel-rooms',
+  'ctaLabel' => t('hotel_choose_room'),
+  'priceFormatted' => $page['intro']['priceFormatted'] ?? null,
+])
+
 @if(!empty($page['gallery']))
   @include('main.hotel-v2.fragments.gallery-lightbox', [
     'gallery' => $page['gallery'],

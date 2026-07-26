@@ -305,9 +305,8 @@ if (!function_exists('seo_content_for_admin')) {
 
 if (!function_exists('media_url')) {
     /**
-     * URL hiển thị ảnh.
-     * GCS (mặc định): https://storage.googleapis.com/{bucket}/{object}
-     * Legacy: /storage/... — map sang GCS nếu object đã tồn tại.
+     * URL hiển thị ảnh — không probe GCS exists() (tránh chặn TTFB).
+     * Cloud path → public GCS URL. Legacy /storage → giữ nguyên (hoặc map GCS theo quy ước nếu bật).
      */
     function media_url(?string $path): ?string
     {
@@ -322,17 +321,24 @@ if (!function_exists('media_url')) {
         /** @var \App\Services\Media\GcsMediaStorageService $storage */
         $storage = app(\App\Services\Media\GcsMediaStorageService::class);
 
-        $cloudPath = $storage->toCloudObjectPath($path);
-
-        if ($cloudPath !== null) {
-            // Legacy chỉ dùng URL GCS khi object đã có; path cloud thuần luôn dùng GCS/public URL.
-            if ($storage->isCloudPath($path) || $storage->exists($cloudPath)) {
-                return $storage->displayUrl($cloudPath);
-            }
+        if ($storage->isCloudPath($path)) {
+            return $storage->displayUrl($storage->normalizePath($path));
         }
 
         if ($storage->isLegacyLocalPath($path)) {
+            if (config('media.legacy_optimistic_gcs', false)) {
+                $cloudPath = $storage->toCloudObjectPath($path);
+                if ($cloudPath !== null) {
+                    return $storage->displayUrl($cloudPath);
+                }
+            }
+
             return str_starts_with($path, '/') ? $path : '/' . ltrim($path, '/');
+        }
+
+        $cloudPath = $storage->toCloudObjectPath($path);
+        if ($cloudPath !== null) {
+            return $storage->displayUrl($cloudPath);
         }
 
         return $path;

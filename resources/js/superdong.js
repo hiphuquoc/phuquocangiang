@@ -2,14 +2,38 @@
   window.hitourHydrateLazySrcImages = function hydrateLazySrcImages(root) {
     const scope = root || document;
     if (!scope?.querySelectorAll) return;
-    scope.querySelectorAll('img[data-lazy-src]').forEach((img) => {
-      if (img.getAttribute('data-lazy-src-done') === '1') return;
-      const url = img.getAttribute('data-lazy-src');
+
+    const nodes = scope.querySelectorAll('img[data-lazy-src], [data-lazy-bg]');
+    if (!nodes.length) return;
+
+    const apply = (el) => {
+      if (el.getAttribute('data-lazy-src-done') === '1') return;
+      const url = el.getAttribute('data-lazy-src') || el.getAttribute('data-lazy-bg');
       if (!url?.trim()) return;
-      img.setAttribute('data-lazy-src-done', '1');
-      img.src = url;
-      img.removeAttribute('data-lazy-src');
-    });
+      el.setAttribute('data-lazy-src-done', '1');
+      if (el.tagName === 'IMG') {
+        el.src = url;
+        el.removeAttribute('data-lazy-src');
+      } else {
+        el.style.setProperty('--sd-img', `url('${url.replace(/'/g, "\\'")}')`);
+        el.removeAttribute('data-lazy-bg');
+      }
+    };
+
+    if (!('IntersectionObserver' in window)) {
+      nodes.forEach(apply);
+      return;
+    }
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        apply(entry.target);
+        io.unobserve(entry.target);
+      });
+    }, { rootMargin: '200px 0px', threshold: 0.01 });
+
+    nodes.forEach((el) => io.observe(el));
   };
 
   window.hitourHydrateLazySrcImages(document);
@@ -1922,6 +1946,7 @@
         modal.removeAttribute('hidden');
         modal.setAttribute('aria-hidden', 'false');
         document.body.classList.add('sd-hotel-room-modal-open');
+        window.hitourHydrateLazySrcImages?.(body);
       });
     });
 

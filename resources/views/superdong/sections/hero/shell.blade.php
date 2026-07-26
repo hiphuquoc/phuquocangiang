@@ -14,6 +14,7 @@
           height="1080"
           @class(['is-active' => $i === 0])
           loading="{{ $i === 0 ? 'eager' : 'lazy' }}"
+          @if($i === 0) fetchpriority="high" @endif
           decoding="async"
         >
       @empty

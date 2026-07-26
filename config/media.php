@@ -38,6 +38,12 @@ return [
     'url_mode' => env('GCS_MEDIA_URL_MODE', 'public'),
 
     /*
+    | Legacy /storage/images/upload/… → map thẳng sang GCS public URL theo quy ước
+    | (không kiểm tra exists). Chỉ bật khi đã migrate object lên bucket.
+    */
+    'legacy_optimistic_gcs' => (bool) env('GCS_LEGACY_OPTIMISTIC', false),
+
+    /*
     | Các prefix object trên GCS — dùng để nhận diện cloud path (media_url, delete, exists…).
     | Mọi ảnh mới nên nằm trong một trong các prefix này.
     */

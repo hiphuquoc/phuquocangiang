@@ -30,6 +30,15 @@ class HomeHeroBackground extends Model
 
     public function mediaUrl(): string
     {
+        if (!empty($this->public_url)) {
+            return (string) $this->public_url;
+        }
+
+        if (!empty($this->gcs_path)) {
+            return app(\App\Services\Media\GcsMediaStorageService::class)
+                ->publicUrl((string) $this->gcs_path);
+        }
+
         return route('media.heroBackground', ['background' => $this->id]);
     }
 }

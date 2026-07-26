@@ -2,10 +2,12 @@
   $intro = $intro ?? [];
   $gallery = $gallery ?? [];
   $galleryCount = count($gallery);
+  $galleryId = $galleryId ?? 'product-gallery';
 @endphp
 
-<section class="sd-section sd-hotel-intro" aria-labelledby="hotel-intro-title">
+<section class="sd-section sd-hotel-intro sd-product-intro" aria-labelledby="{{ $galleryId }}-title">
   <div class="sd-section__inner sd-hotel-intro__shell">
+    {{-- Destination-first: ảnh lớn trước, rồi tiêu đề + book --}}
     @if($galleryCount > 0)
       <div class="sd-hotel-gallery" data-hotel-gallery>
         <button type="button" class="sd-hotel-gallery__hero" data-hotel-gallery-open="0" aria-label="{{ t('view_more') }}">
@@ -55,59 +57,55 @@
 
     <header class="sd-hotel-intro__head">
       <div class="sd-hotel-intro__meta">
-        <span class="sd-hotel-intro__kicker">{{ t('kicker_hotel') }}</span>
-        <h1 class="sd-hotel-intro__title" id="hotel-intro-title">{{ $intro['title'] ?? '' }}</h1>
+        @if(!empty($intro['kicker']))
+          <span class="sd-hotel-intro__kicker">{{ $intro['kicker'] }}</span>
+        @endif
+        <h1 class="sd-hotel-intro__title" id="{{ $galleryId }}-title">{{ $intro['title'] ?? '' }}</h1>
 
-        <div class="sd-hotel-intro__badges">
-          @if(!empty($intro['typeName']))
-            <span class="sd-hotel-intro__type">{{ $intro['typeName'] }}</span>
-          @endif
-          @if(!empty($intro['typeRating']))
-            <span class="sd-hotel-intro__stars" aria-label="{{ t('hotel_rating') }}">
-              @for($i = 0; $i < (int) $intro['typeRating']; ++$i)
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2l2.9 6.26L22 9.27l-5 4.87L18.2 22 12 18.56 5.8 22 7 14.14l-5-4.87 7.1-1.01z"/></svg>
-              @endfor
-            </span>
-          @endif
-        </div>
-
-        @if(!empty($intro['rating']))
-          <div class="sd-hotel-intro__rating">
-            <span class="sd-hotel-intro__rating-score">{{ $intro['rating'] }}</span>
-            <span class="sd-hotel-intro__rating-text">
-              {{ $intro['ratingText'] ?? '' }}
-              (<strong>{{ $intro['ratingCount'] ?? 0 }}</strong> {{ t('hotel_rating_count') }})
-            </span>
-          </div>
-        @else
-          <p class="sd-hotel-intro__rating sd-hotel-intro__rating--empty">{{ t('hotel_no_rating') }}</p>
+        @if(!empty($intro['description']))
+          <p class="sd-product-intro__desc">{{ $intro['description'] }}</p>
         @endif
 
-        @if(!empty($intro['address']))
-          <p class="sd-hotel-intro__address">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z"/></svg>
-            {{ $intro['address'] }}
-          </p>
+        @if(!empty($intro['facts']))
+          <ul class="sd-product-intro__facts" aria-label="Thông tin nhanh">
+            @foreach($intro['facts'] as $fact)
+              <li>{{ $fact }}</li>
+            @endforeach
+          </ul>
         @endif
       </div>
 
-      @if(!empty($intro['priceFormatted']))
-        <aside class="sd-hotel-intro__book" id="js_hotelIntroBook">
-          <p class="sd-hotel-intro__book-label">{{ t('price_from') }}</p>
+      @if(!empty($intro['priceFormatted']) || !empty($intro['ctaHref']) || !empty($intro['ctaAnchor']))
+        <aside class="sd-hotel-intro__book" id="js_productIntroBook">
+          <p class="sd-hotel-intro__book-label">{{ $intro['priceFromLabel'] ?? t('price_from') }}</p>
+
           @if(!empty($intro['saleOff']) && !empty($intro['priceOldFormatted']))
             <div class="sd-hotel-intro__book-old">
               <span>{!! $intro['priceOldFormatted'] !!}</span>
               <em>-{{ $intro['saleOff'] }}%</em>
             </div>
           @endif
-          <div class="sd-hotel-intro__book-price">
-            <strong>{!! $intro['priceFormatted'] !!}</strong>
-            <span class="sd-hotel-intro__book-unit">/ {{ t('hotel_per_night') ?? 'đêm' }}</span>
-          </div>
-          <a href="{{ $intro['roomsAnchor'] ?? '#hotel-rooms' }}" class="sd-hotel-intro__book-cta">
-            {{ t('hotel_choose_room') }}
+
+          @if(!empty($intro['priceFormatted']))
+            <div class="sd-hotel-intro__book-price">
+              <strong>{!! $intro['priceFormatted'] !!}</strong>
+              @if(!empty($intro['priceUnit']))
+                <span class="sd-hotel-intro__book-unit">{{ $intro['priceUnit'] }}</span>
+              @endif
+            </div>
+          @endif
+
+          <a href="{{ $intro['ctaAnchor'] ?? ($intro['ctaHref'] ?? '#') }}" class="sd-hotel-intro__book-cta">
+            {{ $intro['ctaLabel'] ?? t('book_tour') }}
           </a>
-          <p class="sd-hotel-intro__book-trust">Giá tốt · Đặt nhanh · Hỗ trợ 24/7</p>
+
+          @if(!empty($intro['ctaAnchor']) && !empty($intro['ctaHref']))
+            <a href="{{ $intro['ctaHref'] }}" class="sd-product-intro__book-secondary">
+              {{ t('form_book_tour_now') ?? ($intro['ctaLabel'] ?? t('book_tour')) }}
+            </a>
+          @endif
+
+          <p class="sd-hotel-intro__book-trust">Xác nhận nhanh · Hỗ trợ 24/7</p>
         </aside>
       @endif
     </header>

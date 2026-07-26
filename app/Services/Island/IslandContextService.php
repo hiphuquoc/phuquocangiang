@@ -84,9 +84,74 @@ class IslandContextService
         ];
     }
 
+    /**
+     * Eager-load đủ cho trang chủ — bỏ destinations/specials (chỉ dùng nav).
+     *
+     * @return array<string, mixed>
+     */
+    public function homeRelations(): array
+    {
+        return [
+            'seo',
+            'tours.infoTour' => fn ($q) => $q->where('status_show', 1),
+            'tours.infoTour.seo',
+            'shipLocations.infoShipLocation.seo',
+            'shipLocations.infoShipLocation.district',
+            'shipLocations.infoShipLocation.province',
+            'shipLocations.infoShipLocation.ships' => fn ($q) => $q->whereHas(
+                'prices',
+                fn ($p) => $p->where('price_adult', '>', 0)
+            ),
+            'shipLocations.infoShipLocation.ships.seo',
+            'shipLocations.infoShipLocation.ships.portLocation',
+            'shipLocations.infoShipLocation.ships.departure.district',
+            'shipLocations.infoShipLocation.ships.departure.province',
+            'shipLocations.infoShipLocation.ships.portDeparture',
+            'shipLocations.infoShipLocation.ships.prices.times',
+            'hotelLocations.infoHotelLocation.seo',
+            'hotelLocations.infoHotelLocation.hotels' => fn ($q) => $q
+                ->whereHas('rooms')
+                ->limit(8),
+            'hotelLocations.infoHotelLocation.hotels.seo',
+            'hotelLocations.infoHotelLocation.hotels.rooms.prices',
+            'hotelLocations.infoHotelLocation.hotels.comments',
+            'serviceLocations.infoServiceLocation.seo',
+            'serviceLocations.infoServiceLocation.services.seo',
+            'airLocations.infoAirLocation.seo',
+            'guides.infoGuide.seo',
+            'carrentalLocations.infoCarrentalLocation.seo',
+        ];
+    }
+
+    /**
+     * Tour Location cho trang chủ (graph gọn hơn defaultRelations).
+     */
+    public function locationForHome(): ?TourLocation
+    {
+        if ($this->loaded && $this->location !== null) {
+            return $this->location;
+        }
+
+        $this->loaded = true;
+        $id = $this->id();
+
+        if ($id <= 0) {
+            $this->location = null;
+
+            return null;
+        }
+
+        $this->location = TourLocation::query()
+            ->where('id', $id)
+            ->with($this->homeRelations())
+            ->first();
+
+        return $this->location;
+    }
+
     public function name(): string
     {
-        $location = $this->location();
+        $location = ($this->loaded ? $this->location : null) ?? $this->locationForNav();
 
         if ($location) {
             return (string) ($location->display_name ?: $location->name ?: config('island.name_fallback'));
@@ -97,7 +162,50 @@ class IslandContextService
 
     public function cacheStamp(): string
     {
-        return $this->id() . '|' . (string) ($this->location()?->updated_at ?? '0');
+        $id = $this->id();
+        if ($id <= 0) {
+            return '0|0';
+        }
+
+        // Chỉ đọc updated_at — không eager-load toàn bộ graph (tránh chặn mọi request cache stamp).
+        $updated = TourLocation::query()->whereKey($id)->value('updated_at');
+
+        return $id . '|' . (string) ($updated ?? '0');
+    }
+
+    /**
+     * Tour Location tối giản cho menu/footer — không load ships/prices/rooms.
+     */
+    public function locationForNav(): ?TourLocation
+    {
+        static $navLocation = null;
+        static $navLoaded = false;
+
+        if ($navLoaded) {
+            return $navLocation;
+        }
+
+        $navLoaded = true;
+        $id = $this->id();
+        if ($id <= 0) {
+            return null;
+        }
+
+        $navLocation = TourLocation::query()
+            ->where('id', $id)
+            ->with([
+                'seo',
+                'shipLocations.infoShipLocation.seo',
+                'hotelLocations.infoHotelLocation.seo',
+                'serviceLocations.infoServiceLocation.seo',
+                'guides.infoGuide.seo',
+                'carrentalLocations.infoCarrentalLocation.seo',
+                'destinations.infoCategory.seo',
+                'specials.infoCategory.seo',
+            ])
+            ->first();
+
+        return $navLocation;
     }
 
     public function pageUrl(?object $seo, string $fallback = '#'): string
@@ -144,10 +252,14 @@ class IslandContextService
             return (string) config('admin.images.default_750x460');
         }
 
-        $base = $seo->getRawOriginal('image') ?? $seo->getRawOriginal('image_small') ?? null;
+        // Ưu tiên cột đúng kích thước trong DB — không gọi GCS exists()/variant probe.
+        $raw = match ($variant) {
+            'small' => $seo->getRawOriginal('image_small') ?: $seo->getRawOriginal('image'),
+            default => $seo->getRawOriginal('image') ?: $seo->getRawOriginal('image_small'),
+        };
 
-        if (!empty($base)) {
-            $url = media_variant_url($base, $variant);
+        if (!empty($raw)) {
+            $url = media_url($raw);
             if (!empty($url)) {
                 return $url;
             }

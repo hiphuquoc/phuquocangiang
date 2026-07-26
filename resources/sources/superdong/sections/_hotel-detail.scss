@@ -1,28 +1,40 @@
 @use "../foundations/tokens" as *;
 
 /* ===========================================================================
- * Hotel detail page (v2)
+ * Hotel detail page (v2) — synced with product detail / design system
+ * @see docs/design/superdong-design-system.md
  * =========================================================================== */
 
 .sd-hotel-detail-page {
-  background: $sd-sky-50;
+  background:
+    radial-gradient(ellipse 80% 40% at 50% -10%, rgba($sd-sky-300, 0.22), transparent 55%),
+    $sd-sky-50;
+  padding-bottom: calc(4.75rem + env(safe-area-inset-bottom, 0px));
+
+  @include sd-bp($sd-bp-lg) {
+    padding-bottom: 0;
+  }
 }
 
 .sd-hotel-intro {
-  padding-top: clamp($sd-space-6, 4vw, $sd-space-10);
+  padding-top: clamp($sd-space-4, 2.5vw, $sd-space-6);
+
+  /* Listing banner đã chiếm first viewport — kéo nội dung sát hơn */
+  margin-top: clamp(-1.5rem, -2vw, -0.5rem);
 
   &__shell {
     display: grid;
-    gap: clamp($sd-space-6, 3vw, $sd-space-10);
+    gap: clamp($sd-space-5, 2.5vw, $sd-space-8);
   }
 
   &__head {
     display: grid;
-    gap: $sd-space-6;
+    gap: $sd-space-5;
 
     @include sd-bp($sd-bp-lg) {
-      grid-template-columns: minmax(0, 1fr) minmax(240px, 320px);
+      grid-template-columns: minmax(0, 1fr) minmax(260px, 340px);
       align-items: start;
+      gap: $sd-space-8;
     }
   }
 
@@ -33,31 +45,37 @@
   }
 
   &__title {
-    @include sd-type-h2-section;
-    font-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.35rem);
     margin: 0 0 $sd-space-4;
-    color: $sd-sky-950;
+    color: $sd-slate-900;
+    font-family: $sd-font-heading;
+    font-size: clamp(1.75rem, 1.35rem + 1.4vw, 2.5rem);
+    font-weight: $sd-fw-extrabold;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
   }
 
   &__badges {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: $sd-space-3;
+    gap: $sd-space-2 $sd-space-3;
     margin-bottom: $sd-space-3;
   }
 
   &__type {
-    @include sd-type-meta;
-    padding: 0.25rem 0.65rem;
+    padding: 0.28rem 0.7rem;
     border-radius: $sd-radius-pill;
     background: rgba($sd-sky-500, 0.1);
+    border: 1px solid rgba($sd-sky-500, 0.18);
     color: $sd-sky-800;
+    font-family: $sd-font-body;
+    font-size: 0.82rem;
+    font-weight: $sd-fw-medium;
   }
 
   &__stars {
     display: inline-flex;
-    gap: 0.15rem;
+    gap: 0.12rem;
     color: $sd-sun-500;
 
     svg {
@@ -72,7 +90,9 @@
     align-items: center;
     gap: $sd-space-2 $sd-space-3;
     margin: 0 0 $sd-space-3;
-    @include sd-type-body-section;
+    font-family: $sd-font-body;
+    font-size: 0.95rem;
+    line-height: 1.45;
 
     &--empty {
       color: $sd-slate-500;
@@ -84,15 +104,22 @@
     align-items: center;
     justify-content: center;
     min-width: 2.5rem;
-    padding: 0.25rem 0.55rem;
+    padding: 0.28rem 0.55rem;
     border-radius: $sd-radius-sm;
     background: $sd-sky-700;
     color: $sd-white;
+    font-family: $sd-font-heading;
     font-weight: $sd-fw-bold;
+    letter-spacing: -0.02em;
   }
 
   &__rating-text {
     color: $sd-slate-500;
+
+    strong {
+      color: $sd-slate-700;
+      font-weight: $sd-fw-semibold;
+    }
   }
 
   &__address {
@@ -101,7 +128,9 @@
     gap: $sd-space-2;
     margin: 0;
     color: $sd-slate-500;
-    @include sd-type-body-section;
+    font-family: $sd-font-body;
+    font-size: 0.95rem;
+    line-height: 1.5;
 
     svg {
       flex-shrink: 0;
@@ -113,11 +142,29 @@
   }
 
   &__book {
-    padding: clamp($sd-space-4, 2.5vw, $sd-space-5);
-    border-radius: $sd-radius-lg;
-    background: $sd-white;
-    border: 1px solid rgba($sd-sky-300, 0.35);
+    position: relative;
+    padding: clamp($sd-space-4, 2.5vw, $sd-space-6);
+    border-radius: $sd-radius-xl;
+    background:
+      linear-gradient($sd-white, $sd-white) padding-box,
+      linear-gradient(145deg, rgba($sd-sky-400, 0.55), rgba($sd-sun-500, 0.35)) border-box;
+    border: 1.5px solid transparent;
     box-shadow: $sd-shadow-md;
+
+    @include sd-bp($sd-bp-lg) {
+      position: sticky;
+      top: calc(#{$sd-header-h} + #{$sd-space-4});
+    }
+  }
+
+  &__book-label {
+    margin: 0 0 $sd-space-2;
+    color: $sd-slate-500;
+    font-family: $sd-font-body;
+    font-size: 0.78rem;
+    font-weight: $sd-fw-medium;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
   }
 
   &__book-old {
@@ -127,11 +174,16 @@
     margin-bottom: $sd-space-2;
     color: $sd-slate-500;
     text-decoration: line-through;
+    font-size: 0.9rem;
 
     em {
       font-style: normal;
-      color: $sd-sun-600;
+      padding: 0.12rem 0.45rem;
+      border-radius: $sd-radius-pill;
+      background: rgba($sd-price, 0.1);
+      color: $sd-price;
       font-weight: $sd-fw-bold;
+      font-size: 0.78rem;
       text-decoration: none;
     }
   }
@@ -144,16 +196,20 @@
     margin-bottom: $sd-space-4;
 
     strong {
-      @include sd-type-h2-section;
-      color: $sd-sky-800;
+      color: $sd-price;
+      font-family: $sd-font-heading;
+      font-size: clamp(1.45rem, 1.25rem + 0.7vw, 1.85rem);
+      font-weight: $sd-fw-extrabold;
       line-height: 1;
+      letter-spacing: -0.03em;
     }
   }
 
   &__book-from,
   &__book-unit {
-    @include sd-type-meta;
     color: $sd-slate-500;
+    font-family: $sd-font-body;
+    font-size: 0.82rem;
   }
 
   &__book-cta {
@@ -161,30 +217,50 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    min-height: 2.75rem;
-    padding: 0.65rem 1rem;
+    min-height: 2.85rem;
+    padding: 0.7rem 1.1rem;
     border-radius: $sd-radius-pill;
     background: linear-gradient(135deg, $sd-sun-500, $sd-sun-600);
     color: $sd-sky-950;
+    font-family: $sd-font-heading;
+    font-size: 0.98rem;
     font-weight: $sd-fw-bold;
     text-decoration: none;
+    box-shadow: 0 10px 24px -12px rgba($sd-sun-600, 0.7);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 
     @media (hover: hover) {
       &:hover {
         transform: translateY(-1px);
-        box-shadow: 0 10px 24px -12px rgba($sd-sun-600, 0.65);
+        box-shadow: 0 14px 28px -12px rgba($sd-sun-600, 0.8);
       }
     }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+
+      &:hover {
+        transform: none;
+      }
+    }
+  }
+
+  &__book-trust {
+    margin: $sd-space-3 0 0;
+    color: $sd-slate-500;
+    font-family: $sd-font-body;
+    font-size: 0.78rem;
+    line-height: 1.4;
+    text-align: center;
   }
 }
 
 .sd-hotel-gallery {
   display: grid;
-  gap: $sd-space-3;
-  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: $sd-space-2;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
 
-  @media (max-width: #{$sd-bp-md - 1px}) {
+  @include sd-bp-max($sd-bp-md) {
     grid-template-columns: 1fr;
   }
 
@@ -210,23 +286,46 @@
 
     @media (hover: hover) {
       &:hover img {
-        transform: scale(1.03);
+        transform: scale(1.035);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      img {
+        transition: none;
+      }
+
+      &:hover img {
+        transform: none;
       }
     }
   }
 
   &__hero {
-    min-height: clamp(220px, 38vw, 420px);
+    min-height: clamp(220px, 36vw, 440px);
+    box-shadow: $sd-shadow-sm;
 
     img {
-      min-height: clamp(220px, 38vw, 420px);
+      min-height: clamp(220px, 36vw, 440px);
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 55%, rgba($sd-sky-950, 0.28));
+      pointer-events: none;
     }
   }
 
   &__grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: $sd-space-3;
+    gap: $sd-space-2;
+
+    @include sd-bp-max($sd-bp-md) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
   }
 
   &__thumb {
@@ -237,12 +336,15 @@
     position: absolute;
     right: $sd-space-3;
     bottom: $sd-space-3;
-    padding: 0.35rem 0.65rem;
+    z-index: 1;
+    padding: 0.4rem 0.75rem;
     border-radius: $sd-radius-pill;
     background: rgba($sd-sky-950, 0.72);
     color: $sd-white;
-    font-size: 0.82rem;
+    font-family: $sd-font-heading;
+    font-size: 0.8rem;
     font-weight: $sd-fw-bold;
+    backdrop-filter: blur(6px);
   }
 }
 
@@ -250,10 +352,11 @@
   &__groups,
   &__traveloka {
     display: grid;
-    gap: $sd-space-5;
+    gap: $sd-space-4;
 
     @include sd-bp($sd-bp-md) {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: $sd-space-5;
     }
   }
 
@@ -261,13 +364,17 @@
     padding: $sd-space-5;
     border-radius: $sd-radius-lg;
     background: $sd-white;
-    border: 1px solid rgba($sd-slate-300, 0.8);
+    border: 1px solid rgba($sd-slate-300, 0.6);
+    box-shadow: $sd-shadow-sm;
   }
 
   &__group-title {
     margin: 0 0 $sd-space-4;
-    @include sd-type-card-title;
-    color: $sd-sky-900;
+    color: $sd-slate-900;
+    font-family: $sd-font-heading;
+    font-size: 1.05rem;
+    font-weight: $sd-fw-bold;
+    letter-spacing: -0.015em;
   }
 
   &__list {
@@ -289,14 +396,16 @@
     align-items: center;
     gap: $sd-space-2;
     color: $sd-slate-700;
-    @include sd-type-body-section;
+    font-family: $sd-font-body;
+    font-size: 0.92rem;
+    line-height: 1.4;
   }
 
   &__chip {
-    padding: 0.45rem 0.65rem;
+    padding: 0.45rem 0.7rem;
     border-radius: $sd-radius-sm;
     background: $sd-sky-50;
-    border: 1px solid rgba($sd-slate-300, 0.8);
+    border: 1px solid rgba($sd-sky-300, 0.45);
   }
 
   &__icon {
@@ -306,6 +415,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    color: $sd-sky-600;
 
     &--fallback {
       width: 1.1rem;
@@ -321,7 +431,11 @@
 .sd-hotel-rooms {
   &__list {
     display: grid;
-    gap: $sd-space-5;
+    gap: $sd-space-4;
+
+    @include sd-bp($sd-bp-md) {
+      gap: $sd-space-5;
+    }
   }
 }
 
@@ -331,13 +445,31 @@
   padding: $sd-space-4;
   border-radius: $sd-radius-lg;
   background: $sd-white;
-  border: 1px solid rgba($sd-slate-300, 0.85);
+  border: 1px solid rgba($sd-slate-300, 0.65);
   box-shadow: $sd-shadow-sm;
+  transition: box-shadow 0.22s ease, transform 0.22s ease, border-color 0.22s ease;
 
   @include sd-bp($sd-bp-lg) {
-    grid-template-columns: minmax(220px, 320px) minmax(0, 1fr) minmax(180px, 220px);
+    grid-template-columns: minmax(220px, 300px) minmax(0, 1fr) minmax(180px, 230px);
     align-items: stretch;
     padding: $sd-space-5;
+    gap: $sd-space-5;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      border-color: rgba($sd-sky-400, 0.4);
+      box-shadow: $sd-shadow-md;
+      transform: translateY(-2px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    &:hover {
+      transform: none;
+    }
   }
 
   &__media {
@@ -359,6 +491,13 @@
       width: 100%;
       aspect-ratio: 16 / 10;
       object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    @media (hover: hover) {
+      &:hover img {
+        transform: scale(1.04);
+      }
     }
   }
 
@@ -366,7 +505,7 @@
     position: absolute;
     right: $sd-space-2;
     bottom: $sd-space-2;
-    padding: 0.25rem 0.55rem;
+    padding: 0.28rem 0.55rem;
     border-radius: $sd-radius-pill;
     background: rgba($sd-sky-950, 0.72);
     color: $sd-white;
@@ -376,8 +515,12 @@
 
   &__title {
     margin: 0 0 $sd-space-3;
-    @include sd-type-card-title;
-    color: $sd-sky-950;
+    color: $sd-slate-900;
+    font-family: $sd-font-heading;
+    font-size: clamp(1.05rem, 1rem + 0.3vw, 1.2rem);
+    font-weight: $sd-fw-bold;
+    line-height: 1.3;
+    letter-spacing: -0.015em;
   }
 
   &__facts {
@@ -388,7 +531,8 @@
     padding: 0;
     list-style: none;
     color: $sd-slate-500;
-    @include sd-type-meta;
+    font-family: $sd-font-body;
+    font-size: 0.82rem;
 
     li {
       display: inline-flex;
@@ -409,7 +553,8 @@
     gap: $sd-space-2;
     margin: 0 0 $sd-space-3;
     color: $sd-slate-500;
-    @include sd-type-body-section;
+    font-family: $sd-font-body;
+    font-size: 0.92rem;
 
     svg {
       width: 1.1rem;
@@ -430,16 +575,18 @@
       display: inline-flex;
       align-items: center;
       gap: 0.35rem;
-      padding: 0.3rem 0.55rem;
-      border-radius: $sd-radius-sm;
-      background: $sd-sky-50;
+      padding: 0.32rem 0.6rem;
+      border-radius: $sd-radius-pill;
+      background: rgba($sd-sky-500, 0.07);
+      border: 1px solid rgba($sd-sky-500, 0.12);
       color: $sd-slate-700;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
     }
   }
 
   &__facilities-more {
     background: transparent !important;
+    border-color: transparent !important;
     color: $sd-sky-700 !important;
     font-weight: $sd-fw-medium;
   }
@@ -456,13 +603,13 @@
     justify-content: center;
     gap: $sd-space-2;
     padding-top: $sd-space-3;
-    border-top: 1px solid rgba($sd-slate-300, 0.8);
+    border-top: 1px solid rgba($sd-slate-300, 0.65);
 
     @include sd-bp($sd-bp-lg) {
       padding-top: 0;
       padding-left: $sd-space-4;
       border-top: 0;
-      border-left: 1px solid rgba($sd-slate-300, 0.8);
+      border-left: 1px solid rgba($sd-slate-300, 0.65);
       text-align: right;
       align-items: flex-end;
     }
@@ -478,33 +625,38 @@
 
     em {
       font-style: normal;
-      color: $sd-sun-600;
+      color: $sd-price;
       font-weight: $sd-fw-bold;
       text-decoration: none;
     }
   }
 
   &__price {
-    @include sd-type-card-title-lg;
-    color: $sd-sky-800;
+    color: $sd-price;
+    font-family: $sd-font-heading;
+    font-size: clamp(1.15rem, 1.05rem + 0.35vw, 1.35rem);
+    font-weight: $sd-fw-extrabold;
+    letter-spacing: -0.02em;
   }
 
   &__cta {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 2.5rem;
-    padding: 0.55rem 1.1rem;
+    min-height: 2.6rem;
+    padding: 0.6rem 1.2rem;
     border-radius: $sd-radius-pill;
     background: $sd-sky-700;
     color: $sd-white;
+    font-family: $sd-font-heading;
     font-weight: $sd-fw-bold;
     text-decoration: none;
-    transition: background 0.2s ease;
+    transition: background 0.2s ease, transform 0.2s ease;
 
     @media (hover: hover) {
       &:hover {
         background: $sd-sky-800;
+        transform: translateY(-1px);
       }
     }
   }
@@ -515,7 +667,16 @@
     padding: clamp($sd-space-5, 3vw, $sd-space-8);
     border-radius: $sd-radius-lg;
     background: $sd-white;
-    border: 1px solid rgba($sd-slate-300, 0.85);
+    border: 1px solid rgba($sd-slate-300, 0.6);
+    box-shadow: $sd-shadow-sm;
+    color: $sd-slate-700;
+    font-family: $sd-font-body;
+    line-height: 1.7;
+
+    h2, h3, h4 {
+      color: $sd-slate-900;
+      font-family: $sd-font-heading;
+    }
   }
 }
 
@@ -589,7 +750,9 @@
   &__info {
     h4 {
       margin: 0 0 $sd-space-2;
-      @include sd-type-card-title;
+      color: $sd-slate-900;
+      font-family: $sd-font-heading;
+      font-weight: $sd-fw-bold;
     }
 
     p {

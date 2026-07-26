@@ -265,8 +265,8 @@ class GcsMediaStorageService
     }
 
     /**
-     * Resolve path biến thể từ path gốc hoặc path bất kỳ trong set.
-     * Legacy /storage/images/upload/foo-750.webp → thử media/uploads/foo[-small|-medium].webp trên GCS.
+     * Resolve path biến thể theo quy ước đặt tên — KHÔNG gọi GCS exists() (tránh chặn TTFB).
+     * Legacy /storage/images/upload/foo-750.webp → media/uploads/foo[-small|-medium].webp
      */
     public function resolveVariantPath(?string $storedPath, string $variant = 'original'): ?string
     {
@@ -277,56 +277,41 @@ class GcsMediaStorageService
         $cloudPath = $this->toCloudObjectPath($storedPath);
 
         if ($cloudPath === null) {
-            // Không map được sang GCS — giữ nguyên path (legacy local hoặc URL lạ).
             return $storedPath;
         }
 
         $normalized = $this->normalizePath($cloudPath);
+        $filename = (string) pathinfo($normalized, PATHINFO_FILENAME);
+
+        // Giữ nguyên object key nếu đã đúng biến thể cần dùng (vd. -400/-750/-small).
+        if ($variant === 'original') {
+            return $normalized;
+        }
+
+        if ($variant === 'small' && preg_match('/-(small|400|250|460)$/', $filename) === 1) {
+            return $normalized;
+        }
+
+        if ($variant === 'medium' && preg_match('/-(medium|750)$/', $filename) === 1) {
+            return $normalized;
+        }
+
         $dir = dirname($normalized);
         $dir = $dir === '.' ? '' : $dir . '/';
         $ext = pathinfo($normalized, PATHINFO_EXTENSION) ?: $this->extension();
         $base = $this->extractBaseName($normalized);
-
-        $original = $dir . $base . '.' . $ext;
-
-        if ($variant === 'original') {
-            if ($this->exists($original)) {
-                return $original;
-            }
-
-            // Path DB đã là cloud nhưng object chưa có (hoặc tên lệch) → trả path đã chuẩn hóa.
-            return $this->isCloudPath($storedPath) ? $normalized : $storedPath;
-        }
-
         $suffix = (string) (config("media.variants.{$variant}.suffix") ?? "-{$variant}");
-        $candidate = $dir . $base . $suffix . '.' . $ext;
 
-        if ($this->exists($candidate)) {
-            return $candidate;
+        // Upload mới: -small / -medium. Legacy SEO thường có image_small = -400.
+        if ($variant === 'small' && $this->isLegacyLocalPath($storedPath)) {
+            return $dir . $base . '-400.' . $ext;
         }
 
-        if ($variant === 'small') {
-            foreach ((array) config('media.legacy_suffixes', []) as $legacySuffix) {
-                $legacy = $dir . $base . $legacySuffix . '.' . $ext;
-                if ($this->exists($legacy)) {
-                    return $legacy;
-                }
-            }
+        if ($variant === 'medium' && $this->isLegacyLocalPath($storedPath)) {
+            return $dir . $base . '-750.' . $ext;
         }
 
-        if ($variant === 'medium') {
-            $legacyNormal = $dir . $base . '-750.' . $ext;
-            if ($this->exists($legacyNormal)) {
-                return $legacyNormal;
-            }
-        }
-
-        if ($this->exists($original)) {
-            return $original;
-        }
-
-        // Legacy chưa migrate lên GCS → giữ path gốc để fallback /storage hoặc default.
-        return $this->isLegacyLocalPath($storedPath) ? $storedPath : $normalized;
+        return $dir . $base . $suffix . '.' . $ext;
     }
 
     public function deleteImageSet(?string $anyPathInSet): void

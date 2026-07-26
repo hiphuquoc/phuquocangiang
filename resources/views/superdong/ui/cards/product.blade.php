@@ -22,7 +22,7 @@
         @if($hasLink)
           <a href="{{ $ctaHref }}" class="sd-card__media-link" tabindex="-1" aria-hidden="true">
         @endif
-        <img src="{{ $image }}" alt="{{ $alt }}" loading="lazy">
+        <img src="{{ $image }}" alt="{{ $alt }}" loading="lazy" decoding="async" width="640" height="420">
         @if($hasLink)
           </a>
         @endif

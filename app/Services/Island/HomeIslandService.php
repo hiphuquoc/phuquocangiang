@@ -30,7 +30,7 @@ class HomeIslandService
      */
     public function forHomePage(string $locale = 'vi'): array
     {
-        $location = $this->context->location();
+        $location = $this->context->locationForHome();
         $name = $this->context->name();
 
         return [

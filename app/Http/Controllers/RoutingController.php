@@ -262,6 +262,22 @@ class RoutingController extends Controller {
         $content    = $this->renderContentBlade('tour_info', $item->seo->getRawOriginal('slug'), $locale);
         $breadcrumb = Url::buildBreadcrumb($itemSeo->slug_full);
 
+        if (config('modules.use_tour_v2')) {
+            $pageService = app(\App\Services\Tour\TourPageService::class);
+            $page = $pageService->forPage($item, $locale, $related);
+            $schemaOffer = $pageService->schemaOfferPrices($item, $locale);
+
+            return view('main.tour-v2.index', compact(
+                'item',
+                'breadcrumb',
+                'content',
+                'related',
+                'locale',
+                'page',
+                'schemaOffer',
+            ))->render();
+        }
+
         return view('main.tour.index', compact('item', 'breadcrumb', 'content', 'related'))->render();
     }
 
@@ -349,13 +365,26 @@ class RoutingController extends Controller {
             ->where('seo_id', $itemSeo->id)
             ->with(['files'     => fn($q) => $q->where('relation_table', 'ship_info')])
             ->with(['questions' => fn($q) => $q->where('relation_table', 'ship_info')])
-            ->with('seo', 'partners', 'portDeparture', 'portLocation', 'location')
+            ->with('seo', 'partners.infoPartner.seo', 'portDeparture', 'portLocation', 'location')
             ->first();
         if (!$item) return null;
 
         $schedule   = $this->renderContentBlade('ship_schedule', $item->seo->getRawOriginal('slug'), $locale);
         $content    = $this->renderContentBlade('ship_info', $item->seo->getRawOriginal('slug'), $locale);
         $breadcrumb = Url::buildBreadcrumb($itemSeo->slug_full);
+
+        if (config('modules.use_ship_v2')) {
+            $page = app(\App\Services\Ship\ShipPageService::class)->forPage($item, $locale);
+
+            return view('main.ship-v2.index', compact(
+                'item',
+                'schedule',
+                'content',
+                'breadcrumb',
+                'locale',
+                'page',
+            ))->render();
+        }
 
         return view('main.ship.index', compact('item', 'schedule', 'content', 'breadcrumb'))->render();
     }
@@ -400,12 +429,27 @@ class RoutingController extends Controller {
             ->where('seo_id', $itemSeo->id)
             ->with(['files'     => fn($q) => $q->where('relation_table', 'service_info')])
             ->with(['questions' => fn($q) => $q->where('relation_table', 'service_info')])
-            ->with('seo', 'serviceLocation')
+            ->with('seo', 'serviceLocation', 'options.prices')
             ->first();
         if (!$item) return null;
 
         $content    = $this->renderContentBlade('service_info', $item->seo->getRawOriginal('slug'), $locale);
         $breadcrumb = Url::buildBreadcrumb($itemSeo->slug_full);
+
+        if (config('modules.use_service_v2')) {
+            $pageService = app(\App\Services\Service\ServicePageService::class);
+            $page = $pageService->forPage($item, $locale);
+            $schemaOffer = $pageService->schemaOfferPrices($item, $locale);
+
+            return view('main.service-v2.index', compact(
+                'item',
+                'content',
+                'breadcrumb',
+                'locale',
+                'page',
+                'schemaOffer',
+            ))->render();
+        }
 
         return view('main.service.index', compact('item', 'content', 'breadcrumb'))->render();
     }

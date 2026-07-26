@@ -14,7 +14,8 @@
         aria-label="{{ t('view_more') }}"
       >
         <img
-          src="{{ $images[0]['src'] }}"
+          src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+          data-lazy-src="{{ $images[0]['src'] }}"
           alt="{{ $images[0]['alt'] ?? ($room['roomName'] ?? '') }}"
           width="640"
           height="400"
@@ -98,7 +99,13 @@
       <div class="sd-hotel-room-modal__gallery">
         @foreach($images as $image)
           <figure class="sd-hotel-room-modal__figure">
-            <img src="{{ $image['src'] }}" alt="{{ $image['alt'] ?? ($room['roomName'] ?? '') }}" loading="lazy" decoding="async">
+            <img
+              src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+              data-lazy-src="{{ $image['src'] }}"
+              alt="{{ $image['alt'] ?? ($room['roomName'] ?? '') }}"
+              loading="lazy"
+              decoding="async"
+            >
           </figure>
         @endforeach
       </div>
