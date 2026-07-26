@@ -1,0 +1,51 @@
+---
+description: Core UX/UI rule cho superdong.dev theo mô hình OTA (Phú Quốc): Search-first, Conversion-first, Trust-driven, Mobile-first.
+globs:
+  - resources/sources/main/**
+  - resources/views/main/**
+  - public/prototype/**
+  - docs/design/**
+alwaysApply: false
+---
+
+# Super Dong UI — Master Rule
+
+Đọc đầy đủ trước khi sửa UI:
+
+- `docs/design/phu-quoc-travel-ux-ui-master-skill.md`
+- `docs/design/superdong-design-system.md`
+
+## Product Model (OTA)
+
+- Không làm kiểu agency/dribbble showcase.
+- Luôn làm kiểu travel commerce platform: tìm kiếm, khám phá, so sánh, tin tưởng, đặt ngay.
+- Hero bắt buộc có search/booking + CTA trong first viewport.
+
+## Layout hierarchy (không đảo)
+
+1. Search
+2. Popular Destinations
+3. Best Experiences
+4. Featured Tours
+5. Reviews
+6. Travel Guides
+7. FAQ
+8. Booking CTA
+
+## Card-driven UI
+
+- Card là thành phần chính.
+- Mỗi card phải có: ảnh lớn + tiêu đề + rating + giá + CTA.
+- Nội dung scan được trong 3 giây.
+
+## Visual + Typography
+
+- Font: Roboto (body), Be Vietnam Pro (heading).
+- Palette: sky/ocean + white + sand; accent sunset chỉ cho CTA/giá.
+- Rounded UI, soft shadow, minimal border, large imagery.
+
+## Motion
+
+- Motion phải nhẹ, nhanh, có mục đích.
+- Ưu tiên reveal/parallax nhẹ; không animation để trang trí.
+- Tôn trọng `prefers-reduced-motion`.

@@ -1,0 +1,165 @@
+<?php
+
+namespace App\Http\Controllers;
+use App\Models\Tour;
+use App\Models\TourLocation;
+use App\Models\TourPrice;
+use App\Models\Customer;
+use App\Models\Booking;
+use App\Models\BookingQuantityAndPrice;
+use Illuminate\Http\Request;
+
+use App\Services\BuildInsertUpdateModel;
+
+class TourBookingController extends Controller {
+
+    public function __construct(BuildInsertUpdateModel $BuildInsertUpdateModel){
+        $this->BuildInsertUpdateModel  = $BuildInsertUpdateModel;
+    }
+
+    public function form(Request $request){
+        $tourLocations  = TourLocation::select('*')
+                            ->with('region')
+                            ->get();
+        return view('main.tourBooking.form', compact('tourLocations'));
+    }
+
+    public function create(Request $request){
+        /* insert customer_info */
+        $insertCustomer             = $this->BuildInsertUpdateModel->buildArrayTableCustomerInfo($request->all());
+        $idCustomer                 = Customer::insertItem($insertCustomer);
+        /* insert booking_info */
+        $insertTourBooking          = $this->BuildInsertUpdateModel->buildArrayTableBookingInfo($idCustomer, 'tour_info', $request->all());
+        $noBooking                  = $insertTourBooking['no'];
+        $idBooking                  = Booking::insertItem($insertTourBooking);
+        /* insert tour_booking_quantity_and_price */
+        $insertTourBookingQuantityAndPrice  = $this->BuildInsertUpdateModel->buildArrayTableTourQuantityAndPrice($idBooking, $request->all());
+        foreach($insertTourBookingQuantityAndPrice as $itemInsert){
+            BookingQuantityAndPrice::insertItem($itemInsert);
+        }
+        /* thông báo email cho nhân viên */
+        $infoBooking                = Booking::select('*')
+                                        ->where('id', $idBooking)
+                                        ->with('customer_contact', 'customer_list', 'status', 'service', 'tour', 'quantityAndPrice', 'costMoreLess', 'vat')
+                                        ->first();
+        \App\Jobs\ConfirmBooking::dispatch($infoBooking, null, 'notice');
+        return redirect()->to(booking_route('tourBooking.confirm', ['no' => $noBooking]));
+    }
+
+    public static function confirm(Request $request){
+        $noBooking  = $request->get('no') ?? null;
+        $item       = Booking::select('*')
+                        ->where('no', $noBooking)
+                        ->with('tour', 'quantityAndPrice')
+                        ->first();
+        if(!empty($item)){
+            return view('main.tourBooking.confirmBooking', compact('item'));
+        }else {
+            return redirect()->route('main.home');
+        }
+    }
+
+    public static function loadTour(Request $request){
+        $result                 = null;
+        if(!empty($request->get('tour_location_id'))){
+            $idTourLocation     = $request->get('tour_location_id');
+            $idTourInfo         = $request->get('tour_info_id') ?? 0;
+            $data               = Tour::select('*')
+                                    ->whereHas('locations.infoLocation', function($query) use($idTourLocation){
+                                        $query->where('id', $idTourLocation);
+                                    })
+                                    ->where('status_show', 1)
+                                    ->get();
+            $result             = view('main.tourBooking.selectbox', [
+                'data'          => $data, 
+                'idSelected'    => $idTourInfo
+            ]);
+        }
+        return $result;
+    }
+
+    public static function loadFormQuantityByOption(Request $request){
+        $result         = null;
+        if(!empty($request->get('tour_option_id'))){
+            $prices     = TourPrice::select('*')
+                            ->where('tour_option_id', $request->get('tour_option_id'))
+                            ->get();
+            $result     = view('main.tourBooking.formQuantity', compact('prices'))->render();
+            /* dùng cho edit trong admin */
+            if(!empty($request->get('type'))&&$request->get('type')=='admin') {
+                $infoBooking    = Booking::select('*')
+                                    ->where('id', $request->get('booking_info_id'))
+                                    ->with('quantityAndPrice')
+                                    ->first();
+                $result         = view('admin.booking.formQuantity', ['prices' => $prices, 'quantity' => $infoBooking->quantityAndPrice])->render();
+            }
+        }
+        echo $result;
+    }
+
+    public static function loadOptionTour(Request $request){
+        $result                 = null;
+        if(!empty($request->get('tour_info_id'))){
+            $idTour             = $request->get('tour_info_id');
+            $infoTour           = Tour::select('*')
+                                    ->where('id', $idTour)
+                                    ->with('options.prices')
+                                    ->first();
+            $data               = self::getTourOptionByDate($request->get('date'), $infoTour->options->toArray());
+            $result             = view('main.tourBooking.formChooseOption', compact('data'))->render();
+            /* dùng cho edit trong admin */
+            if(!empty($request->get('type'))&&$request->get('type')=='admin') {
+                $result                             = [];
+                $result['content']                  = view('admin.booking.optionTour', ['options' => $data])->render();
+                $result['tour_option_id_active']    = $data[0]['id'];
+                return $result;
+            }
+        }
+        echo $result;
+    }
+
+    public static function getTourOptionByDate($date, $options) {
+        $result = new \Illuminate\Database\Eloquent\Collection;
+        if (!empty($date) && !empty($options)) {
+            $mkDate = strtotime($date);
+            foreach ($options as $option) {
+                if(!empty($option['prices'][0]['date_start'])&&!empty($option['prices'][0]['date_end'])){
+                    $mkStart = strtotime($option['prices'][0]['date_start']);
+                    $mkEnd = strtotime($option['prices'][0]['date_end']);
+                    if ($mkDate > $mkStart && $mkDate < $mkEnd) $result->push($option);
+                }
+            }
+        }
+        return $result;
+    }
+
+    public static function loadBookingSummary(Request $request){
+        $result             = null;
+        if(!empty($request->get('dataForm'))){
+            $dataForm       = [];
+            $quantity       = [];
+            foreach($request->get('dataForm') as $value){
+                $dataForm[$value['name']]   = $value['value'];
+            }
+            /* lấy thông tin tour gộp vào dataForm */
+            $infoTour           = Tour::select('*')
+                                    ->where('id', $dataForm['tour_info_id'])
+                                    ->with('options.prices')
+                                    ->first();
+            $dataForm['tour']   = $infoTour->toArray();
+            /* lọc option theo ngày khởi hành */
+            $options            = self::getTourOptionByDate($dataForm['date'], $dataForm['tour']['options']);
+            $dataForm['tour']['options']   = $options; 
+            /* tách name quantity và tour_price_id */
+            $arrayQuantity      = [];
+            foreach($dataForm as $key => $quantity){
+                preg_match('#quantity\[(.*)\]#imsU', $key, $match);
+                if(!empty($match[1])&&!empty($quantity)) $arrayQuantity[$match[1]] = $quantity;
+            }
+            /* gộp vào dataForm */
+            $dataForm['quantity']   = $arrayQuantity;
+            $result                 = view('main.tourBooking.summary', ['data' => $dataForm]);
+        }
+        echo $result;
+    }
+}

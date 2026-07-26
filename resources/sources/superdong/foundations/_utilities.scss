@@ -1,0 +1,37 @@
+@use "tokens" as *;
+
+.sd-text--white {
+  color: $sd-text-white;
+}
+
+.sd-text--highlight {
+  color: $sd-text-highlight;
+}
+
+.sd-text--highlight-strong {
+  color: $sd-text-highlight-strong;
+}
+
+.maxLine_1 {
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.maxLine_2 {
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.maxLine_4 {
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}

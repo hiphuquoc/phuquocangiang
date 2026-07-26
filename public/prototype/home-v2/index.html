@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Super Dong — nền tảng du lịch Côn Đảo trọn gói: vé tàu cao tốc, tour, khách sạn, combo và trải nghiệm trên đảo.">
+  <title>Super Dong — Du lịch Côn Đảo trọn vẹn</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/prototype/home-v2/home-v2.css?v=20260611">
+</head>
+<body class="sd-home-v2">
+
+<a class="sd-skip" href="#main">Bỏ qua đến nội dung chính</a>
+
+<!-- TOPBAR -->
+<div class="sd-topbar">
+  <div class="sd-topbar__inner">
+    <div class="sd-topbar__left">
+      <span class="sd-topbar__promo">
+        <span class="sd-topbar__promo-tag">Ưu đãi mới</span>
+        Giảm đến 18% combo Côn Đảo khi đặt sớm từ 7 ngày
+      </span>
+    </div>
+    <div class="sd-topbar__right">
+      <a class="sd-topbar__item" href="tel:1900545487">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.79 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <span class="sd-topbar__hotline">1900 5454 87</span>
+      </a>
+      <span class="sd-topbar__sep" aria-hidden="true"></span>
+      <a class="sd-topbar__item sd-topbar__item--mail" href="mailto:support@superdong.dev">support@superdong.dev</a>
+      <span class="sd-topbar__sep" aria-hidden="true"></span>
+      <button type="button" class="sd-topbar__pill">🇻🇳 VI</button>
+      <button type="button" class="sd-topbar__pill">VND ₫</button>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+<div class="sd-hero-shell">
+  <!-- HEADER -->
+  <header class="sd-header" id="top">
+    <div class="sd-header__inner">
+      <a class="sd-header__brand" href="#">
+        <span class="sd-header__logo-mark">SD</span>
+        <span class="sd-header__logo-text">
+          <strong>Super Dong</strong>
+          <span>Côn Đảo Travel</span>
+        </span>
+      </a>
+      <nav class="sd-header__nav" aria-label="Menu chính">
+        <a class="is-active" href="#ferry"><span>Vé tàu</span></a>
+        <a href="#tours"><span>Tour</span></a>
+        <a href="#hotels"><span>Khách sạn</span></a>
+        <a href="#combo"><span>Combo</span></a>
+        <a href="#services"><span>Vé vui chơi</span></a>
+        <a href="#guide"><span>Cẩm nang</span></a>
+      </nav>
+      <div class="sd-header__actions">
+        <button type="button" class="sd-header__btn sd-header__btn--ghost">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          <span>EN</span>
+        </button>
+        <a href="#booking" class="sd-header__btn sd-header__btn--primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.79 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span>Đặt ngay</span>
+        </a>
+        <button type="button" class="sd-header__toggle" aria-label="Mở menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE NAV -->
+  <div class="sd-mobile-nav" aria-hidden="true">
+    <div class="sd-mobile-nav__backdrop"></div>
+    <nav class="sd-mobile-nav__panel" aria-label="Menu di động">
+      <a class="sd-mobile-nav__link" href="#ferry">Vé tàu Côn Đảo</a>
+      <a class="sd-mobile-nav__link" href="#tours">Tour nổi bật</a>
+      <a class="sd-mobile-nav__link" href="#hotels">Khách sạn</a>
+      <a class="sd-mobile-nav__link" href="#combo">Combo tiết kiệm</a>
+      <a class="sd-mobile-nav__link" href="#services">Vé vui chơi</a>
+      <a class="sd-mobile-nav__link" href="#guide">Cẩm nang</a>
+      <div class="sd-mobile-nav__cta">
+        <a href="#booking" class="sd-header__btn sd-header__btn--primary sd-mobile-nav__booking-btn">Đặt vé ngay</a>
+      </div>
+    </nav>
+  </div>
+
+  <!-- HERO SECTION -->
+  <section class="sd-hero" aria-label="Giới thiệu Côn Đảo">
+    <div class="sd-hero__media">
+      <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&q=80" alt="Biển Côn Đảo hoang sơ với làn nước trong vắt" width="1920" height="1080">
+    </div>
+    <div class="sd-hero__grain"></div>
+    <div class="sd-hero__inner">
+      <div class="sd-hero__content">
+        <div class="sd-hero__badge">
+          <span>Côn Đảo</span>
+          Hành trình biển đảo an tâm cùng Super Dong
+        </div>
+        <h1 class="sd-hero__title">Du lịch <em>Côn Đảo</em> dễ dàng<br>đặt tàu, tour, phòng chỉ trong vài phút</h1>
+        <p class="sd-hero__desc">Một nền tảng duy nhất cho vé tàu cao tốc, lưu trú, tour và hoạt động trên đảo. Giá minh bạch, hỗ trợ nhanh, vé điện tử xác nhận tức thì.</p>
+        <div class="sd-hero__cta">
+          <a href="#booking" class="sd-hero__btn sd-hero__btn--primary">Đặt vé tàu ngay <span aria-hidden="true">→</span></a>
+          <a href="#itinerary" class="sd-hero__btn sd-hero__btn--ghost">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M10 8l6 4-6 4z"/></svg>
+            Xem lịch trình gợi ý
+          </a>
+        </div>
+        <div class="sd-hero__stats">
+          <div class="sd-hero__stat"><strong>15+</strong><span>chuyến mỗi ngày</span></div>
+          <div class="sd-hero__stat"><strong>50K+</strong><span>lượt khách phục vụ</span></div>
+          <div class="sd-hero__stat"><strong>4.9★</strong><span>đánh giá trung bình</span></div>
+        </div>
+      </div>
+
+      <!-- BOOKING WIDGET -->
+      <div class="sd-booking" id="booking">
+        <div class="sd-booking__head">
+          <div class="sd-booking__head-text">
+            <strong>Đặt dịch vụ Côn Đảo</strong>
+            <span>Nhanh · minh bạch · giữ chỗ ưu tiên</span>
+          </div>
+          <span class="sd-booking__head-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+            Xác nhận tức thì
+          </span>
+        </div>
+        <div class="sd-booking__tabs" role="tablist">
+          <button type="button" class="sd-booking__tab is-active" data-tab="ship" role="tab" aria-selected="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 21c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.5 0 2.5 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1M13 4v8m0 0l3-3m-3 3L10 9"/></svg>
+            Vé tàu
+          </button>
+          <button type="button" class="sd-booking__tab" data-tab="tour" role="tab">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Tour
+          </button>
+          <button type="button" class="sd-booking__tab" data-tab="hotel" role="tab">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+            Khách sạn
+          </button>
+          <button type="button" class="sd-booking__tab" data-tab="combo" role="tab">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-6"/><path d="M12 2v10M8 6l4-4 4 4"/></svg>
+            Combo
+          </button>
+          <button type="button" class="sd-booking__tab" data-tab="ticket" role="tab">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/></svg>
+            Vé vui chơi
+          </button>
+        </div>
+
+        <!-- TAB PANELS -->
+        <div class="sd-booking__panel is-active" data-panel="ship">
+          <div class="sd-booking__grid">
+            <div class="sd-booking__field">
+              <label for="ship-from">Điểm khởi hành</label>
+              <select id="ship-from"><option>Trần Đề (Sóc Trăng)</option><option>Vũng Tàu</option></select>
+            </div>
+            <div class="sd-booking__field">
+              <label for="ship-to">Điểm đến</label>
+              <select id="ship-to"><option>Côn Đảo</option></select>
+            </div>
+            <div class="sd-booking__field">
+              <label for="ship-date">Ngày đi</label>
+              <input type="date" id="ship-date" value="2026-06-15">
+            </div>
+            <div class="sd-booking__field">
+              <label for="ship-pass">Số khách</label>
+              <select id="ship-pass"><option>1 người lớn</option><option>2 người lớn</option><option>Gia đình 4 người</option></select>
+            </div>
+          </div>
+          <button type="button" class="sd-booking__submit">Tìm chuyến tàu <span aria-hidden="true">→</span></button>
+          <p class="sd-booking__note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Giá từ 390.000₫/khách · hỗ trợ đổi vé trước giờ khởi hành</p>
+        </div>
+
+        <div class="sd-booking__panel" data-panel="tour">
+          <div class="sd-booking__grid">
+            <div class="sd-booking__field sd-booking__field--full">
+              <label>Loại tour</label>
+              <select><option>Tour di tích lịch sử Côn Đảo 1 ngày</option><option>Tour biển đảo - lặn ngắm san hô Hòn Bảy Cạnh</option><option>Tour trekking rừng nguyên sinh Ông Đụng</option></select>
+            </div>
+            <div class="sd-booking__field"><label>Ngày khởi hành</label><input type="date" value="2026-06-16"></div>
+            <div class="sd-booking__field"><label>Số khách</label><select><option>2 người</option><option>4 người</option></select></div>
+          </div>
+          <button type="button" class="sd-booking__submit">Xem tour phù hợp <span aria-hidden="true">→</span></button>
+        </div>
+
+        <div class="sd-booking__panel" data-panel="hotel">
+          <div class="sd-booking__grid">
+            <div class="sd-booking__field"><label>Nhận phòng</label><input type="date" value="2026-06-15"></div>
+            <div class="sd-booking__field"><label>Trả phòng</label><input type="date" value="2026-06-18"></div>
+            <div class="sd-booking__field sd-booking__field--full"><label>Khu vực lưu trú</label><select><option>Trung tâm Côn Sơn</option><option>Bến Đầm</option><option>Bãi Đất Dốc</option></select></div>
+          </div>
+          <button type="button" class="sd-booking__submit">Tìm phòng trống <span aria-hidden="true">→</span></button>
+        </div>
+
+        <div class="sd-booking__panel" data-panel="combo">
+          <div class="sd-booking__grid">
+            <div class="sd-booking__field sd-booking__field--full"><label>Gói combo</label><select><option>Tàu + Khách sạn 3N2Đ</option><option>Tàu + Tour + KS 4N3Đ</option></select></div>
+            <div class="sd-booking__field"><label>Ngày đi</label><input type="date" value="2026-06-15"></div>
+            <div class="sd-booking__field"><label>Số khách</label><select><option>2 người</option><option>Nhóm 4 người</option></select></div>
+          </div>
+          <button type="button" class="sd-booking__submit">Xem combo tiết kiệm <span aria-hidden="true">→</span></button>
+        </div>
+
+        <div class="sd-booking__panel" data-panel="ticket">
+          <div class="sd-booking__grid">
+            <div class="sd-booking__field sd-booking__field--full"><label>Trải nghiệm</label><select><option>Vé cano ngắm rùa biển đẻ trứng (Hòn Bảy Cạnh)</option><option>Lặn ngắm san hô Hòn Cau</option><option>Vé tham quan bảo tàng Côn Đảo</option></select></div>
+            <div class="sd-booking__field"><label>Ngày sử dụng</label><input type="date" value="2026-06-16"></div>
+            <div class="sd-booking__field"><label>Số vé</label><select><option>2 vé</option><option>4 vé</option></select></div>
+          </div>
+          <button type="button" class="sd-booking__submit">Đặt vé ngay <span aria-hidden="true">→</span></button>
+        </div>
+      </div>
+    </div>
+    <a class="sd-hero__scroll" href="#trust" aria-label="Cuộn xuống">Cuộn xuống</a>
+    <div class="sd-hero__wave" aria-hidden="true">
+      <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,64 C240,120 480,0 720,48 C960,96 1200,24 1440,72 L1440,120 L0,120 Z"/>
+      </svg>
+    </div>
+  </section>
+</div>
+
+<!-- TRUST BAR -->
+<section class="sd-trust" id="trust" aria-label="Cam kết dịch vụ">
+  <div class="sd-trust__inner">
+    <div class="sd-trust__item">
+      <div class="sd-trust__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+      <div class="sd-trust__text"><strong>100%</strong><span>Thanh toán bảo mật SSL</span></div>
+    </div>
+    <div class="sd-trust__item">
+      <div class="sd-trust__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+      <div class="sd-trust__text"><strong>24/7</strong><span>Tư vấn lịch trình phù hợp</span></div>
+    </div>
+    <div class="sd-trust__item">
+      <div class="sd-trust__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg></div>
+      <div class="sd-trust__text"><strong>E-ticket</strong><span>Nhận vé trong 30 giây</span></div>
+    </div>
+    <div class="sd-trust__item">
+      <div class="sd-trust__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+      <div class="sd-trust__text"><strong>4.9/5</strong><span>khách hàng hài lòng</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- QUICK ACCESS -->
+<section class="sd-quick">
+  <div class="sd-quick__inner">
+    <div class="sd-quick__head" data-reveal>
+      <span class="sd-eyebrow">Dịch vụ trọn đảo</span>
+      <h2>Mọi nhu cầu cho chuyến đi Côn Đảo chỉ trong <span class="sd-text-grad">một nền tảng</span></h2>
+      <p>Từ vé tàu Super Dong đến lưu trú, tour khám phá và trải nghiệm biển đảo, toàn bộ hành trình được thiết kế để bạn đặt nhanh và đi nhẹ nhàng.</p>
+    </div>
+    <div class="sd-quick__grid">
+      <a class="sd-quick__card sd-quick__card--lg" href="#ferry" data-reveal style="--sd-img:url('https://images.unsplash.com/photo-1502933691298-84fc14542831?w=900&q=80')">
+        <span class="sd-quick__num">01</span>
+        <span class="sd-quick__icon">⛴</span>
+        <span class="sd-quick__body">
+          <strong class="sd-quick__label">Vé tàu cao tốc Côn Đảo</strong>
+          <span class="sd-quick__meta">Trần Đề · Vũng Tàu → Côn Đảo · xác nhận ngay</span>
+        </span>
+        <span class="sd-quick__go" aria-hidden="true">→</span>
+      </a>
+      <a class="sd-quick__card" href="#tours" data-reveal style="--sd-img:url('https://images.unsplash.com/photo-1505228395891-9a51e7e86bf6?w=700&q=80')">
+        <span class="sd-quick__num">02</span>
+        <span class="sd-quick__icon">🏝</span>
+        <span class="sd-quick__body">
+          <strong class="sd-quick__label">Tour lịch sử &amp; thiên nhiên</strong>
+          <span class="sd-quick__meta">Nghĩa trang Hàng Dương · rừng nguyên sinh</span>
+        </span>
+        <span class="sd-quick__go" aria-hidden="true">→</span>
+      </a>
+      <a class="sd-quick__card" href="#hotels" data-reveal style="--sd-img:url('https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=700&q=80')">
+        <span class="sd-quick__num">03</span>
+        <span class="sd-quick__icon">🏨</span>
+        <span class="sd-quick__body">
+          <strong class="sd-quick__label">Khách sạn &amp; homestay</strong>
+          <span class="sd-quick__meta">Gần trung tâm Côn Sơn, nhiều mức giá</span>
+        </span>
+        <span class="sd-quick__go" aria-hidden="true">→</span>
+      </a>
+      <a class="sd-quick__card" href="#combo" data-reveal style="--sd-img:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=700&q=80')">
+        <span class="sd-quick__num">04</span>
+        <span class="sd-quick__icon">🎁</span>
+        <span class="sd-quick__body">
+          <strong class="sd-quick__label">Combo tiết kiệm</strong>
+          <span class="sd-quick__meta">Tàu + phòng + tour · giảm đến 18%</span>
+        </span>
+        <span class="sd-quick__go" aria-hidden="true">→</span>
+      </a>
+      <a class="sd-quick__card" href="#services" data-reveal style="--sd-img:url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=700&q=80')">
+        <span class="sd-quick__num">05</span>
+        <span class="sd-quick__icon">🤿</span>
+        <span class="sd-quick__body">
+          <strong class="sd-quick__label">Vé vui chơi</strong>
+          <span class="sd-quick__meta">Lặn biển · xem rùa · tàu ngắm hoàng hôn</span>
+        </span>
+        <span class="sd-quick__go" aria-hidden="true">→</span>
+      </a>
+      <a class="sd-quick__card" href="#guide" data-reveal style="--sd-img:url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=700&q=80')">
+        <span class="sd-quick__num">06</span>
+        <span class="sd-quick__icon">📖</span>
+        <span class="sd-quick__body">
+          <strong class="sd-quick__label">Cẩm nang Côn Đảo</strong>
+          <span class="sd-quick__meta">Lịch trình 2N1D, 3N2D và mẹo đi tàu</span>
+        </span>
+        <span class="sd-quick__go" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FERRY SECTION -->
+<section class="sd-section sd-section--alt" id="ferry">
+  <div class="sd-section__inner">
+    <div class="sd-section__head">
+      <div class="sd-section__head-text">
+        <span class="sd-eyebrow">Super Dong Speed Ferry</span>
+        <h2>Vé tàu cao tốc đi Côn Đảo</h2>
+        <p>Chọn tuyến phù hợp — thời gian di chuyển minh bạch, giá tốt nhất mỗi ngày.</p>
+      </div>
+      <a class="sd-section__link" href="#">Xem tất cả tuyến →</a>
+    </div>
+    <div class="sd-ship-route">
+      <article class="sd-ship-route__item" data-reveal>
+        <div class="sd-ship-route__port"><strong>Trần Đề</strong><span>Sóc Trăng</span></div>
+        <div class="sd-ship-route__line"><span></span><time>~2h15</time></div>
+        <div class="sd-ship-route__port"><strong>Côn Đảo</strong><span>Cảng Bến Đầm</span></div>
+        <div class="sd-ship-route__price"><strong>390.000₫</strong><span>/ khách · ghế phổ thông</span></div>
+      </article>
+      <article class="sd-ship-route__item" data-reveal>
+        <div class="sd-ship-route__port"><strong>Vũng Tàu</strong><span>Cảng Cầu Đá</span></div>
+        <div class="sd-ship-route__line"><span></span><time>~3h40</time></div>
+        <div class="sd-ship-route__port"><strong>Côn Đảo</strong><span>Cảng Bến Đầm</span></div>
+        <div class="sd-ship-route__price"><strong>790.000₫</strong><span>/ khách · ghế phổ thông</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- TOURS SECTION -->
+<section class="sd-section" id="tours">
+  <div class="sd-section__inner">
+    <div class="sd-section__head">
+      <div class="sd-section__head-text">
+        <span class="sd-eyebrow">Tour nổi bật</span>
+        <h2>Trải nghiệm không thể bỏ lỡ tại Côn Đảo</h2>
+        <p>Tour trong ngày, tour lặn ngắm san hô và hành trình di sản — hướng dẫn viên bản địa am hiểu sâu sắc.</p>
+      </div>
+      <a class="sd-section__link" href="#">Xem tất cả tour →</a>
+    </div>
+    <div class="sd-product-grid sd-product-grid--3">
+      <article class="sd-card">
+        <div class="sd-card__media">
+          <img src="https://images.unsplash.com/photo-1473116763249-2faaef81ccda?w=800&q=80" alt="Di tích lịch sử Côn Đảo" loading="lazy">
+          <span class="sd-card__badge">Bán chạy</span>
+          <span class="sd-card__rating"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> 4.9</span>
+        </div>
+        <div class="sd-card__body">
+          <div class="sd-card__tags"><span>1 ngày</span><span>Lịch sử</span></div>
+          <h3 class="sd-card__title">Tour di tích lịch sử &amp; Tâm linh Côn Đảo</h3>
+          <p class="sd-card__desc">Viếng nghĩa trang Hàng Dương, mộ chị Võ Thị Sáu, tham quan hệ thống nhà tù Côn Đảo và Chuồng Cọp nổi tiếng.</p>
+          <div class="sd-card__meta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Khởi hành hàng ngày · Sáng/Chiều</div>
+          <div class="sd-card__footer">
+            <div class="sd-card__price"><strong>690.000₫ <small>/ khách</small></strong></div>
+            <button type="button" class="sd-card__cta">Chi tiết</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="sd-card">
+        <div class="sd-card__media">
+          <img src="https://images.unsplash.com/photo-1544551763-77a415c5640f?w=800&q=80" alt="Lặn ngắm san hô Côn Đảo" loading="lazy">
+          <span class="sd-card__badge sd-card__badge--teal">Khuyên dùng</span>
+          <span class="sd-card__rating"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> 4.8</span>
+        </div>
+        <div class="sd-card__body">
+          <div class="sd-card__tags"><span>1 ngày</span><span>Snorkeling</span></div>
+          <h3 class="sd-card__title">Tour cano 3 đảo &amp; Lặn ngắm san hô Hòn Bảy Cạnh</h3>
+          <p class="sd-card__desc">Khám phá Hòn Bảy Cạnh, Hòn Cau, lặn ngắm rạn san hô tự nhiên lớn nhất Việt Nam và tìm hiểu bảo tồn rùa biển.</p>
+          <div class="sd-card__footer">
+            <div class="sd-card__price"><del>1.100.000₫</del><strong>920.000₫ <small>/ khách</small></strong></div>
+            <button type="button" class="sd-card__cta">Chi tiết</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="sd-card">
+        <div class="sd-card__media">
+          <img src="https://images.unsplash.com/photo-1439066615861-d1af74d74045?w=800&q=80" alt="Trekking rừng nguyên sinh Côn Đảo" loading="lazy">
+          <span class="sd-card__rating"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> 4.7</span>
+        </div>
+        <div class="sd-card__body">
+          <div class="sd-card__tags"><span>Nửa ngày</span><span>Trekking</span></div>
+          <h3 class="sd-card__title">Trekking rừng nguyên sinh &amp; Khám phá Vịnh Đầm Tre</h3>
+          <p class="sd-card__desc">Băng qua những cánh rừng nhiệt đới Vườn quốc gia Côn Đảo hoang sơ, ngắm cảnh yên bình và tắm biển tại Vịnh Đầm Tre.</p>
+          <div class="sd-card__footer">
+            <div class="sd-card__price"><strong>580.000₫ <small>/ khách</small></strong></div>
+            <button type="button" class="sd-card__cta">Chi tiết</button>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- HOTELS SECTION -->
+<section class="sd-section sd-section--alt" id="hotels">
+  <div class="sd-section__inner">
+    <div class="sd-section__head">
+      <div class="sd-section__head-text">
+        <span class="sd-eyebrow">Nghỉ dưỡng</span>
+        <h2>Khách sạn &amp; homestay Côn Đảo</h2>
+        <p>View biển bãi tắm An Hải, gần trung tâm thị trấn Côn Sơn hoặc yên tĩnh giữa thiên nhiên hoang sơ.</p>
+      </div>
+      <a class="sd-section__link" href="#">Xem tất cả →</a>
+    </div>
+    <div class="sd-product-grid sd-product-grid--4">
+      <article class="sd-card">
+        <div class="sd-card__media"><img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=80" alt="Poulo Condor Resort" loading="lazy"><span class="sd-card__badge sd-card__badge--teal">5★ Premium</span></div>
+        <div class="sd-card__body">
+          <h3 class="sd-card__title">Poulo Condor Boutique Resort</h3>
+          <p class="sd-card__desc">Phong cách Indochine cổ điển · Bãi Vông</p>
+          <div class="sd-card__footer"><div class="sd-card__price"><strong>3.850.000₫ <small>/ đêm</small></strong></div><button type="button" class="sd-card__cta">Đặt phòng</button></div>
+        </div>
+      </article>
+
+      <article class="sd-card">
+        <div class="sd-card__media"><img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600&q=80" alt="The Secret Con Dao" loading="lazy"><span class="sd-card__badge">4★</span></div>
+        <div class="sd-card__body">
+          <h3 class="sd-card__title">The Secret Côn Đảo</h3>
+          <p class="sd-card__desc">Thiết kế hiện đại · Ngay trung tâm Côn Sơn</p>
+          <div class="sd-card__footer"><div class="sd-card__price"><strong>1.850.000₫ <small>/ đêm</small></strong></div><button type="button" class="sd-card__cta">Đặt phòng</button></div>
+        </div>
+      </article>
+
+      <article class="sd-card">
+        <div class="sd-card__media"><img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600&q=80" alt="An Hai Homestay" loading="lazy"><span class="sd-card__badge sd-card__badge--teal">Giá tốt</span></div>
+        <div class="sd-card__body">
+          <h3 class="sd-card__title">An Hải Homestay Côn Đảo</h3>
+          <p class="sd-card__desc">Ấm cúng, thân thiện · Gần bãi tắm An Hải</p>
+          <div class="sd-card__footer"><div class="sd-card__price"><strong>690.000₫ <small>/ đêm</small></strong></div><button type="button" class="sd-card__cta">Đặt phòng</button></div>
+        </div>
+      </article>
+
+      <article class="sd-card">
+        <div class="sd-card__media"><img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600&q=80" alt="Blue Bay Con Dao" loading="lazy"><span class="sd-card__badge">View biển</span></div>
+        <div class="sd-card__body">
+          <h3 class="sd-card__title">Blue Bay Côn Đảo Hotel</h3>
+          <p class="sd-card__desc">View biển tuyệt đẹp · Bể bơi vô cực hiện đại</p>
+          <div class="sd-card__footer"><div class="sd-card__price"><strong>1.250.000₫ <small>/ đêm</small></strong></div><button type="button" class="sd-card__cta">Đặt phòng</button></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- COMBO SECTION -->
+<section class="sd-section" id="combo">
+  <div class="sd-section__inner">
+    <div class="sd-section__head">
+      <div class="sd-section__head-text">
+        <span class="sd-eyebrow">Tiết kiệm hơn</span>
+        <h2>Combo du lịch Côn Đảo trọn gói</h2>
+        <p>Gói tàu + khách sạn + tour — giá ưu đãi, lịch trình tối ưu cho kỳ nghỉ hoàn hảo.</p>
+      </div>
+    </div>
+    <div class="sd-combo-feature">
+      <article class="sd-combo-feature__main">
+        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=80" alt="Combo Côn Đảo 3N2Đ">
+        <div class="sd-combo-feature__content">
+          <span class="sd-card__badge">Giảm 18%</span>
+          <h3>Combo Super Dong 3N2Đ — Tàu khứ hồi + KS 3★ + Tour di tích</h3>
+          <p>Vé tàu khứ hồi từ Trần Đề · 2 đêm khách sạn trung tâm Côn Sơn · Tour di tích lịch sử · Ăn sáng miễn phí</p>
+          <div class="sd-card__footer" style="border:none;padding:0;">
+            <div class="sd-card__price"><del style="color:rgba(255,255,255,0.6);">4.950.000₫</del><strong style="color:#fff;">4.050.000₫ <small style="color:rgba(255,255,255,0.7);">/ 2 khách</small></strong></div>
+            <button type="button" class="sd-card__cta" style="background:#f59e0b;">Đặt combo</button>
+          </div>
+        </div>
+      </article>
+      <div class="sd-combo-feature__side">
+        <article class="sd-card">
+          <div class="sd-card__body">
+            <span class="sd-card__badge sd-card__badge--teal" style="position:static;display:inline-block;margin-bottom:0.5rem;">Phổ biến</span>
+            <h3 class="sd-card__title">Combo 2N1Đ — Tàu + Homestay</h3>
+            <p class="sd-card__desc">Phù hợp chuyến đi cuối tuần nhanh gọn · tiết kiệm 15%</p>
+            <div class="sd-card__footer"><div class="sd-card__price"><strong>2.490.000₫ <small>/ 2 khách</small></strong></div><button type="button" class="sd-card__cta">Xem</button></div>
+          </div>
+        </article>
+        <article class="sd-card">
+          <div class="sd-card__body">
+            <span class="sd-card__badge" style="position:static;display:inline-block;margin-bottom:0.5rem;">Premium</span>
+            <h3 class="sd-card__title">Combo 4N3Đ — Resort 5★ Poulo Condor + Cano VIP</h3>
+            <p class="sd-card__desc">Trọn gói nghỉ dưỡng cao cấp · xe đưa đón riêng · tour cano VIP</p>
+            <div class="sd-card__footer"><div class="sd-card__price"><strong>11.500.000₫ <small>/ 2 khách</small></strong></div><button type="button" class="sd-card__cta">Xem</button></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES SECTION -->
+<section class="sd-section sd-section--alt" id="services">
+  <div class="sd-section__inner">
+    <div class="sd-section__head">
+      <div class="sd-section__head-text">
+        <span class="sd-eyebrow">Giải trí &amp; trải nghiệm</span>
+        <h2>Vé vui chơi &amp; hoạt động biển</h2>
+        <p>Đặt trước để giữ chỗ — xem rùa đẻ trứng, lặn san hô, cano ngắm hoàng hôn vịnh Côn Sơn.</p>
+      </div>
+      <a class="sd-section__link" href="#">Xem tất cả →</a>
+    </div>
+    <div class="sd-product-grid sd-product-grid--4">
+      <article class="sd-card">
+        <div class="sd-card__media"><img src="https://images.unsplash.com/photo-1544551763-77a415c5640f?w=500&q=80" alt="Cano ngắm rùa biển" loading="lazy"></div>
+        <div class="sd-card__body">
+          <h3 class="sd-card__title">Vé cano xem rùa đẻ trứng (Hòn Bảy Cạnh)</h3>
+          <div class="sd-card__footer"><div class="sd-card__price"><strong>850.000₫</strong></div><button type="button" class="sd-card__cta">Đặt vé</button></div>
+        </div>
+      </article>
+      <article class="sd-card">
+        <div class="sd-card__media"><img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=500&q=80" alt="Lặn ngắm san hô Hòn Cau" loading="lazy"></div>
+        <div class="sd-card__body">
+          <h3 class="sd-card__title">Vé cano lặn ngắm san hô Hòn Cau</h3>
+          <div class="sd-card__footer"><div class="sd-card__price"><strong>450.000₫</strong></div><button type="button" class="sd-card__cta">Đặt vé</button></div>
+        </div>
+      </article>
+      <article class="sd-card">
+        <div class="sd-card__media"><img src="https://images.unsplash.com/photo-1473116763249-2faaef81ccda?w=500&q=80" alt="Nhà tù Côn Đảo" loading="lazy"></div>
+        <div class="sd-card__body">
+          <h3 class="sd-card__title">Vé tham quan Di tích Nhà tù Côn Đảo</h3>
+          <div class="sd-card__footer"><div class="sd-card__price"><strong>100.000₫</strong></div><button type="button" class="sd-card__cta">Đặt vé</button></div>
+        </div>
+      </article>
+      <article class="sd-card">
+        <div class="sd-card__media"><img src="https://images.unsplash.com/photo-1530549387789-4c1017266635?w=500&q=80" alt="Chèo SUP bãi biển An Hải" loading="lazy"></div>
+        <div class="sd-card__body">
+          <h3 class="sd-card__title">Thuê SUP chèo biển bãi tắm An Hải</h3>
+          <div class="sd-card__footer"><div class="sd-card__price"><strong>150.000₫</strong></div><button type="button" class="sd-card__cta">Đặt vé</button></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- SPLIT BANNER -->
+<section class="sd-section">
+  <div class="sd-section__inner">
+    <div class="sd-split-banner">
+      <article class="sd-split-banner__item">
+        <img src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=800&q=80" alt="Thuê xe Côn Đảo">
+        <div>
+          <h3>Thuê xe máy &amp; ô tô tự lái</h3>
+          <p>Xe máy từ 120K/ngày, ô tô du lịch có tài xế — tự do khám phá mọi ngóc ngách Côn Đảo linh thiêng.</p>
+          <a href="#">Xem bảng giá →</a>
+        </div>
+      </article>
+      <article class="sd-split-banner__item">
+        <img src="https://images.unsplash.com/photo-1529156069898-bcefbeeaf1c1?w=800&q=80" alt="Cẩm nang du lịch">
+        <div>
+          <h3>Cẩm nang &amp; lịch trình gợi ý</h3>
+          <p>Bí kíp du lịch tâm linh, lịch trình đi lễ mộ cô Sáu và mẹo đi tàu cao tốc không say sóng.</p>
+          <a href="#guide">Khám phá →</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- BENTO GALLERY -->
+<section class="sd-section sd-section--alt">
+  <div class="sd-section__inner">
+    <div class="sd-section__head">
+      <div class="sd-section__head-text">
+        <span class="sd-eyebrow">Trải nghiệm đảo</span>
+        <h2>Côn Đảo qua từng khoảnh khắc</h2>
+        <p>Bãi biển hoang sơ, rừng nguyên sinh rậm rạp và những dấu ấn lịch sử hào hùng.</p>
+      </div>
+    </div>
+    <div class="sd-bento">
+      <figure class="sd-bento__item sd-bento__item--wide sd-bento__item--tall">
+        <img src="https://images.unsplash.com/photo-1559128010-7e1eded945ae?w=900&q=80" alt="Bãi Đầm Trầu">
+        <figcaption><strong>Bãi Đầm Trầu</strong><span>Bãi biển hoang sơ đẹp nhất Côn Đảo</span></figcaption>
+      </figure>
+      <figure class="sd-bento__item">
+        <img src="https://images.unsplash.com/photo-1544551763-77a415c5640f?w=500&q=80" alt="Hòn Bảy Cạnh">
+        <figcaption><strong>Hòn Bảy Cạnh</strong><span>Rạn san hô tự nhiên rực rỡ</span></figcaption>
+      </figure>
+      <figure class="sd-bento__item">
+        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&q=80" alt="Nghĩa trang Hàng Dương">
+        <figcaption><strong>Nghĩa trang Hàng Dương</strong><span>Không gian tâm linh linh thiêng</span></figcaption>
+      </figure>
+      <figure class="sd-bento__item sd-bento__item--wide">
+        <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=900&q=80" alt="Vườn quốc gia Côn Đảo">
+        <figcaption><strong>Vườn quốc gia Côn Đảo</strong><span>Rừng nguyên sinh đa dạng sinh học</span></figcaption>
+      </figure>
+      <figure class="sd-bento__item">
+        <img src="https://images.unsplash.com/photo-1439066615861-d1af74d74045?w=500&q=80" alt="Đỉnh Tình Yêu">
+        <figcaption><strong>Đỉnh Tình Yêu</strong><span>Hoàng hôn lãng mạn trên biển</span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ROUTE GUIDE -->
+<section class="sd-section">
+  <div class="sd-section__inner">
+    <div class="sd-route-guide">
+      <div class="sd-route-guide__steps">
+        <div class="sd-section__head-text">
+          <span class="sd-eyebrow">Di chuyển</span>
+          <h2>Cách đến Côn Đảo</h2>
+          <p>Hai tuyến tàu cao tốc chính — Super Dong kết nối bạn với hòn đảo linh thiêng và xinh đẹp.</p>
+        </div>
+        <div class="sd-route-guide__step">
+          <span class="sd-route-guide__step-num">1</span>
+          <div>
+            <h4>Tuyến Trần Đề (Sóc Trăng) → Côn Đảo</h4>
+            <p>~2h15 · Tuyến di chuyển nhanh nhất từ đất liền · Nhiều chuyến/ngày theo khung giờ linh hoạt</p>
+          </div>
+        </div>
+        <div class="sd-route-guide__step">
+          <span class="sd-route-guide__step-num">2</span>
+          <div>
+            <h4>Tuyến Vũng Tàu → Côn Đảo</h4>
+            <p>~3h40 · Khởi hành từ cảng Cầu Đá · Phù hợp cho du khách từ TP.HCM và các tỉnh miền Nam</p>
+          </div>
+        </div>
+        <div class="sd-route-guide__step">
+          <span class="sd-route-guide__step-num">3</span>
+          <div>
+            <h4>Đặt vé trước 3–7 ngày</h4>
+            <p>Đặt sớm để giữ chỗ, đặc biệt dịp đi lễ cuối tuần và mùa biển êm từ tháng 3 đến tháng 9</p>
+          </div>
+        </div>
+      </div>
+      <div class="sd-route-guide__map" aria-hidden="true">
+        <svg viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="400" height="300" fill="#f0f9ff"/>
+          <path d="M60 165 Q130 105 210 130 T350 100" stroke="#0ea5e9" stroke-width="2" stroke-dasharray="6 4" opacity="0.6"/>
+          <circle cx="92" cy="180" r="12" fill="#0284c7"/><text x="92" y="215" text-anchor="middle" fill="#075985" font-size="11" font-weight="700">Trần Đề</text>
+          <circle cx="188" cy="80" r="10" fill="#0284c7"/><text x="188" y="65" text-anchor="middle" fill="#075985" font-size="10" font-weight="600">Vũng Tàu</text>
+          <circle cx="300" cy="160" r="16" fill="#f59e0b"/><text x="300" y="200" text-anchor="middle" fill="#075985" font-size="12" font-weight="800">Côn Đảo</text>
+          <path d="M92 180 L300 160" stroke="#0284c7" stroke-width="2" marker-end="url(#arrow)"/>
+          <path d="M188 80 L300 160" stroke="#0284c7" stroke-width="2" marker-end="url(#arrow)"/>
+          <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3" fill="#0284c7"/></marker></defs>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG SECTION -->
+<section class="sd-section sd-section--alt" id="guide">
+  <div class="sd-section__inner">
+    <div class="sd-section__head">
+      <div class="sd-section__head-text">
+        <span class="sd-eyebrow">Cẩm nang du lịch</span>
+        <h2>Bí kíp khám phá Côn Đảo</h2>
+        <p>Mẹo đặt vé tàu, thời điểm đẹp đi lễ, ẩm thực đặc sản và những điều cần biết trước chuyến đi.</p>
+      </div>
+      <a class="sd-section__link" href="#">Xem blog →</a>
+    </div>
+    <div class="sd-blog-grid">
+      <article class="sd-blog-card">
+        <div class="sd-blog-card__media"><img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80" alt="Kinh nghiệm đi lễ" loading="lazy"></div>
+        <div class="sd-blog-card__body">
+          <div class="sd-blog-card__cat">Tâm linh</div>
+          <h3 class="sd-blog-card__title">Kinh nghiệm đi lễ mộ cô Sáu Côn Đảo chi tiết từ A–Z</h3>
+          <div class="sd-blog-card__meta">5 phút đọc · 12/06/2026</div>
+        </div>
+      </article>
+      <article class="sd-blog-card">
+        <div class="sd-blog-card__media"><img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=600&q=80" alt="Ẩm thực Côn Đảo" loading="lazy"></div>
+        <div class="sd-blog-card__body">
+          <div class="sd-blog-card__cat">Ẩm thực</div>
+          <h3 class="sd-blog-card__title">Top 8 món ngon đặc sản Côn Đảo nhất định phải thử</h3>
+          <div class="sd-blog-card__meta">8 phút đọc · 08/06/2026</div>
+        </div>
+      </article>
+      <article class="sd-blog-card">
+        <div class="sd-blog-card__media"><img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&q=80" alt="Đặt vé tàu Super Dong" loading="lazy"></div>
+        <div class="sd-blog-card__body">
+          <div class="sd-blog-card__cat">Vé tàu</div>
+          <h3 class="sd-blog-card__title">Hướng dẫn đặt vé tàu Super Dong đi Côn Đảo nhanh nhất</h3>
+          <div class="sd-blog-card__meta">6 phút đọc · 01/06/2026</div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS SECTION -->
+<section class="sd-section sd-section--dark">
+  <div class="sd-section__inner">
+    <div class="sd-section__head">
+      <div class="sd-section__head-text">
+        <span class="sd-eyebrow">Khách hàng nói gì</span>
+        <h2>Hơn 12.000 lượt đánh giá 5 sao</h2>
+        <p>Du khách tin tưởng Super Dong cho hành trình Côn Đảo trọn vẹn.</p>
+      </div>
+    </div>
+    <div class="sd-reviews">
+      <blockquote class="sd-reviews__item">
+        <div class="sd-reviews__stars">★★★★★</div>
+        <p class="sd-reviews__text">"Đặt combo tàu + khách sạn qua Super Dong rất tiện, giá rẻ hơn tự book lẻ. Nhân viên tư vấn nhiệt tình, gửi vé điện tử ngay."</p>
+        <footer class="sd-reviews__author">
+          <img src="https://i.pravatar.cc/80?u=1" alt="Nguyễn Minh Anh">
+          <div><strong>Nguyễn Minh Anh</strong><span>Hà Nội · Combo 3N2Đ</span></div>
+        </footer>
+      </blockquote>
+      <blockquote class="sd-reviews__item">
+        <div class="sd-reviews__stars">★★★★★</div>
+        <p class="sd-reviews__text">"Tàu Super Dong đúng giờ, ghế thoáng. Tour lặn san hô tuyệt vời — thấy rùa biển luôn! Sẽ quay lại Côn Đảo chắc chắn."</p>
+        <footer class="sd-reviews__author">
+          <img src="https://i.pravatar.cc/80?u=2" alt="Trần Hoàng Long">
+          <div><strong>Trần Hoàng Long</strong><span>TP.HCM · Tour biển</span></div>
+        </footer>
+      </blockquote>
+      <blockquote class="sd-reviews__item">
+        <div class="sd-reviews__stars">★★★★★</div>
+        <p class="sd-reviews__text">"Website dễ dùng, thanh toán nhanh. Hotline hỗ trợ đổi ngày vé linh hoạt khi thời tiết xấu. Rất recommend!"</p>
+        <footer class="sd-reviews__author">
+          <img src="https://i.pravatar.cc/80?u=3" alt="Phạm Thu Hà">
+          <div><strong>Phạm Thu Hà</strong><span>Cần Thơ · Vé tàu</span></div>
+        </footer>
+      </blockquote>
+    </div>
+    <div class="sd-partners">
+      <span class="sd-partners__logo">SUPER DONG</span>
+      <span class="sd-partners__logo">Phú Quốc Express</span>
+      <span class="sd-partners__logo">Poulo Condor</span>
+      <span class="sd-partners__logo">Vietcombank</span>
+      <span class="sd-partners__logo">MoMo</span>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ SECTION -->
+<section class="sd-section">
+  <div class="sd-section__inner">
+    <div class="sd-section__head" style="text-align:center;margin-inline:auto;">
+      <div class="sd-section__head-text" style="margin-inline:auto;text-align:center;">
+        <span class="sd-eyebrow">Hỏi đáp</span>
+        <h2>Câu hỏi thường gặp</h2>
+        <p>Giải đáp nhanh trước khi bạn lên đường khám phá Côn Đảo.</p>
+      </div>
+    </div>
+    <div class="sd-faq">
+      <div class="sd-faq__item is-open">
+        <button type="button" class="sd-faq__question" aria-expanded="true">Cần đặt vé tàu trước bao lâu?<span class="sd-faq__toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span></button>
+        <div class="sd-faq__answer"><div><p>Nên đặt trước 3–7 ngày, đặc biệt dịp lễ Tết và mùa cao điểm đi lễ (tháng 10 đến tháng 3 năm sau). Super Dong hỗ trợ đặt online 24/7 với vé điện tử gửi qua email.</p></div></div>
+      </div>
+      <div class="sd-faq__item">
+        <button type="button" class="sd-faq__question" aria-expanded="false">Chính sách đổi / hủy vé tàu Côn Đảo?<span class="sd-faq__toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span></button>
+        <div class="sd-faq__answer"><div><p>Đổi chuyến: phí 20%, báo trước ít nhất 24 giờ. Hủy vé: phí 20%. Đổi thông tin hành khách: phí 10%. Liên hệ hotline để được hỗ trợ nhanh nhất.</p></div></div>
+      </div>
+      <div class="sd-faq__item">
+        <button type="button" class="sd-faq__question" aria-expanded="false">Nên ở Côn Đảo mấy ngày?<span class="sd-faq__toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span></button>
+        <div class="sd-faq__answer"><div><p>3 ngày 2 đêm là lý tưởng: ngày 1 di chuyển + viếng nghĩa trang Hàng Dương đêm, ngày 2 tour lặn ngắm san hô hoặc trekking rừng nguyên sinh, ngày 3 mua đặc sản mứt hạt bàng + về. Combo 3N2Đ của Super Dong được thiết kế sẵn lịch trình tối ưu.</p></div></div>
+      </div>
+      <div class="sd-faq__item">
+        <button type="button" class="sd-faq__question" aria-expanded="false">Thanh toán qua những hình thức nào?<span class="sd-faq__toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span></button>
+        <div class="sd-faq__answer"><div><p>Chuyển khoản ngân hàng, thẻ quốc tế (Visa/Mastercard), ví MoMo, ZaloPay. Thanh toán an toàn qua cổng SSL — nhận xác nhận ngay sau khi thanh toán thành công.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER CTA -->
+<section class="sd-cta">
+  <div class="sd-cta__box">
+    <div class="sd-cta__content">
+      <h2>Sẵn sàng cho chuyến đi Côn Đảo?</h2>
+      <p>Đăng ký nhận ưu đãi vé tàu &amp; combo mới nhất — không spam, chỉ deal thật.</p>
+      <form class="sd-cta__form" onsubmit="return false;">
+        <input type="email" placeholder="Email của bạn" aria-label="Email">
+        <button type="submit">Nhận ưu đãi</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="sd-footer">
+  <div class="sd-footer__inner">
+    <div class="sd-footer__grid">
+      <div class="sd-footer__brand">
+        <span class="sd-header__logo-mark">SD</span>
+        <p>Super Dong — nền tảng du lịch Côn Đảo trọn gói. Vé tàu cao tốc, tour, khách sạn và trải nghiệm biển đảo trên một ứng dụng.</p>
+        <div class="sd-footer__social">
+          <a href="#" aria-label="Facebook">f</a>
+          <a href="#" aria-label="Instagram">ig</a>
+          <a href="#" aria-label="YouTube">yt</a>
+          <a href="#" aria-label="TikTok">tk</a>
+        </div>
+      </div>
+      <div class="sd-footer__col">
+        <h4>Dịch vụ</h4>
+        <ul>
+          <li><a href="#ferry">Vé tàu cao tốc</a></li>
+          <li><a href="#tours">Tour Côn Đảo</a></li>
+          <li><a href="#hotels">Khách sạn</a></li>
+          <li><a href="#combo">Combo du lịch</a></li>
+          <li><a href="#services">Vé vui chơi</a></li>
+        </ul>
+      </div>
+      <div class="sd-footer__col">
+        <h4>Hỗ trợ</h4>
+        <ul>
+          <li><a href="#">Chính sách đổi vé</a></li>
+          <li><a href="#">Hướng dẫn thanh toán</a></li>
+          <li><a href="#">Câu hỏi thường gặp</a></li>
+          <li><a href="#">Liên hệ</a></li>
+        </ul>
+      </div>
+      <div class="sd-footer__col">
+        <h4>Liên hệ</h4>
+        <ul class="sd-footer__contact">
+          <li>📍 Đường Lê Hồng Phong, Huyện Côn Đảo, Bà Rịa - Vũng Tàu</li>
+          <li>📞 1900 5454 87</li>
+          <li>✉️ support@superdong.dev</li>
+        </ul>
+      </div>
+    </div>
+    <div class="sd-footer__bottom">
+      <span>© 2026 Super Dong. GPĐKKD số 1702204052 — Bà Rịa - Vũng Tàu.</span>
+      <div class="sd-footer__payments"><span>Visa</span><span>MC</span><span>MoMo</span><span>VCB</span></div>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOAT ACTIONS -->
+<div class="sd-float">
+  <a href="tel:1900545487" class="sd-float__link sd-float--phone" aria-label="Gọi hotline">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.79 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+  </a>
+  <a href="#" class="sd-float__link sd-float--chat" aria-label="Chat Zalo">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.03 2 11c0 2.87 1.45 5.43 3.72 7.1L5 22l4.2-1.1c1.05.29 2.16.45 3.3.45 5.52 0 10-4.03 10-9S17.52 2 12 2z"/></svg>
+  </a>
+</div>
+
+<script src="/prototype/home-v2/home-v2.js"></script>
+</body>
+</html>

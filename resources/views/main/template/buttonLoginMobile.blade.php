@@ -1,0 +1,41 @@
+@if(!empty($user))
+    <div class="headerBottom_item" onClick="toggleMenuListMobile();">
+        <div class="headerBottom_item_icon">
+            <img src="{{ Storage::url('images/svg/icon-user.svg') }}" alt="{{ t('account') }}" title="{{ t('account') }}" style="width:22px;" />
+        </div>
+        <div class="headerBottom_item_text maxLine_1">
+            {{ $user->name ?? t('account') }}
+
+
+            <div class="headerBottom_item_text_modal">
+                <a href="{{ route('admin.logout') }}" class="loginBox_list_item">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <div>{{ t('logout') }}</div>
+                </a>
+            </div>
+            <div class="headerBottom_item_text_background"></div>
+            <script type="text/javascript">
+                function toggleMenuListMobile(){
+                    const flagShow = $('.headerBottom_item_text_modal').css('display');
+                    if(flagShow=='none'){
+                        $('.headerBottom_item_text_modal').css('display', 'block');
+                        $('.headerBottom_item_text_background').css('display', 'block');
+                    }else {
+                        $('.headerBottom_item_text_modal').css('display', 'none');
+                        $('.headerBottom_item_text_background').css('display', 'none');
+                    }
+                }
+
+            </script>
+        </div>
+    </div>
+@else 
+    <div class="headerBottom_item" onClick="toggleModalCustomerLoginForm('modalLoginFormCustomerBox');">
+        <div class="headerBottom_item_icon">
+            <img src="{{ Storage::url('images/svg/sign-in-alt.svg') }}" alt="{{ t('login') }}" title="{{ t('login') }}" />
+        </div>
+        <div class="headerBottom_item_text">
+            {{ t('login') }}
+        </div>
+    </div>
+@endif

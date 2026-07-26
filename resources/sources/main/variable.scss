@@ -1,0 +1,586 @@
+$colorTitle             : #345;
+$colorLv1           : #007bff;
+$colorLv2           : #005ab4;
+$colorLv1-light    : #1773ce;
+
+$colorSLv1          : #f4d03f;
+$colorSLv2          : #f1c40f;
+$colorPrice: #fd5056;
+$colorRed: #E74C3C;
+$colorSuccess: #26cf8e;
+
+$bg-1: 			#212529;
+$bg-09: 		#343a40;
+$bg-08: 		#495057;
+$bg-07: 		#6c757d;
+$bg-06: 		#adb5bd;
+$bg-05: 		#ced4da;
+$bg-04: 		#dee2e6;
+$bg-03: 		#e9ecef;
+$bg-02: 		#EDF2F7;
+$color-link: #3498DB;
+$color-link-dark: #2E86C1;
+$colorDesc : #678;
+$colorText: #567;
+$colorTextLight: #e8eef6;
+$colorHighlight: #183153;
+
+$opacity-to-hex: (
+    0       : '00',
+    0.05    : '0C',
+    0.1     : '19',
+    0.15    : '26',
+    0.2     : '33',
+    0.25    : '3F',
+    0.3     : '4C',
+    0.35    : '59',
+    0.4     : '66',
+    0.45    : '72',
+    0.5     : '7F',
+    0.55    : '8C',
+    0.6     : '99',
+    0.65    : 'A5',
+    0.7     : 'B2',
+    0.75    : 'BF',
+    0.8     : 'CC',
+    0.85    : 'D8',
+    0.9     : 'E5',
+    0.95    : 'F2',
+    1       : 'FF'
+);
+@mixin colorOpacity($property, $color, $opacity, $important:null) {
+    #{$property}: unquote($color + map-get($opacity-to-hex, $opacity)) $important;
+}
+
+$fontTitle: "SVN-Gilroy Bold", sans-serif;
+$fontText: "SVN-Gilroy", sans-serif;
+$fontSegoeBold: "Segoe-UI Bold", serif;
+$fontSegoe: "Segoe-UI", serif;
+$fontSegoeSemi: "Segoe-UI Semi", serif;
+
+$backgroundImage: 'https://hitour.vn/images/main/hitour-background.png';
+
+@mixin titleOfBox {
+    font-family: $fontTitle;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+/* Badge kicker dùng chung (footer brand row, khối video listing, …) */
+@mixin hitourEyebrowBadge {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 0.45rem 0 0;
+    padding: 0.28125rem 0.65rem;
+    max-width: 100%;
+    font-size: 0.6875rem;
+    line-height: 1.25;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: #534511;
+    border-radius: 999px;
+    background: linear-gradient(
+        180deg,
+        rgba($colorSLv2, 0.42) 0%,
+        rgba($colorSLv2, 0.16) 100%
+    );
+    border: 1px solid rgba($colorSLv2, 0.38);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.65),
+        0 1px 2px rgba($colorLv2, 0.06);
+}
+
+@mixin titleSection {
+    font-family: $fontSegoeBold;
+    font-size: 1.4rem !important;
+    margin: 0 0 0.5rem 0 !important;
+    color: $colorTitle;
+    display: inline-block;
+    @media (max-width: 1199px) {
+        font-size: 1.38rem !important;
+    }
+    @media (max-width: 1023px) {
+        font-size: 1.36rem !important;
+    }
+    @media (max-width: 990px) {
+        font-size: 1.35rem !important;
+    }
+    @media (max-width: 768px) {
+        font-size: 1.3rem !important;
+    }
+    @media (max-width: 567px) {
+        font-size: 1.25rem !important;
+        margin: 0 0 0.25rem 0 !important;
+    }
+}
+
+/* ===========================================================================
+ * Typography tokens — bộ chữ thống nhất dùng cho trang listing / landing.
+ * Source of truth duy nhất cho mọi cấp bậc; mọi chỗ áp typography phải gọi
+ * mixin/biến tại đây thay vì khai báo rời.
+ *   1.  titleSection   — h2 section heading                         (đã có ở trên)
+ *   2.  titleCard      — h3 tiêu đề item trong grid / câu hỏi FAQ
+ *   3.  titleHighlight — h4 highlight nổi bật trong tour/combo card
+ *   4.  textDesc       — mô tả section, lede, FAQ lead
+ *   5.  textBodyCard   — text mô tả ngắn bên trong grid card (info_desc, route…)
+ *   6.  textBodyProse  — text dài / prose (FAQ answer, intro article)
+ *   7.  textMeta       — text phụ (rating, footnote) trong card
+ *   8.  pricePrimary   — số giá chính (price_now) — emphasized
+ *   9.  priceSecondary — số giá cũ gạch ngang (price_old)
+ *  10.  btnCardCta     — chữ trên CTA button trong card
+ *  11.  badgePillCorner — pill nổi ở góc thumbnail (saleoff, % giảm)
+ *  12.  chipTag        — tag tròn nhỏ trong card (meta, route, options)
+ *  13.  iconInline     — icon đứng trước text body
+ * =========================================================================== */
+
+$colorH:        #0f172a;   /* slate-900 — tiêu đề chính */
+$colorBody:     #475569;   /* slate-600 — đoạn văn dài, FAQ answer */
+$colorMuted:    #64748b;   /* slate-500 — mô tả section */
+$colorSubtle:   #94a3b8;   /* slate-400 — meta, footnote */
+$colorHairline: rgba(15, 23, 42, 0.11); /* hairline divider chuẩn */
+
+@mixin titleCard {
+    /* Bộ size khớp ĐÚNG tour H3 (`.tourList_item_info_title h2,h3`):
+     *   desktop ≥768px → 1.05rem
+     *   mobile  ≤767px → 0.975rem
+     * Tất cả H3 trên grid (tour / ship / service / explore) và câu hỏi FAQ
+     * dùng cùng mixin này → typography đồng nhất tuyệt đối. */
+    font-family: $fontSegoeBold;
+    font-size: 1.05rem;
+    line-height: 1.34;
+    letter-spacing: -0.012em;
+    color: $colorH;
+    margin: 0;
+    @media (max-width: 767px) {
+        font-size: 0.975rem;
+    }
+}
+
+@mixin titleHighlight {
+    /* H4 "highlight" trong tour / combo card — đoạn câu nổi bật brand-blue.
+     * Cùng kích cỡ với titleCard nhưng đậm + brand color để tạo "điểm nhấn"
+     * mà không phá phân cấp h3 → h4. */
+    font-family: $fontTitle;
+    font-size: 1.05rem;
+    line-height: 1.4;
+    letter-spacing: -0.005em;
+    color: $colorLv2;
+    margin: 0;
+    @media (max-width: 767px) {
+        font-size: 0.985rem;
+        line-height: 1.38;
+    }
+    @media (max-width: 567px) {
+        font-size: 0.95rem;
+    }
+}
+
+@mixin textDesc {
+    font-size: clamp(0.9rem, 0.86rem + 0.18vw, 0.95rem);
+    line-height: 1.6;
+    color: $colorMuted;
+    /* Bottom margin có khoảng thở mặc định để desc không dính sát content
+     * phía dưới (grid, CTA, list…). Top margin để call site quyết định
+     * (vì khoảng cách từ h2 → desc khác nhau theo từng layout). */
+    margin: 0 0 clamp(0.9rem, 1.8vw, 1.25rem) 0;
+    @media (max-width: 1023px) {
+        margin-bottom: clamp(0.8rem, 1.7vw, 1.05rem);
+    }
+    @media (max-width: 767px) {
+        margin-bottom: 0.85rem;
+    }
+    @media (max-width: 567px) {
+        margin-bottom: 0.7rem;
+    }
+}
+
+@mixin textBodyCard {
+    /* Text mô tả ngắn / dòng phụ trợ bên trong grid card.
+     * Compact hơn textBodyProse vì card có không gian hạn chế. */
+    font-family: $fontSegoe;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: $colorBody;
+    @media (max-width: 767px) {
+        font-size: 0.86rem;
+        line-height: 1.48;
+    }
+}
+
+@mixin textCardDesc {
+    /* Mô tả "meta" trong card grid — dùng chung giữa các thiết kế tương
+     * đồng: tour desc strip (pickup/lịch) và vé vui chơi (service ticket
+     * desc). Bắt đầu 0.95rem ở viewport lớn → giảm dần theo breakpoint cho
+     * phù hợp card width hẹp hơn ở mobile. */
+    font-family: $fontSegoe;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: $colorBody;
+    @media (max-width: 1199px) {
+        font-size: 0.92rem;
+        line-height: 1.5;
+    }
+    @media (max-width: 767px) {
+        font-size: 0.88rem;
+        line-height: 1.48;
+    }
+    @media (max-width: 567px) {
+        font-size: 0.85rem;
+        line-height: 1.45;
+    }
+}
+
+@mixin textBodyProse {
+    /* Body text dài (FAQ answer, intro article, prose box).
+     * Line-height rộng hơn cho dễ đọc dài; mọi prose body dùng chung. */
+    font-family: $fontSegoe;
+    font-size: 0.94rem;
+    line-height: 1.7;
+    color: $colorBody;
+    @media (max-width: 767px) {
+        font-size: 0.92rem;
+        line-height: 1.65;
+    }
+    @media (max-width: 567px) {
+        font-size: 0.9rem;
+        line-height: 1.6;
+    }
+}
+
+@mixin textMeta {
+    font-size: 0.82rem;
+    line-height: 1.35;
+    color: $colorSubtle;
+}
+
+@mixin pricePrimary {
+    /* Số giá chính (price_now) — emphasized brand-price color. */
+    font-family: $fontSegoeBold;
+    font-size: 1.2rem;
+    line-height: 1.2;
+    letter-spacing: 0.5px;
+    color: $colorPrice;
+    @media (max-width: 767px) {
+        font-size: 1.15rem;
+    }
+    @media (max-width: 567px) {
+        font-size: 1.1rem;
+    }
+}
+
+@mixin priceSecondary {
+    /* Số giá cũ gạch ngang. */
+    font-family: $fontSegoe;
+    font-size: 0.85rem;
+    line-height: 1.2;
+    @media (max-width: 567px) {
+        font-size: 0.82rem;
+    }
+}
+
+@mixin btnCardCta {
+    /* Chữ trên CTA button trong card (Chi tiết / Đặt vé / Xem chi tiết). */
+    font-family: $fontTitle;
+    font-size: 0.95rem;
+    line-height: 1.2;
+    letter-spacing: 0;
+    @media (max-width: 767px) {
+        font-size: 0.92rem;
+    }
+}
+
+/* ============================================================================
+ * Card CTA buttons — hệ thống flat-modern cho 3 grid: tour / vé tàu / vé vui chơi.
+ *
+ * DESIGN PHILOSOPHY (refined 2026 — light & honest):
+ *   Loại bỏ mọi yếu tố "skeuomorphic" gây cảm giác nặng:
+ *     ✗ Gradient (mimic 3D depth)        ✓ Solid flat color
+ *     ✗ Drop-shadow elevated             ✓ No shadow (hoặc rất nhẹ on hover)
+ *     ✗ Border outline trên primary      ✓ Border 0 — edge sharp & clean
+ *     ✗ Transform lift -1px on hover     ✓ Color shift only — yên tĩnh
+ *     ✗ Font weight 700 + min-height 44  ✓ 600 + 40px — gọn nhẹ
+ *
+ *   Tham chiếu: Linear, Vercel, Stripe, Apple HIG — đều theo flat-solid,
+ *   không gradient/shadow trên CTA card. Tone "honest design" 2025+: button
+ *   không "diễn" cảm giác 3D mà thẳng thắn thông báo "đây là button, click đi".
+ *
+ * COLOR (brand identity):
+ *   • PRIMARY: solid `$colorLv1` (#007bff) — brand-blue, hover → `$colorLv2`.
+ *   • SECONDARY: ghost transparent, border + text slate — hover lấp blue tint.
+ *
+ * SHAPE:
+ *   • border-radius 10px — modern (không quá pill chip, không quá rect formal).
+ *   • Min-height 40px — đạt WCAG AA touch-target, không quá to gây nặng card.
+ *   • Padding 0.55rem 1.1rem — gọn, đủ breathing room cho text "Đặt ngay".
+ *
+ * MOTION (minimalist):
+ *   • Hover: chỉ đổi background-color, KHÔNG transform / KHÔNG box-shadow.
+ *   • Active: bg darken 4% — feedback ấn nhẹ.
+ *   • Focus-visible: outline blue 2px offset 2px — accessibility AAA.
+ *   • Transition 0.16s ease — instant feel, không lag.
+ * ============================================================================ */
+@mixin btnCardBase {
+    @include btnCardCta;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    padding: 0.55rem 1.1rem;
+    min-height: 40px;
+    border-radius: 10px;
+    border: 0;
+    cursor: pointer;
+    text-align: center;
+    white-space: nowrap;
+    letter-spacing: 0;
+    transition: background-color 0.16s ease, color 0.16s ease,
+                border-color 0.16s ease;
+    text-decoration: none;
+    &:focus-visible {
+        outline: 2px solid rgba($colorLv1, 0.5);
+        outline-offset: 2px;
+    }
+    i {
+        margin: 0;
+        font-size: 0.85rem;
+        line-height: 1;
+        transition: transform 0.18s ease;
+    }
+    /* Icon trượt phải 2px on hover — affordance "go to" tinh tế.
+     * CHỈ áp cho icon directional (arrow/chevron/angle) đứng SAU text.
+     * Icon object (ticket, calendar, bookmark…) đứng yên vì không có
+     * semantic "đi tiếp". Pattern chuẩn Linear/Stripe/Vercel/Notion. */
+    @media (hover: hover) {
+        &:hover span + .fa-arrow-right,
+        &:hover span + .fa-arrow-right-long,
+        &:hover span + .fa-chevron-right,
+        &:hover span + .fa-angle-right {
+            transform: translateX(2px);
+        }
+    }
+    @media (max-width: 767px) {
+        padding: 0.5rem 0.95rem;
+    }
+}
+
+/* PRIMARY — solid brand-blue flat. Không gradient, không shadow, không border.
+ * Đơn giản, thẳng thắn — "click me" rõ ràng mà không "diễn" 3D. */
+@mixin btnCardPrimary {
+    @include btnCardBase;
+    background-color: $colorLv1;
+    color: #fff;
+    font-weight: 600;
+    @media (hover: hover) {
+        &:hover {
+            background-color: $colorLv2;
+            color: #fff;
+        }
+    }
+    &:active {
+        background-color: darken($colorLv2, 5%);
+    }
+}
+
+/* SECONDARY — ghost slate transparent. Border mảnh, hover chuyển dần
+ * sang blue tint → dẫn user về primary mood mà không cạnh tranh. */
+@mixin btnCardSecondary {
+    @include btnCardBase;
+    background-color: transparent;
+    color: $colorTitle;
+    font-weight: 500;
+    border: 1px solid rgba($colorTitle, 0.16);
+    @media (hover: hover) {
+        &:hover {
+            background-color: rgba($colorLv1, 0.06);
+            color: $colorLv1;
+            border-color: rgba($colorLv1, 0.3);
+        }
+    }
+    &:active {
+        background-color: rgba($colorLv1, 0.1);
+    }
+}
+
+/* ACCENT — LIGHT version của brand-blue (Đặt vé / Mua / Action mạnh).
+ * Cùng họ màu với btnCardPrimary nhưng LIGHT-weight (tinted bg + border
+ * + blue text), tạo hierarchy 2-tier trong cùng 1 hệ blue:
+ *   • btnCardPrimary = solid blue + white text → đậm, dominant
+ *   • btnCardAccent  = tinted blue + blue text → nhẹ, supporting
+ * Cả 2 cùng tone brand $colorLv1 → unified identity, KHÔNG xung đột màu.
+ * Triết lý "monochromatic hierarchy": cùng hue, khác value (light/dark). */
+@mixin btnCardAccent {
+    @include btnCardBase;
+    background-color: rgba($colorLv1, 0.08);
+    color: $colorLv1;
+    font-weight: 600;
+    border: 1px solid rgba($colorLv1, 0.28);
+    i {
+        color: $colorLv1;
+    }
+    @media (hover: hover) {
+        &:hover {
+            background-color: rgba($colorLv1, 0.14);
+            color: $colorLv2;
+            border-color: rgba($colorLv1, 0.45);
+            i { color: $colorLv2; }
+        }
+    }
+    &:active {
+        background-color: rgba($colorLv1, 0.2);
+    }
+}
+
+@mixin badgePillCorner($bg: $colorPrice) {
+    position: absolute;
+    background: $bg;
+    color: #fff;
+    border-radius: 999px;
+    font-family: $fontSegoeBold;
+    font-size: 0.78rem;
+    font-weight: 700;
+    line-height: 1.2;
+    padding: 0.22rem 0.62rem;
+    z-index: 2;
+    @media (max-width: 567px) {
+        font-size: 0.74rem;
+        padding: 0.18rem 0.55rem;
+    }
+}
+
+@mixin chipTag {
+    display: inline-flex;
+    align-items: center;
+    font-family: $fontTitle;
+    font-size: 0.82rem;
+    line-height: 1.2;
+    padding: 0.18rem 0.7rem;
+    border-radius: 999px;
+    background: rgba($colorLv1, 0.06);
+    color: $colorBody;
+    border: 1px solid rgba($colorLv1, 0.16);
+    white-space: nowrap;
+    @media (max-width: 767px) {
+        font-size: 0.78rem;
+        padding: 0.15rem 0.6rem;
+    }
+}
+
+@mixin iconInline {
+    color: $colorSubtle;
+    font-size: 0.85em;
+    margin-right: 0.45rem;
+}
+
+@mixin slickSliderMain {
+    &:hover {
+        .slick-prev, .slick-next {
+            display: block;
+        }
+    }
+    .slick-prev, .slick-next {
+        display: none;
+        background: #fff;
+        position: absolute;
+        padding: 0.5rem !important;
+        top: 50% !important;
+        bottom: unset !important;
+        transform: translateY(-50%);
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        z-index: 100;
+        font-size: 1.2rem;
+        // @media (min-width: 768px) and (max-width: 1023px){
+        //     padding: 13px !important;
+        // }
+        // @media (max-width: 767px){
+        //     padding: 11px !important;
+        // }
+    }
+    .slick-prev {
+        left: 0 !important;
+        right: unset !important;
+    }
+    .slick-next {
+        left: unset !important;
+        right: 0 !important;
+    }
+    .slick-dots {
+        position: absolute;
+        bottom: 0;
+        right: 1.5rem;
+        display: flex;
+        li {
+            list-style-type: none;
+            cursor: pointer;
+            button {
+                padding: 0;
+                height: 5px;
+                width: 35px;
+                @include colorOpacity('background', $colorLv1, 0.3);
+                border: none !important;
+                box-shadow: none !important;
+                &::selection {
+                    border: none !important;
+                    outline: none !important;
+                }
+            }
+            &:not(:first-child){
+                margin-left: 0.5rem;
+            }
+        }
+        .slick-active {
+            button {
+                background: $colorLv1;
+            }
+        }
+        @media (max-width: 767px){
+            bottom: 0.5rem !important;
+            li {
+                button {
+                    height: 4px !important;
+                }
+            }
+        }
+        @media (max-width: 577px){
+            right: 1rem;
+            li {
+                button {
+                    width: 25px !important;
+                }
+            }
+        }
+    }
+}
+@mixin slickArrowCircle {
+    position: absolute;
+    transform: translateY(-50%);
+    z-index: 99;
+    border: none;
+    border-radius: 50%;
+    text-align: center;
+    @include colorOpacity('background', $colorSLv1, 0.8);
+    padding: 0.6rem 0.9rem;
+    &:hover {
+        background: $colorSLv1;
+    }
+    &.slick-prev {
+        left: -0.5rem;
+        top: 50%;
+    }
+    &.slick-next {
+        right: -0.5rem;
+        top: 50%;
+    }
+    i {
+        margin: 0;
+        vertical-align: middle;
+    }
+}
+
+@mixin fontAwesome {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+}

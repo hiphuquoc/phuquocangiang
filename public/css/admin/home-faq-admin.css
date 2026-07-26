@@ -1,0 +1,33 @@
+/* Home FAQ admin — public fallback (also imported via admin/style.scss) */
+.hfaq-admin .hfq-hint{font-size:.8125rem;color:#6e6b7b;margin-bottom:.75rem}
+.hfaq-admin .hfq-hint code{background:#f3f2f7;padding:.1rem .35rem;border-radius:4px;font-size:.78rem}
+.hfaq-admin .hfq-card .card-header{background:#fff}
+.hfaq-admin .mt-25{margin-top:.25rem}
+.hfaq-admin .mt-50{margin-top:.5rem}
+.hfaq-admin .hfq-item-grid{display:flex;flex-direction:column;gap:1.5rem;width:100%}
+.hfaq-admin .hfq-item-grid--new:not(:empty){margin-top:1.5rem;padding-top:1.5rem;border-top:2px dashed #d8d6de}
+.hfaq-admin .hfq-item-grid--new:not(:empty)::before{content:"Câu hỏi mới (chưa lưu)";display:block;margin-bottom:.25rem;font-size:.78rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#7367f0}
+.hfaq-admin .hfq-item-card{display:flex;flex-direction:column;width:100%;border:1px solid #d8d6de;border-radius:.5rem;background:#fff;box-shadow:0 2px 8px rgba(34,41,47,.06);overflow:hidden;transition:box-shadow .2s ease,border-color .2s ease;margin-bottom:0}
+.hfaq-admin .hfq-item-card:hover{border-color:#b4b2bd;box-shadow:0 6px 22px rgba(115,103,240,.1)}
+.hfaq-admin .hfq-item-card--new{border-style:dashed;border-color:#7367f0;background:#fcfbff}
+.hfaq-admin .hfq-item-card--new .hfq-item-card__badge{background:#28c76f}
+.hfaq-admin .hfq-item-card__head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem 1rem;padding:.85rem 1.25rem;background:linear-gradient(180deg,#f8f8f8 0%,#f3f2f7 100%);border-bottom:1px solid #ebe9f1}
+.hfaq-admin .hfq-item-card__head-left{display:flex;align-items:center;gap:.65rem;min-width:0}
+.hfaq-admin .hfq-item-card__badge{flex-shrink:0;font-size:.72rem;font-weight:700;color:#fff;background:#7367f0;padding:.2rem .55rem;border-radius:999px}
+.hfaq-admin .hfq-item-card__head .form-check{margin:0;padding-left:1.6rem}
+.hfaq-admin .hfq-item-card__head .form-check-label{font-size:.8125rem;font-weight:500;color:#5e5873;white-space:nowrap}
+.hfaq-admin .hfq-item-card__head-actions{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap}
+.hfaq-admin .hfq-item-card__body{display:flex;flex-direction:column;width:100%}
+.hfaq-admin .hfq-field-group{padding:1.1rem 1.25rem;border-bottom:1px solid #f0eff4;width:100%}
+.hfaq-admin .hfq-field-group:last-child{border-bottom:none}
+.hfaq-admin .hfq-field-group--answer{background:#fafafa}
+.hfaq-admin .hfq-field-group--meta{background:#fcfcfd;padding-top:.85rem;padding-bottom:.85rem}
+.hfaq-admin .hfq-field-group .form-label{display:block;font-size:.78rem;margin-bottom:.45rem;font-weight:700;letter-spacing:.02em;text-transform:uppercase;color:#5e5873}
+.hfaq-admin .hfq-field-group .form-control{font-size:.9375rem;line-height:1.5;width:100%}
+.hfaq-admin .hfq-field-group textarea.form-control{min-height:9rem;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:.8125rem;line-height:1.55;resize:vertical}
+.hfaq-admin .hfq-field-group--answer .form-label::after{content:" — hỗ trợ thẻ HTML";font-weight:500;text-transform:none;letter-spacing:0;color:#b9b9c3;font-size:.72rem}
+.hfaq-admin .hfq-item-card__footer{display:flex;align-items:center;justify-content:flex-end;gap:.5rem;padding:.75rem 1.25rem;background:#f8f8f8;border-top:1px solid #ebe9f1}
+.hfaq-admin .hfq-empty{text-align:center;padding:2.5rem 1rem;border:2px dashed #ebe9f1;border-radius:.428rem;color:#6e6b7b;background:#fcfcfd}
+.hfaq-admin .hfq-empty p{margin:0}
+.hfaq-admin .pageAdminWithRightSidebar_main_content_item.width100 .hfq-card .card-body{padding:1.25rem 1.5rem 1.5rem}
+@media (max-width:575.98px){.hfaq-admin .hfq-item-card__head{flex-direction:column;align-items:flex-start}.hfaq-admin .hfq-item-card__head-actions{width:100%;justify-content:space-between}}

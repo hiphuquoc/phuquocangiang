@@ -1,0 +1,609 @@
+@use "../foundations/tokens" as *;
+
+.sd-hero-shell {
+  position: relative;
+  display: block;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  background: $sd-sky-950;
+  overflow: hidden;
+
+  &.is-overlay-open {
+    overflow: visible;
+  }
+
+  &__backdrop {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    background: $sd-sky-950;
+    pointer-events: none;
+  }
+
+  &__media {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: auto;
+      height: auto;
+      min-width: 100%;
+      min-height: 100%;
+      max-width: none !important;
+      object-fit: cover;
+      object-position: center center;
+      transform: translate(-50%, -50%) scale(1.06);
+      transform-origin: center center;
+      opacity: 0;
+      transition: opacity 1.4s ease;
+      will-change: opacity, transform;
+
+      &.is-active {
+        opacity: 1;
+      }
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background:
+        linear-gradient(112deg, rgba($sd-sky-950, 0.88) 0%, rgba($sd-sky-900, 0.58) 38%, rgba($sd-sky-800, 0.16) 62%, transparent 88%),
+        linear-gradient(180deg, rgba($sd-sky-950, 0.28) 0%, transparent 36%, rgba($sd-sky-950, 0.62) 100%);
+    }
+  }
+
+  &__grain {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  &__cut {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    z-index: 2;
+    line-height: 0;
+    pointer-events: none;
+
+    svg {
+      display: block;
+      width: 100%;
+      height: clamp(72px, 11vw, 128px);
+    }
+
+    path {
+      fill: $sd-cloud-50;
+    }
+  }
+}
+
+.sd-hero {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+
+  &.is-overlay-open {
+    z-index: 30;
+    overflow: visible;
+  }
+
+  &__body {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    min-height: clamp(560px, calc(100svh - #{$sd-topbar-h} - 3.5rem), 820px);
+    min-height: clamp(560px, calc(100dvh - #{$sd-topbar-h} - 3.5rem), 820px);
+    padding-top: calc(#{$sd-header-h} + #{$sd-space-6});
+    padding-bottom: $sd-hero-pad-bottom;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    @include sd-bp-max($sd-bp-md) {
+      min-height: clamp(520px, calc(100svh - #{$sd-topbar-h} - 2rem), 720px);
+      min-height: clamp(520px, calc(100dvh - #{$sd-topbar-h} - 2rem), 720px);
+      padding-top: calc(#{$sd-header-h} + #{$sd-space-4});
+      padding-bottom: clamp(5.5rem, 18vw, 7.5rem);
+    }
+  }
+
+  &__inner {
+    @include sd-container;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: $sd-section-stack;
+    align-items: start;
+    min-width: 0;
+
+    > * {
+      min-width: 0;
+      max-width: 100%;
+    }
+
+    @include sd-bp($sd-bp-lg) {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 492px);
+      gap: $sd-split-gap;
+      align-items: center;
+    }
+
+    @include sd-bp($sd-bp-xl) {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 520px);
+      gap: $sd-split-gap-wide;
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: $sd-space-5;
+    width: 100%;
+    min-width: 0;
+    max-width: 36rem;
+  }
+
+  &__lead {
+    display: flex;
+    flex-direction: column;
+    gap: $sd-space-2;
+  }
+
+  &__title {
+    margin: 0;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    font-family: $sd-font-heading;
+    font-size: clamp(1.85rem, 1.35rem + 2.2vw, 3.6rem);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+    color: $sd-text-white;
+    text-wrap: balance;
+    text-shadow: 0 2px 18px rgba($sd-sky-950, 0.4);
+  }
+
+  &__title-accent {
+    display: block;
+    margin-top: 0.12em;
+    font-weight: 800;
+    background: linear-gradient(100deg, $sd-sun-500 10%, $sd-text-highlight-strong 90%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: none;
+  }
+
+  &__tagline {
+    margin: 0;
+    font-size: clamp(0.98rem, 0.92rem + 0.25vw, 1.1rem);
+    line-height: 1.6;
+    color: rgba($sd-text-white, 0.82);
+    max-width: 30rem;
+    text-shadow: 0 1px 6px rgba($sd-sky-950, 0.25);
+  }
+
+  &__routes {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $sd-space-4;
+    margin: 0;
+    padding: 0.85rem 0 0;
+    list-style: none;
+    min-width: 0;
+
+    @include sd-bp($sd-bp-md) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: $sd-space-5;
+    }
+
+    @include sd-bp-max($sd-bp-md) {
+      gap: $sd-space-5;
+    }
+
+    li {
+      min-width: 0;
+    }
+  }
+
+  &__route-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    height: 100%;
+    min-width: 0;
+    padding: 1.5rem 0.85rem 0.5rem;
+    margin-top: 0.55rem;
+    border-radius: $sd-radius-md;
+    text-decoration: none;
+    color: inherit;
+    overflow: visible;
+    background:
+      linear-gradient(160deg, rgba($sd-sky-950, 0.78) 0%, rgba($sd-sky-900, 0.62) 100%);
+    border: 1px solid rgba($sd-sky-300, 0.22);
+    backdrop-filter: blur(20px);
+    box-shadow:
+      0 16px 40px -16px rgba($sd-sky-950, 0.55),
+      inset 0 1px 0 rgba($sd-white, 0.1);
+    transition:
+      transform 0.32s cubic-bezier(0.34, 1.2, 0.64, 1),
+      box-shadow 0.32s ease,
+      border-color 0.32s ease,
+      background 0.32s ease;
+
+    @media (hover: hover) {
+      &:hover,
+      &:focus-visible {
+        transform: translateY(-3px);
+        border-color: rgba($sd-sun-500, 0.45);
+        background:
+          linear-gradient(160deg, rgba($sd-sky-950, 0.84) 0%, rgba($sd-sky-800, 0.68) 100%);
+        box-shadow:
+          0 24px 48px -18px rgba($sd-sky-950, 0.62),
+          0 0 0 1px rgba($sd-sun-500, 0.15),
+          inset 0 1px 0 rgba($sd-white, 0.14);
+
+        .sd-hero__route-duration {
+          background: linear-gradient(135deg, $sd-sun-500 0%, $sd-sun-600 100%);
+          box-shadow: 0 10px 24px -8px rgba($sd-sun-600, 0.55);
+        }
+
+        .sd-hero__route-wave path {
+          stroke: rgba($sd-sun-500, 0.52);
+        }
+
+        .sd-hero__route-ship {
+          color: $sd-text-highlight-strong;
+          animation-duration: 2.4s;
+        }
+
+        .sd-hero__route-go {
+          background: rgba($sd-sky-500, 0.35);
+          border-color: rgba($sd-sky-300, 0.35);
+          color: $sd-white;
+
+          svg {
+            transform: translateX(3px);
+          }
+        }
+      }
+    }
+  }
+
+  &__route-duration {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    z-index: 2;
+    transform: translate(-50%, -50%);
+    padding: 0.4rem 0.85rem;
+    border-radius: $sd-radius-pill;
+    background: linear-gradient(135deg, $sd-sun-500 0%, $sd-sun-600 100%);
+    font-family: $sd-font-heading;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    line-height: 1;
+    color: $sd-sky-950;
+    white-space: nowrap;
+    box-shadow:
+      0 8px 20px -6px rgba($sd-sun-600, 0.65),
+      inset 0 1px 0 rgba($sd-white, 0.45);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  &__route-journey {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0.65rem, 1.25fr) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(0.35rem, 1.6vw, 0.75rem);
+    padding-top: 0.35rem;
+    padding-bottom: 1.5rem;
+    min-width: 0;
+  }
+
+  &__route-point-name {
+    font-family: $sd-font-heading;
+    font-size: clamp(0.88rem, 0.82rem + 0.22vw, 1.12rem);
+    font-weight: 800;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    color: $sd-text-white;
+    overflow-wrap: anywhere;
+    min-width: 0;
+
+    &--end {
+      text-align: right;
+    }
+  }
+
+  &__route-bridge {
+    position: relative;
+    width: 100%;
+    height: 1.125rem;
+    align-self: center;
+    pointer-events: none;
+  }
+
+  &__route-wave {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+
+    path {
+      fill: none;
+      stroke: rgba($sd-white, 0.24);
+      stroke-width: 1.15;
+      vector-effect: non-scaling-stroke;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: stroke 0.35s ease;
+    }
+  }
+
+  &__route-ship {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 15px;
+    height: 15px;
+    margin: -7px 0 0 -7px;
+    color: rgba($sd-sky-100, 0.86);
+    animation: sd-hero-ship-ride 3.2s ease-in-out infinite;
+
+    svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+
+  @keyframes sd-hero-ship-ride {
+    0%,
+    100% {
+      transform: translate(0, 1px) rotate(-1.25deg);
+    }
+
+    25% {
+      transform: translate(1.25px, -2px) rotate(0.75deg);
+    }
+
+    50% {
+      transform: translate(0, 0) rotate(-0.5deg);
+    }
+
+    75% {
+      transform: translate(-1px, -1.5px) rotate(0.5deg);
+    }
+  }
+
+  &__route-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.75rem;
+    padding-top: 0.15rem;
+    min-width: 0;
+  }
+
+  &__route-price {
+    display: flex;
+    align-items: baseline;
+    gap: 0.15rem;
+    margin: 0;
+    line-height: 1;
+  }
+
+  &__route-price-val {
+    font-family: $sd-font-heading;
+    font-size: clamp(1.22rem, 1.12rem + 0.4vw, 1.48rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: $sd-text-highlight-strong;
+    text-shadow: 0 0 16px rgba($sd-sun-500, 0.3);
+  }
+
+  &__route-price-unit {
+    font-family: $sd-font-heading;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: rgba($sd-text-highlight-strong, 0.88);
+  }
+
+  &__route-go {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.42rem 0.8rem;
+    border-radius: $sd-radius-pill;
+    background: rgba($sd-sky-800, 0.45);
+    border: 1px solid rgba($sd-sky-400, 0.22);
+    font-family: $sd-font-heading;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: rgba($sd-sky-100, 0.92);
+    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+
+    svg {
+      width: 13px;
+      height: 13px;
+      transition: transform 0.3s ease;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 0.55rem;
+    width: 100%;
+    min-width: 0;
+    margin-top: 1rem;
+
+    @include sd-bp($sd-bp-md) {
+      justify-content: flex-end;
+    }
+
+    @include sd-bp-max($sd-bp-sm) {
+      flex-direction: column;
+
+      .sd-hero__btn {
+        width: 100%;
+      }
+    }
+
+    a.sd-hero__btn {
+      text-decoration: none;
+    }
+  }
+
+  &__btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    padding: 0.62rem 1.3rem;
+    border-radius: 12px;
+    font-family: $sd-font-heading;
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease, color 0.22s ease, border-color 0.22s ease;
+
+    @include sd-bp-max($sd-bp-sm) {
+      white-space: normal;
+      text-align: center;
+    }
+
+    svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      transition: transform 0.22s ease;
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+
+  &__actions a.sd-hero__btn--solid {
+    color: $sd-white;
+    background: linear-gradient(135deg, $sd-sky-500 0%, $sd-sky-700 100%);
+    border: 1px solid rgba($sd-white, 0.16);
+    box-shadow: 0 8px 22px -10px rgba($sd-sky-700, 0.6);
+    padding-inline: 1.45rem;
+
+    span,
+    svg {
+      color: $sd-white;
+    }
+
+    @media (hover: hover) {
+      &:hover,
+      &:focus-visible {
+        transform: translateY(-1px);
+        background: linear-gradient(135deg, $sd-sky-400 0%, $sd-sky-600 100%);
+        box-shadow: 0 10px 22px -8px rgba($sd-sky-600, 0.6);
+
+        svg {
+          transform: translateX(2px);
+        }
+      }
+    }
+  }
+
+  &__actions a.sd-hero__btn--ghost {
+    color: rgba($sd-text-white, 0.95);
+    background: rgba($sd-white, 0.1);
+    border: 1px solid rgba($sd-white, 0.24);
+    backdrop-filter: blur(10px);
+    padding-inline: 1.15rem;
+
+    span,
+    svg {
+      color: rgba($sd-text-white, 0.92);
+    }
+
+    @media (hover: hover) {
+      &:hover,
+      &:focus-visible {
+        transform: translateY(-1px);
+        background: rgba($sd-white, 0.12);
+        border-color: rgba($sd-white, 0.32);
+        color: $sd-white;
+
+        span,
+        svg {
+          color: $sd-white;
+        }
+      }
+    }
+  }
+
+  &__slider-dots {
+    position: relative;
+    z-index: 2;
+    @include sd-container;
+    display: flex;
+    gap: 0.4rem;
+    padding-top: $sd-space-4;
+    padding-bottom: $sd-space-4;
+
+    button {
+      width: 28px;
+      height: 3px;
+      padding: 0;
+      border: none;
+      border-radius: 2px;
+      background: rgba($sd-white, 0.25);
+      cursor: pointer;
+      transition: background 0.25s ease, width 0.25s ease;
+
+      &.is-active {
+        width: 40px;
+        background: $sd-sun-500;
+      }
+    }
+
+    @media (max-width: $sd-bp-lg) {
+      justify-content: center;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sd-hero-shell__media img {
+    transition: opacity 0.01ms;
+  }
+}

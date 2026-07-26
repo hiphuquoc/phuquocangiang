@@ -1,0 +1,364 @@
+@use "../foundations/tokens" as *;
+
+/* ===========================================================================
+ * sd-faq-section — Editorial accordion
+ * Typography & spacing: docs/design/superdong-design-system.md §4–5
+ * =========================================================================== */
+
+.sd-faq-section {
+  position: relative;
+  overflow: hidden;
+  @include sd-section-padding-feature;
+  background:
+    radial-gradient(ellipse 80% 60% at 100% 0%, rgba($sd-sky-400, 0.1), transparent 55%),
+    radial-gradient(ellipse 60% 50% at 0% 100%, rgba($sd-sun-500, 0.06), transparent 50%),
+    linear-gradient(180deg, $sd-cloud-50 0%, $sd-white 100%);
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba($sd-sky-700, 0.045) 1px, transparent 1px);
+    background-size: 22px 22px;
+    pointer-events: none;
+    opacity: 0.45;
+  }
+
+  .sd-section__inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  &__layout {
+    @include sd-split-layout;
+
+    @include sd-bp($sd-bp-lg) {
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    }
+  }
+
+  &__aside {
+    @include sd-bp($sd-bp-lg) {
+      position: sticky;
+      top: calc(#{$sd-header-h} + #{$sd-topbar-h} + #{$sd-space-6});
+    }
+  }
+
+  &__kicker {
+    @include sd-type-eyebrow;
+    margin: 0 0 $sd-space-4;
+  }
+
+  &__title {
+    @include sd-type-h2-section;
+    margin: 0 0 $sd-space-3;
+  }
+
+  &__desc {
+    @include sd-type-body-section;
+    margin: 0;
+    max-width: 28rem;
+  }
+
+  &__help {
+    display: flex;
+    align-items: flex-start;
+    gap: $sd-space-4;
+    margin-top: $sd-space-6;
+    padding: $sd-space-5;
+    border-radius: $sd-radius-lg;
+    background:
+      linear-gradient(145deg, rgba($sd-white, 0.98) 0%, rgba($sd-sky-50, 0.92) 100%);
+    border: 1px solid rgba($sd-sky-300, 0.35);
+    box-shadow: $sd-shadow-sm;
+
+    strong {
+      display: block;
+      margin-bottom: $sd-space-1;
+      font-family: $sd-font-heading;
+      font-size: clamp(0.92rem, 0.88rem + 0.12vw, 1rem);
+      font-weight: $sd-fw-bold;
+      color: $sd-slate-900;
+    }
+
+    p {
+      margin: 0;
+      @include sd-type-meta;
+      line-height: 1.55;
+      color: $sd-slate-500;
+
+      a {
+        font-weight: $sd-fw-semibold;
+        color: $sd-sky-700;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  &__help-icon {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: $sd-radius-md;
+    color: $sd-sky-600;
+    background: rgba($sd-sky-500, 0.1);
+    border: 1px solid rgba($sd-sky-400, 0.22);
+
+    svg {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+  }
+
+  &__list {
+    display: grid;
+    gap: $sd-space-3;
+  }
+}
+
+.sd-faq {
+  &__item {
+    position: relative;
+    border-radius: $sd-radius-md;
+    background: $sd-white;
+    border: 1px solid rgba($sd-slate-300, 0.4);
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 0.5s ease var(--fq-delay, 0ms),
+      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) var(--fq-delay, 0ms),
+      border-color 0.28s ease,
+      box-shadow 0.28s ease;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: linear-gradient(180deg, $sd-sky-500, $sd-sky-400);
+      opacity: 0;
+      transition: opacity 0.28s ease;
+    }
+
+    &.is-open {
+      border-color: rgba($sd-sky-400, 0.45);
+      box-shadow:
+        0 1px 2px rgba(15, 23, 42, 0.04),
+        0 12px 32px -16px rgba($sd-sky-800, 0.14);
+
+      &::before {
+        opacity: 1;
+      }
+
+      .sd-faq__question {
+        color: $sd-sky-800;
+      }
+
+      .sd-faq__index {
+        color: $sd-sky-600;
+        background: rgba($sd-sky-500, 0.12);
+        border-color: rgba($sd-sky-400, 0.28);
+      }
+
+      .sd-faq__answer {
+        grid-template-rows: 1fr;
+      }
+
+      .sd-faq__toggle {
+        background: rgba($sd-sky-500, 0.12);
+        border-color: rgba($sd-sky-400, 0.28);
+        color: $sd-sky-700;
+
+        svg {
+          transform: rotate(180deg);
+        }
+      }
+    }
+  }
+
+  &__question {
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: $sd-space-3;
+    padding: $sd-space-4 $sd-space-5;
+    border: none;
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
+    transition: color 0.2s ease;
+
+    @media (hover: hover) {
+      &:hover {
+        color: $sd-sky-700;
+
+        .sd-faq__toggle {
+          border-color: rgba($sd-sky-400, 0.35);
+          color: $sd-sky-600;
+        }
+      }
+    }
+  }
+
+  &__index {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.25rem;
+    height: 2.25rem;
+    padding: 0 $sd-space-2;
+    border-radius: $sd-radius-sm;
+    font-family: $sd-font-heading;
+    font-size: 0.78rem;
+    font-weight: $sd-fw-extrabold;
+    letter-spacing: 0.04em;
+    color: $sd-slate-500;
+    background: $sd-cloud-100;
+    border: 1px solid rgba($sd-slate-300, 0.45);
+    transition: color 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+  }
+
+  &__label {
+    font-family: $sd-font-heading;
+    font-size: clamp(0.92rem, 0.88rem + 0.12vw, 1rem);
+    font-weight: $sd-fw-bold;
+    line-height: 1.4;
+    color: $sd-slate-900;
+  }
+
+  &__toggle {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    color: $sd-slate-500;
+    background: $sd-cloud-50;
+    border: 1px solid rgba($sd-slate-300, 0.45);
+    transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+
+    svg {
+      width: 1rem;
+      height: 1rem;
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+  }
+
+  &__answer {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+
+    > div {
+      overflow: hidden;
+    }
+
+    p {
+      margin: 0;
+      padding: 0 $sd-space-5 $sd-space-5;
+      padding-left: calc(#{$sd-space-5} + 2.25rem + #{$sd-space-3});
+      @include sd-type-body-section;
+      font-size: clamp(0.9rem, 0.86rem + 0.12vw, 0.95rem);
+      color: $sd-slate-500;
+
+      @media (max-width: #{$sd-bp-sm - 1px}) {
+        padding-left: $sd-space-5;
+      }
+    }
+  }
+
+  &__answer-body {
+    padding: 0 $sd-space-5 $sd-space-5;
+    padding-left: calc(#{$sd-space-5} + 2.25rem + #{$sd-space-3});
+    @include sd-type-body-section;
+    font-size: clamp(0.9rem, 0.86rem + 0.12vw, 0.95rem);
+    color: $sd-slate-500;
+    line-height: 1.65;
+
+    @media (max-width: #{$sd-bp-sm - 1px}) {
+      padding-left: $sd-space-5;
+    }
+
+    p {
+      margin: 0 0 $sd-space-3;
+      padding: 0;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    ul,
+    ol {
+      margin: 0 0 $sd-space-3;
+      padding-left: 1.25rem;
+    }
+
+    a {
+      font-weight: $sd-fw-semibold;
+      color: $sd-sky-700;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.sd-faq-section__help-body {
+  @include sd-type-meta;
+  line-height: 1.55;
+  color: $sd-slate-500;
+
+  p {
+    margin: 0;
+  }
+
+  a {
+    font-weight: $sd-fw-semibold;
+    color: $sd-sky-700;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.sd-faq-section.is-revealed .sd-faq__item {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sd-faq__item {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .sd-faq__answer {
+    transition: none;
+  }
+}
+
+@media (max-width: #{$sd-bp-md - 1px}) {
+  .sd-faq-section__help {
+    margin-top: $sd-space-5;
+  }
+}

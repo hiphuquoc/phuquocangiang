@@ -1,0 +1,285 @@
+// Super Dong Design System v1 — Sky palette
+// @see docs/design/superdong-design-system.md
+
+$sd-font-heading: "Be Vietnam Pro", Roboto, system-ui, sans-serif;
+$sd-font-body: "Roboto", system-ui, -apple-system, sans-serif;
+
+// Font weights — Be Vietnam Pro / Roboto
+$sd-fw-light: 300;
+$sd-fw-regular: 400;
+$sd-fw-medium: 500;
+$sd-fw-semibold: 600;
+$sd-fw-bold: 700;
+$sd-fw-extrabold: 800;
+
+// Breakpoints
+$sd-bp-sm: 576px;
+$sd-bp-md: 768px;
+$sd-bp-lg: 992px;
+$sd-bp-xl: 1200px;
+$sd-bp-2xl: 1440px;
+
+// Sky brand
+$sd-sky-950: #0c1929;
+$sd-sky-900: #0c4a6e;
+$sd-sky-800: #075985;
+$sd-sky-700: #0369a1;
+$sd-sky-600: #0284c7;
+$sd-sky-500: #0ea5e9;
+$sd-sky-400: #38bdf8;
+$sd-sky-300: #7dd3fc;
+$sd-sky-100: #e0f2fe;
+$sd-sky-50: #f0f9ff;
+
+$sd-cloud-50: #f8fafc;
+$sd-cloud-100: #f1f5f9;
+
+// Text on dark
+$sd-text-white: #ffffff;
+$sd-text-highlight: #fff9e3;
+$sd-text-highlight-strong: #fef08a;
+
+// Text on light
+$sd-slate-900: #0f172a;
+$sd-slate-700: #334155;
+$sd-slate-500: #64748b;
+$sd-slate-300: #cbd5e1;
+$sd-slate-100: #f1f5f9;
+
+$sd-white: #ffffff;
+$sd-price: #C62E2E;
+$sd-price-bright: #FF8585; // đỏ sáng ngả trắng — trên nền tối
+$sd-success: #26cf8e;
+
+// Sun CTA
+$sd-sun-500: #fbbf24;
+$sd-sun-600: #f59e0b;
+
+$sd-highlight-grad: linear-gradient(100deg, $sd-sun-500 10%, $sd-text-highlight-strong 90%);
+$sd-price-block-grad: linear-gradient(105deg, rgba($sd-white, 0.96) 0%, rgba(255, 248, 248, 0.92) 50%, rgba(255, 236, 236, 0.88) 100%);
+
+// Spacing (4pt)
+$sd-space-1: 0.25rem;
+$sd-space-2: 0.5rem;
+$sd-space-3: 0.75rem;
+$sd-space-4: 1rem;
+$sd-space-5: 1.25rem;
+$sd-space-6: 1.5rem;
+$sd-space-8: 2rem;
+$sd-space-10: 2.5rem;
+$sd-space-12: 3rem;
+$sd-space-16: 4rem;
+
+$sd-radius-sm: 12px;
+$sd-radius-md: 18px;
+$sd-radius-lg: 24px;
+$sd-radius-xl: 32px;
+$sd-radius-pill: 999px;
+
+$sd-shadow-sm: 0 4px 16px -6px rgba(15, 23, 42, 0.12);
+$sd-shadow-md: 0 16px 40px -20px rgba(15, 23, 42, 0.22);
+$sd-shadow-lg: 0 32px 64px -32px rgba(12, 74, 110, 0.28);
+$sd-shadow-dock: 0 20px 50px -20px rgba(12, 74, 110, 0.45);
+
+$sd-container: 1240px;
+$sd-header-h: 72px;
+$sd-topbar-h: 38px;
+$sd-dock-h: 56px;
+
+// Layout rhythm — @see docs/design/layout-spacing-grid.md
+$sd-section-pad-start: clamp(1.65rem, 3.4vw, 2.45rem);
+$sd-section-pad-end: clamp(2rem, 4vw, 3rem);
+$sd-section-pad-feature: clamp(3rem, 6vw, 5rem);
+$sd-section-head-mb: clamp(#{$sd-space-6}, 2.8vw, #{$sd-space-8});
+$sd-section-stack: clamp(#{$sd-space-6}, 3vw, #{$sd-space-8});
+$sd-gutter-inline: clamp(1rem, 3vw, 1.25rem);
+$sd-grid-gap: clamp(#{$sd-space-3}, 1.2vw, #{$sd-space-5});
+$sd-split-gap: clamp(#{$sd-space-8}, 4vw, 3.5rem);
+$sd-split-gap-wide: clamp(#{$sd-space-8}, 5vw, 4rem);
+$sd-mast-stack-mb: clamp(#{$sd-space-8}, 4vw, #{$sd-space-10});
+$sd-hero-pad-bottom: clamp(6.5rem, 11vw, 9rem);
+$sd-trust-overlap: clamp(-5.5rem, -10vw, -7.25rem);
+$sd-trust-gap: clamp(#{$sd-space-3}, 1.4vw, 0.9rem);
+
+@mixin sd-bp($min) {
+  @media (min-width: $min) {
+    @content;
+  }
+}
+
+@mixin sd-bp-max($max) {
+  @media (max-width: #{$max - 1px}) {
+    @content;
+  }
+}
+
+@mixin sd-container {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: calc(#{$sd-container} + #{$sd-gutter-inline} * 2);
+  margin-inline: auto;
+  padding-inline: $sd-gutter-inline;
+}
+
+@mixin sd-section-padding {
+  padding-block: $sd-section-pad-start $sd-section-pad-end;
+}
+
+@mixin sd-section-padding-feature {
+  padding-block: $sd-section-pad-feature;
+}
+
+@mixin sd-band-feature {
+  @include sd-section-padding-feature;
+}
+
+@mixin sd-section-head-spacing {
+  margin-bottom: $sd-section-head-mb;
+}
+
+@mixin sd-layout-grid-gap {
+  gap: $sd-grid-gap;
+}
+
+@mixin sd-split-layout {
+  display: grid;
+  gap: $sd-split-gap;
+  align-items: stretch;
+
+  @include sd-bp($sd-bp-lg) {
+    gap: $sd-split-gap-wide;
+  }
+}
+
+@mixin sd-product-grid-base {
+  display: grid;
+  align-items: stretch;
+  @include sd-layout-grid-gap;
+  grid-template-columns: 1fr;
+}
+
+@mixin sd-product-grid-cols-2 {
+  @include sd-bp($sd-bp-sm) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@mixin sd-product-grid-cols-3 {
+  @include sd-product-grid-cols-2;
+
+  @include sd-bp($sd-bp-lg) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@mixin sd-product-grid-cols-4 {
+  @include sd-product-grid-cols-2;
+
+  @include sd-bp($sd-bp-xl) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+// Typography scale — @see docs/design/superdong-design-system.md §4.2
+@mixin sd-type-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: $sd-space-2;
+  padding: 0.32rem 0.8rem;
+  font-family: $sd-font-heading;
+  font-size: 0.72rem;
+  font-weight: $sd-fw-bold;
+  line-height: 1.2;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $sd-sky-800;
+  background: rgba($sd-sky-500, 0.1);
+  border: 1px solid rgba($sd-sky-500, 0.2);
+  border-radius: $sd-radius-pill;
+}
+
+@mixin sd-type-h2-section {
+  font-family: $sd-font-heading;
+  font-size: clamp(1.75rem, 1.35rem + 1.5vw, 2.5rem);
+  font-weight: $sd-fw-bold;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: $sd-slate-900;
+}
+
+@mixin sd-type-body-section {
+  font-family: $sd-font-body;
+  font-size: clamp(0.95rem, 0.9rem + 0.15vw, 1rem);
+  font-weight: $sd-fw-regular;
+  line-height: 1.6;
+  color: $sd-slate-500;
+}
+
+@mixin sd-type-card-title($weight: $sd-fw-bold) {
+  font-family: $sd-font-heading;
+  font-size: clamp(1rem, 0.95rem + 0.15vw, 1.05rem);
+  font-weight: $weight;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+
+@mixin sd-type-card-title-lg($weight: $sd-fw-bold) {
+  font-family: $sd-font-heading;
+  font-size: clamp(1.25rem, 1.12rem + 0.45vw, 1.45rem);
+  font-weight: $weight;
+  line-height: 1.22;
+  letter-spacing: -0.02em;
+}
+
+@mixin sd-type-meta {
+  font-family: $sd-font-body;
+  font-size: clamp(0.82rem, 0.78rem + 0.12vw, 0.88rem);
+  font-weight: $sd-fw-regular;
+  line-height: 1.5;
+}
+
+@mixin sd-type-cta-card($weight: $sd-fw-bold) {
+  font-family: $sd-font-heading;
+  font-size: clamp(0.88rem, 0.85rem + 0.1vw, 0.92rem);
+  font-weight: $weight;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+}
+
+@mixin sd-section-head {
+  max-width: 38rem;
+  @include sd-section-head-spacing;
+
+  .sd-eyebrow {
+    @include sd-type-eyebrow;
+    margin-bottom: $sd-space-4;
+  }
+
+  h2 {
+    @include sd-type-h2-section;
+    margin: 0 0 $sd-space-3;
+  }
+
+  p {
+    @include sd-type-body-section;
+    margin: 0;
+    max-width: 42rem;
+  }
+}
+
+@mixin sd-card-hover {
+  transition: transform 0.28s ease, box-shadow 0.28s ease;
+
+  @media (hover: hover) {
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: $sd-shadow-lg;
+    }
+  }
+}
+
+@mixin sd-glass {
+  background: rgba($sd-white, 0.14);
+  border: 1px solid rgba($sd-white, 0.22);
+  backdrop-filter: blur(14px);
+}

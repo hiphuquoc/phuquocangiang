@@ -1,0 +1,770 @@
+/* ============================================================
+ * V3.1.2 — Admin Translation Banner (mode + origin)
+ * Nằm trong .app-content — không tràn sidebar; layout 2 hàng (top + bottom).
+ * Typography align với admin (~14px base).
+ * ============================================================ */
+
+/* --- Banner container --- */
+.translationBanner {
+    --tb-radius: 6px;
+    --tb-pad-x: 1.125rem;
+    --tb-pad-y: 1rem;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin: 0 0 1.25rem 0;
+    padding: var(--tb-pad-y) var(--tb-pad-x);
+    position: relative;
+    z-index: 5;
+    border-radius: var(--tb-radius);
+    border: 1px solid transparent;
+    border-bottom-width: 2px;
+    font-size: 0.9375rem; /* 15px */
+    line-height: 1.45;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+    overflow: hidden; /* clip nội dung, tránh tràn visual */
+}
+
+.translationBanner--mode {
+    background: linear-gradient(135deg, #fffbeb 0%, #fff7ed 50%, #ffedd5 100%);
+    border-color: #fed7aa;
+    border-bottom-color: #f59e0b;
+}
+.translationBanner--mode .translationBanner_icon { color: #d97706; }
+.translationBanner--mode .translationBanner_title strong { color: #92400e; }
+
+.translationBanner--origin {
+    background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 45%, #d1fae5 100%);
+    border-color: #a7f3d0;
+    border-bottom-color: #10b981;
+}
+.translationBanner--origin .translationBanner_icon { color: #059669; }
+.translationBanner--origin .translationBanner_title strong { color: #065f46; }
+
+/*
+ * Sidebar phải cố định: .pageAdminWithRightSidebar_main_rightSidebar { width: 300px; right: 0; position: fixed }
+ * Cột nội dung dùng margin-right: calc(300px - 0.5rem) — resources/sources/admin/style.scss ~456
+ * Banner render TRƯỚC form nên không hưởng margin đó → thu width khi trang có .withRightSidebar.
+ * Dùng :has() để không ảnh hưởng các trang admin không dùng layout này.
+ */
+.app-content.content:has(.pageAdminWithRightSidebar.withRightSidebar) > .translationBanner {
+    width: calc(100% - (300px - 0.5rem));
+    max-width: 100%;
+}
+
+/* --- Inner: cột dọc, không ép 1 hàng --- */
+.translationBanner_inner {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+}
+
+/* Hàng 1: thông điệp + (mode only) nút Bản gốc */
+.translationBanner_top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem 1rem;
+    width: 100%;
+    min-width: 0;
+}
+
+.translationBanner_left {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    flex: 1 1 16rem;
+    min-width: 0;
+}
+
+.translationBanner_icon {
+    font-size: 1.5rem;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+}
+
+.translationBanner_text {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.translationBanner_title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem 0.5rem;
+    font-size: 1rem; /* 16px */
+    font-weight: 500;
+    color: #1f2937;
+    margin-bottom: 0.25rem;
+}
+.translationBanner_title > span:first-of-type {
+    color: #4b5563;
+    font-weight: 500;
+}
+.translationBanner_title strong {
+    font-weight: 700;
+    color: inherit;
+}
+
+.translationBanner_currentFlag {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+}
+
+.translationBanner_subtext {
+    font-size: 0.875rem; /* 14px */
+    color: #4b5563;
+    line-height: 1.5;
+    max-width: 72ch;
+}
+.translationBanner--origin .translationBanner_subtext { color: #047857; }
+.translationBanner--mode .translationBanner_subtext { color: #78350f; }
+
+.translationBanner_legend {
+    display: inline-block;
+    padding: 0.125rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.8125rem; /* 13px */
+    line-height: 1.35;
+    vertical-align: baseline;
+}
+.translationBanner_legend--editable {
+    background: #fef3c7;
+    color: #92400e;
+    border: 1px solid #fcd34d;
+}
+.translationBanner_legend--locked {
+    background: #e5e7eb;
+    color: #374151;
+    border: 1px dashed #9ca3af;
+}
+
+/* --- Hàng 2: switcher full width --- */
+.translationBanner_bottom {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    padding-top: 0.75rem;
+    margin-top: 0.125rem;
+    border-top: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.translationBanner_switcher {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.75rem;
+    width: 100%;
+    min-width: 0;
+}
+
+.translationBanner_switcherLabel {
+    flex: 0 0 auto;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #6b7280;
+    line-height: 1.2;
+    padding: 0.25rem 0;
+}
+
+.translationBanner_switcherList {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.375rem 0.5rem;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.translationBanner_switcherItem {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    min-height: 2.25rem;
+    padding: 0.35rem 0.65rem;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    font-size: 0.8125rem; /* 13px */
+    font-weight: 600;
+    text-decoration: none;
+    color: #374151;
+    transition: border-color 0.15s, background 0.15s, color 0.15s, box-shadow 0.15s;
+    cursor: pointer;
+    line-height: 1.2;
+    white-space: nowrap;
+    box-sizing: border-box;
+}
+.translationBanner_switcherItem:hover {
+    border-color: #9ca3af;
+    color: #111827;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+}
+
+/* Active — mode (cam) */
+.translationBanner--mode .translationBanner_switcherItem.is-active {
+    background: #f59e0b;
+    color: #fff;
+    border-color: #d97706;
+    box-shadow: 0 1px 4px rgba(217, 119, 6, 0.35);
+}
+.translationBanner--mode .translationBanner_switcherItem.is-active:hover {
+    background: #d97706;
+    color: #fff;
+}
+
+/* Active — origin (xanh), current */
+.translationBanner--origin .translationBanner_switcherItem.is-active.is-current {
+    background: #10b981;
+    color: #fff;
+    border-color: #059669;
+    cursor: default;
+    box-shadow: 0 1px 4px rgba(5, 150, 105, 0.3);
+}
+.translationBanner--origin .translationBanner_switcherItem.is-active.is-current:hover {
+    background: #10b981;
+    color: #fff;
+    box-shadow: 0 1px 4px rgba(5, 150, 105, 0.3);
+}
+
+/* Đã dịch, không active */
+.translationBanner_switcherItem.has-translation {
+    background: #ffffff;
+    border-color: #d1d5db;
+    color: #111827;
+}
+.translationBanner_switcherItem.has-translation:hover {
+    background: #f9fafb;
+    border-color: #6b7280;
+}
+
+/* Chưa dịch */
+.translationBanner_switcherItem.no-translation {
+    background: #f3f4f6;
+    border-color: #e5e7eb;
+    border-style: dashed;
+    color: #6b7280;
+}
+.translationBanner_switcherItem.no-translation .translationFlag {
+    opacity: 0.7;
+}
+.translationBanner_switcherItem.no-translation:hover {
+    background: #fff7ed;
+    border-color: #f59e0b;
+    border-style: solid;
+    color: #92400e;
+}
+.translationBanner_switcherItem.no-translation:hover .translationFlag {
+    opacity: 1;
+}
+
+.translationBanner_switcherCheck {
+    color: #10b981;
+    font-size: 0.6875rem;
+    margin-left: 0.1rem;
+}
+
+.translationBanner_switcherCode {
+    line-height: 1;
+    font-size: 0.8125rem;
+}
+
+/* --- Flags (không inline style trong blade) --- */
+.translationFlag {
+    display: inline-block;
+    flex-shrink: 0;
+    vertical-align: middle;
+}
+img.translationFlag {
+    object-fit: cover;
+    border-radius: 3px;
+    border: 1px solid rgba(15, 23, 42, 0.12);
+}
+.translationFlag--sm {
+    width: 22px;
+    height: 15px;
+}
+.translationFlag--md {
+    width: 24px;
+    height: 17px;
+}
+.translationFlag--lg {
+    width: 28px;
+    height: 19px;
+}
+.translationFlag--text {
+    font-size: 0.625rem;
+    font-weight: 700;
+    background: #f3f4f6;
+    padding: 0.1rem 0.35rem;
+    border-radius: 3px;
+    color: #6b7280;
+    border: 1px solid #e5e7eb;
+    line-height: 1.2;
+}
+
+/* --- Nút Bản gốc (chỉ mode banner) --- */
+.translationBanner_btnBack {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    flex-shrink: 0;
+    min-height: 2.25rem;
+    padding: 0.4rem 0.85rem;
+    background: #fff;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #374151;
+    text-decoration: none;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+    white-space: nowrap;
+}
+.translationBanner_btnBack:hover {
+    background: #f9fafb;
+    color: #111827;
+    border-color: #9ca3af;
+}
+
+/* --- Responsive --- */
+@media (max-width: 576px) {
+    .translationBanner {
+        --tb-pad-x: 0.875rem;
+        --tb-pad-y: 0.875rem;
+        font-size: 0.875rem;
+    }
+    .translationBanner_title {
+        font-size: 0.9375rem;
+    }
+    .translationBanner_subtext {
+        font-size: 0.8125rem;
+        max-width: none;
+    }
+    .translationBanner_top {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .translationBanner_btnBack {
+        width: 100%;
+        justify-content: center;
+    }
+    .translationBanner_switcherLabel {
+        width: 100%;
+    }
+}
+
+/* ============================================================
+ * Form fields (chỉ khi body.translation-mode)
+ * ============================================================ */
+
+body.translation-mode {
+    background-color: #fafaf9;
+}
+
+/* Trang translation cần thu gọn nút để tránh chèn hàng ở sidebar hẹp. */
+body.translation-mode .btn {
+    padding: 1rem !important;
+}
+
+/* Trường được phép dịch — xanh lá nhẹ (chỉ input) */
+body.translation-mode input[data-translatable="1"],
+body.translation-mode textarea[data-translatable="1"],
+body.translation-mode select[data-translatable="1"] {
+    background-color: #f0fdf4 !important;
+    border: 1px solid #86efac !important;
+    border-radius: 6px;
+    transition: background-color 0.15s, border-color 0.15s, box-shadow 0.15s;
+}
+
+body.translation-mode input[data-translatable="1"]:focus,
+body.translation-mode textarea[data-translatable="1"]:focus,
+body.translation-mode select[data-translatable="1"]:focus {
+    background-color: #fff !important;
+    border-color: #22c55e !important;
+    box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2) !important;
+}
+
+body.translation-mode [data-translatable="0"][disabled],
+body.translation-mode [data-translatable="0"][readonly] {
+    background-color: #f9fafb !important;
+    color: #6b7280 !important;
+    cursor: not-allowed !important;
+    opacity: 0.88 !important;
+    border-style: dashed !important;
+    border-color: #d1d5db !important;
+}
+
+.translation-hide {
+    display: none !important;
+}
+
+/* Nhãn + nút dịch từng trường */
+body.translation-mode .translation-fieldLabel {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.5rem;
+}
+
+body.translation-mode .translationFieldAiBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.65rem;
+    height: 1.65rem;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #93c5fd;
+    border-radius: 6px;
+    background: #eff6ff;
+    color: #2563eb;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 0.15s, color 0.15s, border-color 0.15s, opacity 0.15s;
+}
+
+body.translation-mode .translationFieldAiBtn:hover:not(:disabled) {
+    background: #2563eb;
+    color: #fff;
+    border-color: #2563eb;
+}
+
+body.translation-mode .translationFieldAiBtn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+body.translation-mode .translationFieldAiBtn i {
+    font-size: 0.8rem;
+    pointer-events: none;
+}
+
+/* Đang dịch — cam (chỉ input) */
+body.translation-mode input[data-translatable="1"].translation-field--translating,
+body.translation-mode textarea[data-translatable="1"].translation-field--translating,
+body.translation-mode select[data-translatable="1"].translation-field--translating {
+    background-color: #fff7ed !important;
+    border: 1px solid #fb923c !important;
+    box-shadow: 0 0 0 2px rgba(251, 146, 60, 0.25) !important;
+    cursor: wait !important;
+}
+
+/* Dịch xong — xanh dương (chỉ input) */
+body.translation-mode input[data-translatable="1"].translation-field--done,
+body.translation-mode textarea[data-translatable="1"].translation-field--done,
+body.translation-mode select[data-translatable="1"].translation-field--done {
+    background-color: #eff6ff !important;
+    border: 1px solid #60a5fa !important;
+}
+
+/* Lỗi — đỏ (chỉ input) */
+body.translation-mode input[data-translatable="1"].translation-field--error,
+body.translation-mode textarea[data-translatable="1"].translation-field--error,
+body.translation-mode select[data-translatable="1"].translation-field--error {
+    background-color: #fef2f2 !important;
+    border: 1px solid #f87171 !important;
+    box-shadow: 0 0 0 2px rgba(248, 113, 113, 0.2) !important;
+}
+
+/* Khóa Lưu / Quay lại / preview chỉ khi «Dịch toàn bộ» */
+body.translation-ai-nav-locked .pageAdminWithRightSidebar_main_rightSidebar_item.buttonAction button[type="submit"],
+body.translation-ai-nav-locked .pageAdminWithRightSidebar_main_rightSidebar_item.buttonAction a.btn-secondary,
+body.translation-ai-nav-locked .translationBanner_btnBack,
+body.translation-ai-nav-locked .js-translation-preview-btn {
+    pointer-events: none !important;
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+    filter: grayscale(0.25);
+}
+
+/* ============================================================
+ * AI translation panel in right sidebar
+ * ============================================================ */
+.translationAiPanel {
+    border: 1px solid #dbeafe;
+    background: linear-gradient(180deg, #eff6ff 0%, #ffffff 100%);
+    border-radius: 10px;
+    padding: 0.9rem;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+}
+
+.translationAiPanel_title {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1e3a8a;
+    margin-bottom: 0.45rem;
+}
+
+.translationAiPanel_desc {
+    font-size: 0.8rem;
+    line-height: 1.45;
+    color: #334155;
+    margin-bottom: 0.75rem;
+}
+
+.translationAiPanel_label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 0.3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.translationAiPanel_select {
+    margin-bottom: 0.65rem;
+    font-size: 0.85rem;
+    border-radius: 7px;
+}
+
+.translationAiPanel_textarea {
+    margin-bottom: 0.65rem;
+    font-size: 0.82rem;
+    line-height: 1.4;
+    border-radius: 7px;
+    resize: vertical;
+}
+
+.translationAiPanel_input {
+    font-size: 0.82rem;
+    border-radius: 7px;
+    margin-bottom: 0.65rem;
+}
+
+.translationAiPanel_actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: 0.45rem;
+    margin-bottom: 0.45rem;
+}
+
+.translationAiPanel_actionBtn {
+    flex: 1 1 calc(50% - 0.25rem);
+    min-width: 5rem;
+    padding: 0.48rem 0.65rem !important;
+    font-size: 0.82rem !important;
+    border-radius: 7px !important;
+    font-weight: 600;
+}
+
+.translationAiPanel_actionBtn--icon {
+    flex: 0 0 auto;
+    min-width: 2.6rem;
+    padding-left: 0.65rem !important;
+    padding-right: 0.65rem !important;
+}
+
+.translationAiPanel_actionBtn--hidden {
+    display: none !important;
+}
+
+.translationAiPanel_hint {
+    font-size: 0.72rem;
+    line-height: 1.45;
+    color: #64748b;
+    margin: 0 0 0.65rem;
+}
+
+.translationAiPanel_inline {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 0.65rem;
+}
+
+.translationAiPanel_smallBtn {
+    white-space: nowrap;
+    padding: 0.5rem 0.7rem !important;
+}
+
+.translationAiPanel_iconBtn {
+    padding: 0.55rem 0.65rem !important;
+    line-height: 1;
+}
+
+.translationAiPanel_tokens {
+    margin-top: -0.3rem;
+    margin-bottom: 0.65rem;
+    font-size: 0.74rem;
+    color: #475569;
+}
+
+.translationAiPanel_tokens code {
+    background: #e2e8f0;
+    color: #0f172a;
+    border-radius: 4px;
+    padding: 0.08rem 0.3rem;
+    margin-right: 0.2rem;
+}
+
+.translationAiPanel_btn {
+    width: 100%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.45rem;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.translationAiPanel_status {
+    margin-top: 0.6rem;
+    min-height: 1.2rem;
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+.translationAiPanel_status.is-loading {
+    color: #92400e;
+}
+.translationAiPanel_status.is-success {
+    color: #047857;
+}
+.translationAiPanel_status.is-error {
+    color: #b91c1c;
+}
+
+.translationAiPanel_debugLabel {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.45rem;
+    margin: 0 0 0.65rem;
+    font-size: 0.78rem;
+    line-height: 1.4;
+    color: #475569;
+    cursor: pointer;
+    user-select: none;
+}
+
+.translationAiPanel_debugLabel input {
+    margin-top: 0.15rem;
+    flex-shrink: 0;
+}
+
+.translationAiPanel_btn--cancel {
+    margin-top: 0.45rem;
+}
+
+.translationAiPanel_progress {
+    margin-top: 0.55rem;
+    height: 6px;
+    border-radius: 999px;
+    background: #e2e8f0;
+    overflow: hidden;
+}
+
+.translationAiPanel_progressBar {
+    height: 100%;
+    width: 0;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #2563eb 0%, #3b82f6 100%);
+    transition: width 0.25s ease;
+}
+
+/* --- Tour: Tùy chọn & Giá — phân biệt bản mẫu gốc vs bản riêng locale --- */
+body.translation-mode .translationTourOptionsShell--master > .card {
+    border: 1px solid #93c5fd;
+    border-radius: 10px;
+    background: linear-gradient(180deg, #eff6ff 0%, #ffffff 52%);
+    box-shadow: 0 2px 10px rgba(37, 99, 235, 0.07);
+}
+body.translation-mode .translationTourOptionsShell--master > .card > .card-header {
+    background: rgba(219, 234, 254, 0.75);
+    border-bottom-color: #93c5fd;
+}
+
+body.translation-mode .translationTourOptionsShell--fork > .card {
+    border: 1px solid #6ee7b7;
+    border-radius: 10px;
+    background: linear-gradient(180deg, #ecfdf5 0%, #ffffff 52%);
+    box-shadow: 0 2px 10px rgba(5, 150, 105, 0.08);
+}
+body.translation-mode .translationTourOptionsShell--fork > .card > .card-header {
+    background: rgba(209, 250, 229, 0.85);
+    border-bottom-color: #6ee7b7;
+}
+
+/*
+ * Tiêu đề «Tùy chọn và Giá»: override titleBox (#fff) nhưng GIỮ layout gốc
+ * (style.scss — h4 width 100%, h4 > * position absolute right:0, FA weight 900).
+ * Blade dùng fa-solid fa-circle-plus để khớp font-weight 900 của theme.
+ */
+body.translation-mode .translationTourOptionsShell > .card > .card-header h4.card-title {
+    color: #111827 !important;
+    font-weight: 600 !important;
+    font-size: 1.025rem !important;
+    letter-spacing: 0.5px !important;
+    width: 100% !important;
+    position: relative !important;
+    padding-right: 2.75rem;
+    box-sizing: border-box;
+    margin-bottom: 0 !important;
+}
+body.translation-mode .translationTourOptionsShell > .card > .card-header h4.card-title > i {
+    font-family: "Font Awesome 6 Free" !important;
+    font-style: normal !important;
+    font-weight: 900 !important;
+    font-size: 1.6rem !important;
+    line-height: 1 !important;
+    position: absolute !important;
+    right: 0 !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    color: #f4d03f !important;
+    cursor: pointer;
+    -webkit-font-smoothing: antialiased;
+}
+body.translation-mode .translationTourOptionsShell > .card > .card-header h4.card-title > i:hover {
+    color: #f1c40f !important;
+}
+
+.translationTourOptionsLegend {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 0.65rem 0.75rem;
+    border-radius: 8px;
+    font-size: 0.8125rem;
+    line-height: 1.45;
+    margin-bottom: 0.85rem;
+}
+.translationTourOptionsLegend > i {
+    flex: 0 0 auto;
+    margin-top: 0.1rem;
+    opacity: 0.9;
+}
+.translationTourOptionsLegend--master {
+    color: #1e3a8a;
+    background: rgba(191, 219, 254, 0.55);
+    border: 1px solid #93c5fd;
+}
+.translationTourOptionsLegend--master > i {
+    color: #2563eb;
+}
+.translationTourOptionsLegend--fork {
+    color: #064e3b;
+    background: rgba(167, 243, 208, 0.55);
+    border: 1px solid #6ee7b7;
+}
+.translationTourOptionsLegend--fork > i {
+    color: #059669;
+}

@@ -1,0 +1,797 @@
+@use "../foundations/tokens" as *;
+
+/* ===========================================================================
+ * sd-footer — Light premium footer
+ * Typography & spacing: docs/design/superdong-design-system.md §4–5, §6–7
+ * =========================================================================== */
+
+@mixin sd-footer-col-title {
+  margin: 0 0 $sd-space-4;
+  font-family: $sd-font-heading;
+  font-size: clamp(0.82rem, 0.76rem + 0.2vw, 0.95rem);
+  font-weight: $sd-fw-extrabold;
+  line-height: 1.25;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $sd-sky-900;
+}
+
+@mixin sd-footer-link {
+  display: inline-flex;
+  padding-block: 0.15rem;
+  font-family: $sd-font-body;
+  font-size: clamp(0.95rem, 0.9rem + 0.12vw, 1rem);
+  font-weight: $sd-fw-regular;
+  line-height: 1.65;
+  color: $sd-slate-700;
+  text-decoration: none;
+  transition: color 0.2s ease;
+
+  @media (hover: hover) {
+    &:hover {
+      color: $sd-sky-700;
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid rgba($sd-sky-500, 0.45);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+@keyframes sd-footer-shimmer {
+  0% { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+
+@keyframes sd-footer-float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(2%, -3%) scale(1.04); }
+}
+
+@keyframes sd-footer-float-alt {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-2.5%, 2%) scale(1.03); }
+}
+
+.sd-footer {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  color: $sd-slate-700;
+  background: $sd-white;
+
+  /* ── Decorative layer ── */
+  &__fx {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  &__wave {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2.25rem;
+    color: $sd-sky-50;
+    opacity: 0.9;
+    filter: drop-shadow(0 1px 0 rgba($sd-sky-300, 0.2));
+  }
+
+  &__mesh {
+    position: absolute;
+    inset: -20% -10%;
+    background:
+      conic-gradient(from 210deg at 18% 22%, rgba($sd-sky-400, 0.12), transparent 38%),
+      conic-gradient(from 30deg at 82% 68%, rgba($sd-sun-500, 0.08), transparent 42%),
+      radial-gradient(ellipse 50% 40% at 50% 0%, rgba($sd-sky-500, 0.07), transparent 70%);
+    opacity: 0.7;
+    mix-blend-mode: multiply;
+  }
+
+  &__orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(48px);
+    opacity: 0.5;
+
+    &--sky {
+      top: -8%;
+      right: -4%;
+      width: min(42vw, 28rem);
+      height: min(42vw, 28rem);
+      background: radial-gradient(circle, rgba($sd-sky-400, 0.4) 0%, rgba($sd-sky-500, 0.06) 55%, transparent 72%);
+      animation: sd-footer-float 18s ease-in-out infinite;
+    }
+
+    &--sun {
+      bottom: 8%;
+      left: -6%;
+      width: min(36vw, 22rem);
+      height: min(36vw, 22rem);
+      background: radial-gradient(circle, rgba($sd-sun-500, 0.24) 0%, rgba($sd-sun-500, 0.05) 58%, transparent 72%);
+      animation: sd-footer-float-alt 22s ease-in-out infinite;
+    }
+  }
+
+  /* ── Main shell ── */
+  &__shell {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid rgba($sd-slate-300, 0.35);
+    background:
+      radial-gradient(ellipse 80% 55% at 100% 0%, rgba($sd-sky-400, 0.09), transparent 52%),
+      radial-gradient(ellipse 60% 45% at 0% 100%, rgba($sd-sun-500, 0.05), transparent 50%),
+      linear-gradient(180deg, rgba($sd-sky-50, 0.5) 0%, $sd-white 40%, $sd-cloud-50 100%);
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background:
+        linear-gradient(
+          90deg,
+          transparent 0%,
+          $sd-sky-500 18%,
+          $sd-sky-400 42%,
+          rgba($sd-sun-500, 0.85) 58%,
+          $sd-sky-400 78%,
+          transparent 100%
+        );
+      background-size: 200% auto;
+      animation: sd-footer-shimmer 8s linear infinite;
+      opacity: 0.88;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba($sd-sky-700, 0.035) 1px, transparent 1px);
+      background-size: 22px 22px;
+      pointer-events: none;
+      opacity: 0.4;
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, transparent 90%);
+    }
+  }
+
+  &__inner {
+    @include sd-container;
+    position: relative;
+    z-index: 1;
+    padding-block:
+      clamp($sd-space-10, 5vw, 3.5rem)
+      clamp($sd-space-8, 4vw, $sd-space-10);
+  }
+
+  /* ── Mast: logo + liên hệ ── */
+  &__mast {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: clamp($sd-space-5, 2.5vw, $sd-space-6);
+    margin-bottom: $sd-mast-stack-mb;
+    padding-bottom: clamp($sd-space-6, 3vw, $sd-space-8);
+    border-bottom: 1px solid rgba($sd-slate-300, 0.4);
+
+    @include sd-bp($sd-bp-md) {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: clamp($sd-space-4, 2vw, $sd-space-6);
+    }
+  }
+
+  &__logo {
+    display: inline-flex;
+    align-items: center;
+    gap: $sd-space-4;
+    align-self: flex-start;
+    flex-shrink: 0;
+    text-decoration: none;
+    color: inherit;
+
+    @include sd-bp($sd-bp-md) {
+      align-self: center;
+      width: auto;
+      max-width: none;
+    }
+
+    .sd-header__logo-mark {
+      margin: 0;
+      flex-shrink: 0;
+      width: 3.35rem;
+      height: 3.35rem;
+      border-radius: 1rem;
+      font-size: 1.28rem;
+      box-shadow: 0 10px 24px -10px rgba($sd-sky-700, 0.45);
+    }
+
+    &:focus-visible {
+      outline: 2px solid rgba($sd-sky-500, 0.45);
+      outline-offset: 4px;
+      border-radius: $sd-radius-sm;
+    }
+  }
+
+  &__logo-text {
+    display: flex;
+    flex-direction: column;
+    gap: $sd-space-1;
+
+    strong {
+      font-family: $sd-font-heading;
+      font-size: clamp(1.15rem, 1.05rem + 0.35vw, 1.38rem);
+      font-weight: $sd-fw-extrabold;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: $sd-slate-900;
+    }
+
+    span {
+      font-family: $sd-font-body;
+      font-size: 0.78rem;
+      font-weight: $sd-fw-medium;
+      line-height: 1.2;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: $sd-slate-500;
+    }
+  }
+
+  &__reach {
+    display: flex;
+    flex-direction: column;
+    gap: $sd-space-4;
+    flex: 1 1 auto;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    @include sd-bp($sd-bp-sm) {
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+      gap: clamp($sd-space-6, 3.5vw, $sd-space-10);
+    }
+
+    @include sd-bp($sd-bp-md) {
+      flex: 0 1 auto;
+      flex-wrap: nowrap;
+      margin-left: auto;
+      gap: clamp($sd-space-8, 4vw, 2.75rem);
+    }
+
+    > li {
+      flex: 0 0 auto;
+      width: max-content;
+      max-width: 100%;
+    }
+  }
+
+  &__reach-item {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: $sd-space-5;
+    width: max-content;
+    max-width: 100%;
+    padding: 0;
+    text-decoration: none;
+    color: inherit;
+    transition: opacity 0.2s ease;
+
+    @include sd-bp($sd-bp-sm) {
+      align-items: center;
+      gap: clamp($sd-space-4, 1.5vw, $sd-space-5);
+    }
+
+    @media (hover: hover) {
+      &:hover:not(.sd-footer__reach-item--static) {
+        opacity: 1;
+
+        .sd-footer__reach-icon {
+          transform: rotate(0deg) translateY(-1px);
+
+          &::after {
+            opacity: 1;
+          }
+        }
+      }
+    }
+
+    &:focus-visible:not(.sd-footer__reach-item--static) {
+      outline: 2px solid rgba($sd-sky-500, 0.45);
+      outline-offset: 4px;
+      border-radius: $sd-radius-sm;
+    }
+
+    &--static {
+      cursor: default;
+    }
+
+    &--phone .sd-footer__reach-icon {
+      color: $sd-white;
+      background: linear-gradient(145deg, $sd-sky-400 0%, $sd-sky-700 100%);
+      box-shadow:
+        0 10px 22px -10px rgba($sd-sky-700, 0.55),
+        inset 0 1px 0 rgba($sd-white, 0.35);
+
+      &::before {
+        background: radial-gradient(circle at 30% 25%, rgba($sd-white, 0.45) 0%, transparent 55%);
+      }
+
+      &::after {
+        box-shadow: 0 0 0 2px rgba($sd-sky-400, 0.35);
+      }
+    }
+
+    &--mail .sd-footer__reach-icon {
+      color: $sd-white;
+      background: linear-gradient(145deg, #f87171 0%, #dc2626 100%);
+      box-shadow:
+        0 10px 22px -10px rgba(#dc2626, 0.45),
+        inset 0 1px 0 rgba($sd-white, 0.32);
+
+      &::before {
+        background: radial-gradient(circle at 30% 25%, rgba($sd-white, 0.4) 0%, transparent 55%);
+      }
+
+      &::after {
+        box-shadow: 0 0 0 2px rgba(#f87171, 0.38);
+      }
+    }
+
+    &--pin .sd-footer__reach-icon {
+      color: $sd-white;
+      background: linear-gradient(145deg, $sd-sun-500 0%, #d97706 100%);
+      box-shadow:
+        0 10px 22px -10px rgba(#d97706, 0.42),
+        inset 0 1px 0 rgba($sd-white, 0.32);
+
+      &::before {
+        background: radial-gradient(circle at 30% 25%, rgba($sd-white, 0.42) 0%, transparent 55%);
+      }
+
+      &::after {
+        box-shadow: 0 0 0 2px rgba($sd-sun-500, 0.38);
+      }
+    }
+  }
+
+  &__reach-icon {
+    position: relative;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 2.85rem;
+    height: 2.85rem;
+    border-radius: 0.85rem;
+    transform: rotate(-6deg);
+    transition: transform 0.28s cubic-bezier(0.34, 1.2, 0.64, 1), box-shadow 0.22s ease;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: -3px;
+      border-radius: calc(0.85rem + 3px);
+      opacity: 0.75;
+      pointer-events: none;
+      transition: opacity 0.22s ease;
+    }
+
+    svg {
+      position: relative;
+      z-index: 1;
+      width: 1.15rem;
+      height: 1.15rem;
+      filter: drop-shadow(0 1px 1px rgba(15, 23, 42, 0.12));
+    }
+  }
+
+  &__reach-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    flex: 0 1 auto;
+    padding-top: 0.15rem;
+
+    @include sd-bp($sd-bp-sm) {
+      padding-top: 0;
+    }
+  }
+
+  &__reach-label {
+    font-family: $sd-font-body;
+    font-size: 0.72rem;
+    font-weight: $sd-fw-medium;
+    line-height: 1.2;
+    letter-spacing: 0.04em;
+    color: $sd-slate-500;
+    white-space: nowrap;
+  }
+
+  &__reach-value {
+    font-family: $sd-font-heading;
+    font-size: clamp(0.9rem, 0.84rem + 0.2vw, 1rem);
+    font-weight: $sd-fw-bold;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    color: $sd-slate-900;
+    white-space: nowrap;
+  }
+
+  /* ── Content grid ── */
+  &__grid {
+    display: grid;
+    gap: clamp($sd-space-8, 4vw, $sd-space-10);
+
+    @include sd-bp($sd-bp-md) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp($sd-space-6, 3vw, $sd-space-8);
+
+      .sd-footer__brand {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @include sd-bp($sd-bp-xl) {
+      grid-template-columns: 1.4fr repeat(2, 0.75fr) 0.95fr;
+      gap: clamp($sd-space-6, 3vw, 2.75rem);
+
+      .sd-footer__brand {
+        grid-column: auto;
+      }
+    }
+  }
+
+  &__brand {
+    max-width: 26rem;
+  }
+
+  &__tagline {
+    margin: 0 0 $sd-space-5;
+    @include sd-type-body-section;
+    line-height: 1.65;
+    color: $sd-slate-500;
+  }
+
+  &__certs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $sd-space-2;
+    margin-bottom: $sd-space-5;
+
+    span {
+      display: inline-flex;
+      align-items: center;
+      min-height: 1.75rem;
+      padding: 0.2rem 0.65rem;
+      border-radius: $sd-radius-pill;
+      @include sd-type-meta;
+      font-size: clamp(0.78rem, 0.74rem + 0.1vw, 0.82rem);
+      font-weight: $sd-fw-medium;
+      line-height: 1.4;
+      letter-spacing: 0.02em;
+      color: $sd-slate-500;
+      background: rgba($sd-white, 0.88);
+      border: 1px solid rgba($sd-slate-300, 0.4);
+    }
+  }
+
+  &__social {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: $sd-space-2;
+
+    &-tile {
+      display: grid;
+      place-items: center;
+      width: 2.65rem;
+      height: 2.65rem;
+      border-radius: 12px;
+      background: $sd-white;
+      border: 1px solid rgba($sd-slate-300, 0.42);
+      box-shadow: 0 2px 8px -4px rgba(15, 23, 42, 0.12);
+      text-decoration: none;
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+
+      svg {
+        display: block;
+        width: 1.35rem;
+        height: 1.35rem;
+      }
+
+      @media (hover: hover) {
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: $sd-shadow-sm;
+          border-color: rgba($sd-sky-300, 0.55);
+        }
+      }
+
+      &:focus-visible {
+        outline: 2px solid rgba($sd-sky-500, 0.45);
+        outline-offset: 2px;
+      }
+    }
+  }
+
+  &__col-title {
+    @include sd-footer-col-title;
+  }
+
+  &__links {
+    display: grid;
+    gap: $sd-space-3;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    a {
+      @include sd-footer-link;
+    }
+  }
+
+  &__contact {
+    display: grid;
+    gap: $sd-space-4;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+      display: flex;
+      align-items: flex-start;
+      gap: $sd-space-3;
+    }
+  }
+
+  &__contact-body {
+    @include sd-type-meta;
+    font-size: clamp(0.95rem, 0.9rem + 0.12vw, 1rem);
+    line-height: 1.65;
+    color: $sd-slate-500;
+
+    strong {
+      display: block;
+      margin-bottom: $sd-space-1;
+      font-family: $sd-font-heading;
+      font-size: clamp(0.92rem, 0.88rem + 0.12vw, 1rem);
+      font-weight: $sd-fw-bold;
+      line-height: 1.35;
+      color: $sd-slate-900;
+    }
+
+    a {
+      font-weight: $sd-fw-medium;
+      color: $sd-sky-700;
+      text-decoration: none;
+      transition: color 0.2s ease;
+
+      @media (hover: hover) {
+        &:hover {
+          color: $sd-sky-800;
+          text-decoration: underline;
+        }
+      }
+
+      &:focus-visible {
+        outline: 2px solid rgba($sd-sky-500, 0.45);
+        outline-offset: 2px;
+        border-radius: 4px;
+      }
+    }
+  }
+
+  &__contact-icon {
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: $sd-radius-md;
+    color: $sd-sky-600;
+    background: rgba($sd-sky-500, 0.08);
+    border: 1px solid rgba($sd-sky-300, 0.35);
+
+    svg {
+      width: 1.15rem;
+      height: 1.15rem;
+    }
+  }
+
+  /* ── Legal bar ── */
+  &__legal {
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(180deg, rgba($sd-cloud-100, 0.95) 0%, $sd-cloud-100 100%);
+    border-top: 1px solid rgba($sd-slate-300, 0.4);
+  }
+
+  &__legal-inner {
+    @include sd-container;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $sd-space-4;
+    padding-block: $sd-space-5 $sd-space-6;
+    text-align: center;
+
+    @include sd-bp($sd-bp-md) {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      align-items: center;
+      gap: $sd-space-4 $sd-space-6;
+      padding-block: $sd-space-5 $sd-space-6;
+      text-align: left;
+    }
+  }
+
+  &__copy {
+    margin: 0;
+    @include sd-type-meta;
+    font-size: clamp(0.78rem, 0.74rem + 0.1vw, 0.82rem);
+    line-height: 1.4;
+    color: $sd-slate-500;
+    flex-shrink: 0;
+
+    @include sd-bp($sd-bp-md) {
+      justify-self: start;
+      min-width: 0;
+      text-align: left;
+    }
+  }
+
+  &__legal-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: $sd-space-2 $sd-space-4;
+
+    @include sd-bp($sd-bp-md) {
+      position: static;
+      transform: none;
+      justify-self: center;
+      justify-content: center;
+      flex-wrap: nowrap;
+    }
+
+    a {
+      padding-block: 0.15rem;
+      font-family: $sd-font-body;
+      font-size: clamp(0.78rem, 0.74rem + 0.1vw, 0.82rem);
+      font-weight: $sd-fw-medium;
+      line-height: 1.4;
+      color: $sd-slate-500;
+      text-decoration: none;
+      transition: color 0.2s ease;
+
+      @media (hover: hover) {
+        &:hover {
+          color: $sd-sky-700;
+        }
+      }
+
+      &:focus-visible {
+        outline: 2px solid rgba($sd-sky-500, 0.45);
+        outline-offset: 2px;
+        border-radius: 4px;
+      }
+    }
+  }
+
+  &__payments {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: $sd-space-2;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    @include sd-bp($sd-bp-md) {
+      justify-self: end;
+      justify-content: flex-end;
+      max-width: 100%;
+      min-width: 0;
+    }
+  }
+
+  &__pay {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 3.5rem;
+    height: 2.125rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: 8px;
+    background: $sd-white;
+    border: 1px solid rgba($sd-slate-300, 0.45);
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+  }
+
+  &__pay-word {
+    font-family: $sd-font-heading;
+    font-size: 0.82rem;
+    font-weight: $sd-fw-extrabold;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+  }
+
+  &__pay-mark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 0;
+
+    svg {
+      display: block;
+      width: auto;
+      height: 1.2rem;
+    }
+  }
+
+  &__pay--visa .sd-footer__pay-word {
+    font-size: 0.95rem;
+    font-style: italic;
+    font-weight: $sd-fw-extrabold;
+    letter-spacing: -0.05em;
+    color: #1a1f71;
+  }
+
+  &__pay--momo .sd-footer__pay-word {
+    font-size: 0.88rem;
+    color: #a50064;
+  }
+
+  &__pay--vcb .sd-footer__pay-word {
+    font-size: 0.9rem;
+    font-weight: $sd-fw-extrabold;
+    color: #006b3f;
+  }
+
+  &__pay--zalopay .sd-footer__pay-word {
+    font-size: 0.78rem;
+    font-weight: $sd-fw-bold;
+    color: #0068ff;
+
+    &::first-letter {
+      font-weight: $sd-fw-extrabold;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sd-footer {
+    &__orb--sky,
+    &__orb--sun {
+      animation: none;
+    }
+
+    &__shell::before {
+      animation: none;
+      background-size: auto;
+    }
+  }
+}

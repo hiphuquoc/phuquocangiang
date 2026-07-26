@@ -1,0 +1,269 @@
+{
+  "moved": [
+    {
+      "from": "resources/sources/main/home-v2/_tokens.scss",
+      "to": "resources/sources/superdong/foundations/_tokens.scss"
+    },
+    {
+      "from": "resources/sources/main/home-v2/_base.scss",
+      "to": "resources/sources/superdong/foundations/_base.scss"
+    },
+    {
+      "from": "resources/sources/main/home-v2/_utilities.scss",
+      "to": "resources/sources/superdong/foundations/_utilities.scss"
+    },
+    {
+      "from": "resources/sources/main/home-v2/_topbar.scss",
+      "to": "resources/sources/superdong/layout/_topbar.scss"
+    },
+    {
+      "from": "resources/sources/main/home-v2/_header.scss",
+      "to": "resources/sources/superdong/layout/_header.scss"
+    },
+    {
+      "from": "resources/sources/main/home-v2/_footer.scss",
+      "to": "resources/sources/superdong/layout/_footer.scss"
+    },
+    {
+      "from": "resources/sources/main/home-v2/_float.scss",
+      "to": "resources/sources/superdong/layout/_float.scss"
+    },
+    {
+      "from": "resources/sources/main/home-v2/_region-switcher.scss",
+      "to": "resources/sources/superdong/layout/_region-switcher.scss"
+    },
+    {
+      "from": "resources/sources/main/home-v2/_section-head.scss",
+      "to": "resources/sources/superdong/components/_section-head.scss"
+    },
+    {
+      "from": "resources/sources/main/home-v2/_booking.scss",
+      "to": "resources/sources/superdong/components/_booking.scss"
+    },
+    {
+      "from": "resources/sources/main/home-v2/_components.scss",
+      "to": "resources/sources/superdong/components/_cards.scss"
+    },
+    {
+      "from": "resources/sources/main/home-v2/_hero.scss",
+      "to": "resources/sources/superdong/sections/_hero.scss"
+    },
+    {
+      "from": "resources/sources/main/home-v2/_sections.scss",
+      "to": "resources/sources/superdong/sections/_sections.scss"
+    },
+    {
+      "from": "resources/sources/main/home-v2/_travel-guide.scss",
+      "to": "resources/sources/superdong/sections/_travel-guide.scss"
+    },
+    {
+      "from": "resources/sources/main/home-v2/_vehicle-rental.scss",
+      "to": "resources/sources/superdong/sections/_vehicle-rental.scss"
+    },
+    {
+      "from": "resources/sources/main/home-v2/_gallery.scss",
+      "to": "resources/sources/superdong/sections/_gallery.scss"
+    },
+    {
+      "from": "resources/sources/main/home-v2/_reviews.scss",
+      "to": "resources/sources/superdong/sections/_reviews.scss"
+    },
+    {
+      "from": "resources/sources/main/home-v2/_faq.scss",
+      "to": "resources/sources/superdong/sections/_faq.scss"
+    },
+    {
+      "from": "resources/sources/main/home-v2/_letter.scss",
+      "to": "resources/sources/superdong/sections/_letter.scss"
+    },
+    {
+      "from": "resources/views/main/home-v2/layouts/app.blade.php",
+      "to": "resources/views/superdong/layout/app.blade.php"
+    },
+    {
+      "from": "resources/views/main/home-v2/partials/header.blade.php",
+      "to": "resources/views/superdong/chrome/header.blade.php"
+    },
+    {
+      "from": "resources/views/main/home-v2/partials/footer.blade.php",
+      "to": "resources/views/superdong/chrome/footer.blade.php"
+    },
+    {
+      "from": "resources/views/main/home-v2/partials/topbar.blade.php",
+      "to": "resources/views/superdong/chrome/topbar.blade.php"
+    },
+    {
+      "from": "resources/views/main/home-v2/partials/mobile-nav.blade.php",
+      "to": "resources/views/superdong/chrome/mobile-nav.blade.php"
+    },
+    {
+      "from": "resources/views/main/home-v2/partials/float.blade.php",
+      "to": "resources/views/superdong/chrome/float.blade.php"
+    },
+    {
+      "from": "resources/views/main/home-v2/partials/svg-sprite.blade.php",
+      "to": "resources/views/superdong/assets/svg-sprite.blade.php"
+    },
+    {
+      "from": "resources/views/main/home-v2/partials/footer-icons.blade.php",
+      "to": "resources/views/superdong/assets/footer-icons.blade.php"
+    },
+    {
+      "from": "resources/views/main/home-v2/partials/footer-icon-defs.blade.php",
+      "to": "resources/views/superdong/assets/footer-icon-defs.blade.php"
+    },
+    {
+      "from": "resources/views/main/home-v2/partials/section-head.blade.php",
+      "to": "resources/views/superdong/ui/section-head.blade.php"
+    },
+    {
+      "from": "resources/views/main/home-v2/partials/product-card.blade.php",
+      "to": "resources/views/superdong/ui/cards/product.blade.php"
+    },
+    {
+      "from": "resources/views/main/home-v2/partials/experience-card.blade.php",
+      "to": "resources/views/superdong/ui/cards/experience.blade.php"
+    },
+    {
+      "from": "resources/views/main/home-v2/partials/gallery-lightbox.blade.php",
+      "to": "resources/views/superdong/ui/gallery-lightbox.blade.php"
+    },
+    {
+      "from": "resources/views/main/home-v2/partials/booking.blade.php",
+      "to": "resources/views/superdong/sections/booking/widget.blade.php"
+    },
+    {
+      "from": "resources/views/main/home-v2/partials/hero-shell.blade.php",
+      "to": "resources/views/superdong/sections/hero/shell.blade.php"
+    },
+    {
+      "from": "resources/views/main/home-v2/partials/hero.blade.php",
+      "to": "resources/views/superdong/sections/hero/content.blade.php"
+    },
+    {
+      "from": "resources/views/main/home-v2/partials/trust.blade.php",
+      "to": "resources/views/superdong/sections/trust.blade.php"
+    },
+    {
+      "from": "resources/views/main/home-v2/partials/cta.blade.php",
+      "to": "resources/views/superdong/sections/cta.blade.php"
+    },
+    {
+      "from": "resources/views/main/home-v2/partials/faq.blade.php",
+      "to": "resources/views/superdong/sections/faq.blade.php"
+    },
+    {
+      "from": "resources/views/main/home-v2/partials/reviews.blade.php",
+      "to": "resources/views/superdong/sections/reviews.blade.php"
+    },
+    {
+      "from": "resources/views/main/home-v2/partials/gallery.blade.php",
+      "to": "resources/views/superdong/sections/gallery.blade.php"
+    },
+    {
+      "from": "resources/views/main/home-v2/partials/travel-guide.blade.php",
+      "to": "resources/views/superdong/sections/travel-guide.blade.php"
+    },
+    {
+      "from": "resources/views/main/home-v2/partials/vehicle-rental.blade.php",
+      "to": "resources/views/superdong/sections/vehicle-rental.blade.php"
+    },
+    {
+      "from": "resources/views/main/home-v2/partials/quick.blade.php",
+      "to": "resources/views/main/home-v2/sections/quick.blade.php"
+    },
+    {
+      "from": "resources/views/main/home-v2/partials/ferry.blade.php",
+      "to": "resources/views/main/home-v2/sections/ferry.blade.php"
+    },
+    {
+      "from": "resources/views/main/home-v2/partials/tours.blade.php",
+      "to": "resources/views/main/home-v2/sections/tours.blade.php"
+    },
+    {
+      "from": "resources/views/main/home-v2/partials/hotels.blade.php",
+      "to": "resources/views/main/home-v2/sections/hotels.blade.php"
+    },
+    {
+      "from": "resources/views/main/home-v2/partials/services.blade.php",
+      "to": "resources/views/main/home-v2/sections/services.blade.php"
+    },
+    {
+      "from": "resources/views/main/home-v2/partials/route-guide.blade.php",
+      "to": "resources/views/main/home-v2/sections/route-guide.blade.php"
+    },
+    {
+      "from": "resources/views/main/home-v2/partials/blog.blade.php",
+      "to": "resources/views/main/home-v2/sections/blog.blade.php"
+    },
+    {
+      "from": "resources/views/main/home-v2/components/field-date.blade.php",
+      "to": "resources/views/superdong/form/fields/field-date.blade.php"
+    },
+    {
+      "from": "resources/views/main/home-v2/components/field-stepper.blade.php",
+      "to": "resources/views/superdong/form/fields/field-stepper.blade.php"
+    },
+    {
+      "from": "resources/views/main/home-v2/components/field-options.blade.php",
+      "to": "resources/views/superdong/form/fields/field-options.blade.php"
+    },
+    {
+      "from": "resources/views/main/home-v2/components/field-chips.blade.php",
+      "to": "resources/views/superdong/form/fields/field-chips.blade.php"
+    },
+    {
+      "from": "resources/views/main/home-v2/components/field-passengers.blade.php",
+      "to": "resources/views/superdong/form/fields/field-passengers.blade.php"
+    },
+    {
+      "from": "resources/views/main/home-v2/components/field-select.blade.php",
+      "to": "resources/views/superdong/form/fields/field-select.blade.php"
+    },
+    {
+      "from": "resources/views/main/home-v2/components/field-route.blade.php",
+      "to": "resources/views/superdong/form/fields/field-route.blade.php"
+    },
+    {
+      "from": "resources/views/main/home-v2/components/field-date-picker.blade.php",
+      "to": "resources/views/superdong/form/fields/field-date-picker.blade.php"
+    }
+  ],
+  "updated": [
+    "resources/sources/superdong/layout/_topbar.scss",
+    "resources/sources/superdong/layout/_header.scss",
+    "resources/sources/superdong/layout/_footer.scss",
+    "resources/sources/superdong/layout/_float.scss",
+    "resources/sources/superdong/layout/_region-switcher.scss",
+    "resources/sources/superdong/components/_section-head.scss",
+    "resources/sources/superdong/components/_booking.scss",
+    "resources/sources/superdong/components/_cards.scss",
+    "resources/sources/superdong/sections/_hero.scss",
+    "resources/sources/superdong/sections/_sections.scss",
+    "resources/sources/superdong/sections/_travel-guide.scss",
+    "resources/sources/superdong/sections/_vehicle-rental.scss",
+    "resources/sources/superdong/sections/_gallery.scss",
+    "resources/sources/superdong/sections/_reviews.scss",
+    "resources/sources/superdong/sections/_faq.scss",
+    "resources/sources/superdong/sections/_letter.scss",
+    "resources/views/superdong/layout/app.blade.php",
+    "resources/views/superdong/chrome/footer.blade.php",
+    "resources/views/superdong/sections/booking/widget.blade.php",
+    "resources/views/superdong/sections/hero/content.blade.php",
+    "resources/views/superdong/sections/hero/shell.blade.php",
+    "resources/views/superdong/sections/gallery.blade.php",
+    "resources/views/main/home-v2/index.blade.php",
+    "resources/views/main/home-v2/sections/hotels.blade.php",
+    "resources/views/main/home-v2/sections/ferry.blade.php",
+    "resources/views/main/home-v2/sections/tours.blade.php",
+    "resources/views/main/home-v2/sections/quick.blade.php",
+    "resources/views/main/home-v2/sections/services.blade.php",
+    "resources/views/main/home-v2/sections/blog.blade.php",
+    "resources/views/main/home-v2/sections/route-guide.blade.php",
+    "resources/sources/superdong.scss",
+    "resources/sources/main/home-v2.scss",
+    "vite.config.js",
+    "resources/views/main/home-v2/layouts/app.blade.php (stub)"
+  ],
+  "errors": []
+}

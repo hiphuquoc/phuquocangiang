@@ -1,0 +1,64 @@
+@use "tokens" as *;
+
+// ─── Page sections (listing rhythm) ────────────────────────────────────────
+// @see docs/design/layout-spacing-grid.md §9
+
+.sd-section {
+  position: relative;
+  @include sd-section-padding;
+
+  & + & {
+    border-top: 1px solid rgba($sd-slate-900, 0.06);
+  }
+
+  &--alt {
+    background: linear-gradient(180deg, $sd-sky-50 0%, $sd-cloud-50 100%);
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: -120px;
+      width: min(380px, 50vw);
+      height: min(380px, 50vw);
+      transform: translateY(-50%);
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba($sd-sky-400, 0.14), transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+  }
+
+  &--dark {
+    background: $sd-sky-950;
+    color: rgba($sd-white, 0.88);
+  }
+
+  &--feature {
+    @include sd-section-padding-feature;
+  }
+
+  &__inner {
+    @include sd-container;
+    position: relative;
+    z-index: 1;
+  }
+}
+
+// ─── Listing grids ──────────────────────────────────────────────────────────
+
+.sd-product-grid {
+  @include sd-product-grid-base;
+
+  &--2 {
+    @include sd-product-grid-cols-2;
+  }
+
+  &--3 {
+    @include sd-product-grid-cols-3;
+  }
+
+  &--4 {
+    @include sd-product-grid-cols-4;
+  }
+}

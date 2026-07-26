@@ -1,0 +1,365 @@
+*, ::after, ::before {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-size: 1rem;
+    line-height: 1.6rem;
+    font-weight: 500;
+    font-family: $fontText;
+    color: $colorText;
+    @media (max-width: 1023px) {
+        background: #fff;
+        font-size: 0.975rem;
+    }
+    @media (max-width: 767px) {
+        background: #fff;
+        font-size: 0.95rem;
+    }
+}
+
+p {
+    margin-bottom: 0.5rem;
+    color: $colorText;
+    @media(max-width: 577px){
+        margin-bottom: 0.25rem;
+    }
+}
+
+a {
+    text-decoration: none;
+    color: $colorLv1;
+    &:hover {
+        color: $colorLv2;
+    }
+}
+
+h2 {
+    margin-bottom: 0.5rem;
+    font-family: $fontSegoeBold;
+    line-height: 1.4;
+    font-size: 1.3rem;
+}
+
+h3 {
+    font-size: 1.2rem;
+    @media(max-width: 1023px){
+        font-size: 1.175rem;
+    }
+    @media(max-width: 577px){
+        font-size: 1.15rem;
+    }
+}
+
+h4 {
+    font-size: 1.1rem;
+}
+
+h5 {
+    font-size: 1.05rem;
+}
+
+h3, h4, h5, h6 {
+    margin-bottom: 0.5rem;
+    font-family: $fontTitle;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    text-align: left;
+    line-height: 1.5;
+    @media(max-width: 1023px){
+        line-height: 1.45;
+    }
+    @media(max-width: 1023px){
+        line-height: 1.4;
+    }
+}
+
+ul, ol {
+    margin: 0.5rem 0 0.5rem 1rem;
+    @media(max-width: 577px){
+        margin: 0.25rem 0 0.25rem 0.75rem;
+    }
+}
+
+img {
+    max-width: 100%;
+}
+
+// $folderFont : '/fonts/';
+// @font-face{
+// 	font-family:'SVN-SegoeUI';
+// 	font-style:normal;
+// 	font-weight:500;
+// 	src:url($folderFont+"svn_segoe_ui.ttf");
+// }
+table {
+    width: 100%;
+    border-collapse: collapse;
+    &:not(.noResponsive){
+        min-width: 600px;
+    }
+    h3 {
+        font-size: 1rem;
+        margin-bottom: 0;
+    }
+}
+
+.customScrollBar-y {
+    width: 100%;
+    overflow-y: scroll !important;
+    &::-webkit-scrollbar {
+      background-color: transparent;
+      width: 5px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: $bg-06;
+      border-radius: 1000px;
+      -webkit-box-shadow: inset 0 0 6px $bg-04;
+    }
+    &::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 6px $bg-04;
+      border-radius: 10px;
+      background: transparent;
+    }
+  }
+  .customScrollBar-x {
+    width: 100%;
+    overflow-x: scroll !important;
+    &::-webkit-scrollbar {
+      background-color: transparent;
+      height: 5px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: $bg-06;
+      border-radius: 1000px;
+      -webkit-box-shadow: inset 0 0 6px #fff;
+    }
+    &::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 6px #fff;
+      border-radius: 10px;
+      background: transparent;
+    }
+  }
+
+.fa-regular, .far {
+    font-weight: 900 !important;
+}
+
+.container {
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    @media (max-width: 767px) {
+        padding: 0 1rem;
+    }
+    @media (max-width: 567px) {
+        padding: 0 0.75rem;
+    }
+}
+
+.width100 {
+    width: 100% !important;
+}
+
+.maxLine_1, .maxLine_2, .maxLine_3, .maxLine_4, .maxLine_5 {
+	display: -webkit-box;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	-webkit-box-orient: vertical;
+}
+.maxLine_1 {
+	-webkit-line-clamp: 1;
+}
+.maxLine_2 {
+	-webkit-line-clamp: 2;
+}
+.maxLine_3 {
+	-webkit-line-clamp: 3;
+}
+.maxLine_4 {
+	-webkit-line-clamp: 4;
+}
+.maxLine_5 {
+	-webkit-line-clamp: 5;
+}
+
+button {
+    background: $colorSLv1;
+    // border: 1px solid $bg-05;
+    border: none;
+    padding: 10px 12px;
+    font-size: 0.95rem;
+    font-weight: bold;
+    border-radius: 3px;
+    box-shadow: 0 1px 3px $bg-07;
+    cursor: pointer;
+    &:hover {
+        background: $colorSLv2;
+    }
+}
+
+.backgroundFull {
+    background: #fff;
+    padding: 1rem;
+    box-shadow: 0 0 5px $bg-04;
+    border-radius: 7px;
+    @media (max-width: 577px) {
+        padding: 0;
+        box-shadow: none;
+    }
+}
+
+.hide-767 {
+    display: block !important;
+    @media (max-width: 767px){
+        display: none !important;
+    }
+}
+
+.hide-990 {
+    display: block !important;
+    @media (max-width: 990px){
+        display: none !important;
+    }
+}
+
+.hide-1199 {
+    display: block !important;
+    @media (max-width: 1199px){
+        display: none !important;
+    }
+}
+
+.show-767 {
+    display: none !important;
+    @media (max-width: 767px){
+        display: block !important;
+    }
+}
+
+.show-990 {
+    display: none !important;
+    @media (max-width: 990px){
+        display: block !important;
+    }
+}
+
+.show-1199 {
+    display: none !important;
+    @media (max-width: 1199px){
+        display: block !important;
+    }
+}
+
+.blurBackground {
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
+}
+
+label {
+    // font-weight: 600;
+    font-size: 0.925rem;
+    display: flex;
+    margin-bottom: 0.2rem;
+    display: flex;
+    flex-wrap: wrap;
+    &.required {
+      &:after {
+        content: '*';
+        color: $colorPrice;
+        font-size: 1.1rem;
+        margin-left: 0.25rem;
+      }
+    }
+    &.error {
+      &:after {
+        content: 'Vui lòng kiểm tra lại trường này';
+        color: $colorPrice;
+        font-size: 0.9rem;
+        font-family: $fontTitle;
+        margin-left: 0.25rem;
+      }
+    }
+    &.checkBox {
+        cursor: pointer;
+        margin-bottom: 0;
+        input {
+            width: 20px;
+        }
+        > * {
+            &:not(:first-child){
+            margin-left: 0.5rem;
+            }
+        }
+    }
+}
+
+input, textarea {
+    font-size: 1rem;
+    font-family: $fontText;
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid $bg-05;
+    padding: 0.6rem 1rem;
+    outline: none;
+    background: #fff !important;
+    &:disabled {
+        background: $bg-03 !important;
+    }
+}
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}
+input[type="number"]{
+    /* Firefox */
+    -moz-appearance: textfield;
+    /* Chrome, Safari, Edge, Opera */
+    &::-webkit-outer-spin-button, &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+}
+
+.select2-container--default {
+    .select2-selection--single {
+        border: 1px solid $bg-05 !important;
+        border-radius: 5px !important;
+        height: 42px !important;
+        padding: 0.3rem 0.5rem !important;
+        .select2-selection__arrow {
+            display: none;
+        }
+    }
+    .select2-results>.select2-results__options {
+        width: 100%;
+        overflow-y: scroll;
+        font-size: 0.95rem;
+        &::-webkit-scrollbar {
+          background-color: transparent;
+          width: 7px;
+        }
+        &::-webkit-scrollbar-thumb {
+          background-color: $bg-06;
+          border-radius: 1000px;
+          -webkit-box-shadow: inset 0 0 6px $bg-04;
+        }
+        &::-webkit-scrollbar-track {
+          -webkit-box-shadow: inset 0 0 6px $bg-04;
+          border-radius: 10px;
+          background: transparent;
+        }
+    }
+}
+
+.select2-search--dropdown {
+    padding: 0.6rem !important;
+    .select2-search__field {
+        padding: 0.5rem !important;
+    }
+}

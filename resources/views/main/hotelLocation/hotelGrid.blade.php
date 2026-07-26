@@ -1,0 +1,21 @@
+<div id="js_filter_parent" class="hotelList">
+    @foreach($list as $hotel)
+        @if(!empty($hotel->images)&&$hotel->images->isNotEmpty()&&!empty($hotel->rooms)&&$hotel->rooms->isNotEmpty())
+            @php
+                $displayShow    = 'display:flex;';
+                // if($loop->index>9) $displayShow = 'display:none;';
+            @endphp
+            <div id="js_loadHotelInfo_{{ $hotel->id }}" class="hotelList_item" data-filter-type="{{ \App\Helpers\Charactor::convertStrToUrl($hotel->type_name) }}" style="{{ $displayShow }}">
+                {{-- @include('main.hotelLocation.oneHotel', compact('hotel')) --}}
+                <!-- load Ajax chép đè -->
+                <div style="width:100%;height:230px;display:flex;justify-content:center;align-items:center;">
+                    <img src="{{ config('main.svg.loading_main_nobg')}}" alt="{{ t('hotel_loading_room', ['room' => $hotel->name]) }}" title="{{ t('hotel_loading_room', ['room' => $hotel->name]) }}" style="width:230px;" />
+                </div>
+            </div>
+        @endif
+    @endforeach
+</div>
+<div id="js_filter_hidden" style="display:none;">
+    <!-- chứa phần tử tạm của filter => để hiệu chỉnh nth-child cho chính xác -->
+</div>
+@include('main.hotelLocation.loadingGridBox')

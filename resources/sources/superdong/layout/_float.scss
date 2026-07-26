@@ -1,0 +1,252 @@
+@use "../foundations/tokens" as *;
+
+/* ===========================================================================
+ * sd-float — FAB phone + go-to-top
+ * =========================================================================== */
+
+@keyframes sd-float-ripple-phone {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+
+  100% {
+    transform: scale(2.15);
+    opacity: 0;
+  }
+}
+
+@keyframes sd-float-phone-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(#34d399, 0.5);
+    opacity: 1;
+  }
+
+  100% {
+    box-shadow: 0 0 0 16px rgba(#34d399, 0);
+    opacity: 0;
+  }
+}
+
+@keyframes sd-float-phone-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 8px 22px -6px rgba(#047857, 0.5),
+      0 0 0 0 rgba(#34d399, 0.35),
+      0 0 18px rgba(#34d399, 0.2),
+      inset 0 1px 0 rgba($sd-white, 0.28);
+  }
+
+  50% {
+    box-shadow:
+      0 10px 28px -4px rgba(#047857, 0.58),
+      0 0 0 8px rgba(#34d399, 0.22),
+      0 0 28px 6px rgba(#34d399, 0.32),
+      inset 0 1px 0 rgba($sd-white, 0.32);
+  }
+}
+
+@keyframes sd-float-phone-shake {
+  0%,
+  68%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  70% {
+    transform: rotate(-11deg);
+  }
+
+  72% {
+    transform: rotate(11deg);
+  }
+
+  74% {
+    transform: rotate(-9deg);
+  }
+
+  76% {
+    transform: rotate(9deg);
+  }
+
+  78% {
+    transform: rotate(-5deg);
+  }
+
+  80% {
+    transform: rotate(5deg);
+  }
+
+  82% {
+    transform: rotate(-2deg);
+  }
+
+  84% {
+    transform: rotate(0deg);
+  }
+}
+
+.sd-float {
+  position: fixed;
+  right: clamp(0.85rem, 2vw, 1.35rem);
+  bottom: clamp(0.85rem, 2vw, 1.35rem);
+  z-index: 180;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $sd-space-3;
+
+  &__fab {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 2.875rem;
+    height: 2.875rem;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+
+    @media (hover: hover) {
+      &:hover {
+        transform: translateY(-2px) scale(1.04);
+      }
+    }
+
+    &:focus-visible {
+      outline: 2px solid rgba($sd-white, 0.85);
+      outline-offset: 3px;
+    }
+
+    &--phone {
+      overflow: visible;
+
+      &::before,
+      &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      &::before {
+        animation: sd-float-phone-ring 2.2s ease-out infinite;
+      }
+
+      &::after {
+        animation: sd-float-phone-ring 2.2s ease-out infinite;
+        animation-delay: 1.1s;
+      }
+
+      .sd-float__fab-core {
+        background: linear-gradient(145deg, #34d399 0%, #059669 100%);
+        animation: sd-float-phone-glow 2.2s ease-in-out infinite;
+
+        svg {
+          transform-origin: 55% 55%;
+          animation: sd-float-phone-shake 3.2s ease-in-out infinite;
+        }
+      }
+
+      .sd-float__ripple {
+        inset: 0;
+        filter: blur(1.5px);
+        animation: sd-float-ripple-phone 2.2s ease-out infinite;
+
+        &--delay {
+          animation-delay: 0.73s;
+        }
+
+        &--delay-2 {
+          animation-delay: 1.46s;
+        }
+      }
+    }
+
+    &--top {
+      opacity: 0;
+      transform: translateY(0.5rem) scale(0.92);
+      pointer-events: none;
+
+      &.is-visible {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        pointer-events: auto;
+      }
+
+      .sd-float__fab-core {
+        color: $sd-sky-700;
+        background: linear-gradient(165deg, $sd-white 0%, $sd-sky-50 45%, $sd-sky-100 100%);
+        border: 1.5px solid rgba($sd-sky-400, 0.42);
+        box-shadow:
+          0 8px 22px -10px rgba($sd-sky-600, 0.2),
+          inset 0 1px 0 rgba($sd-white, 0.95);
+      }
+    }
+  }
+
+  &__fab-core {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    color: $sd-white;
+    box-sizing: border-box;
+
+    svg {
+      width: 1.15rem;
+      height: 1.15rem;
+    }
+  }
+
+  &__ripple {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+
+    &--green {
+      background: rgba(#34d399, 0.48);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sd-float__fab--phone {
+    &::before,
+    &::after {
+      animation: none;
+      opacity: 0;
+    }
+
+    .sd-float__fab-core {
+      animation: none;
+      box-shadow:
+        0 8px 22px -8px rgba(#047857, 0.45),
+        inset 0 1px 0 rgba($sd-white, 0.28);
+
+      svg {
+        animation: none;
+      }
+    }
+  }
+
+  .sd-float__ripple {
+    animation: none;
+    opacity: 0;
+  }
+
+  .sd-float__fab--top {
+    transition: opacity 0.2s ease;
+  }
+}

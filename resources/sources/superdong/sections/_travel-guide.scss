@@ -1,0 +1,390 @@
+@use "../foundations/tokens" as *;
+
+/* ===========================================================================
+ * travelGuide — Editorial spread
+ * Typography & spacing: docs/design/superdong-design-system.md §4–5
+ * =========================================================================== */
+.travelGuide {
+  position: relative;
+
+  &_inner {
+    @include sd-split-layout;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    align-items: center;
+
+    @include sd-bp-max($sd-bp-lg) {
+      grid-template-columns: 1fr;
+      gap: $sd-space-6;
+      align-items: stretch;
+    }
+  }
+
+  &_collage {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @include sd-bp-max($sd-bp-lg) {
+      order: 2;
+      padding: 0 $sd-space-4;
+      margin-top: $sd-space-2;
+    }
+  }
+
+  &_collage_stage {
+    position: relative;
+    width: 100%;
+    max-width: 520px;
+    aspect-ratio: 1 / 1;
+    margin: 0 auto;
+    --pxr: 0;
+    --pyr: 0;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.7s ease, transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+
+    @include sd-bp-max($sd-bp-lg) {
+      max-width: 460px;
+    }
+
+    @include sd-bp-max($sd-bp-md) {
+      max-width: 400px;
+    }
+
+    @include sd-bp-max($sd-bp-sm) {
+      max-width: 340px;
+    }
+  }
+
+  &_collage_card {
+    position: absolute;
+    width: 56%;
+    aspect-ratio: 3 / 4;
+    background: $sd-white;
+    border-radius: 4px;
+    padding: 10px 10px 36px;
+    margin: 0;
+    box-shadow:
+      0 2px 4px rgba(15, 23, 42, 0.08),
+      0 18px 38px -16px rgba(15, 23, 42, 0.28);
+    transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+
+    > img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 2px;
+      display: block;
+      margin: 0;
+    }
+
+    &--back {
+      top: 4%;
+      left: 0;
+      transform: rotate(-8deg) translate(calc(var(--pxr) * -5px), calc(var(--pyr) * -3px));
+      z-index: 1;
+    }
+
+    &--mid {
+      top: 22%;
+      left: 22%;
+      transform: rotate(4deg) translate(calc(var(--pxr) * 6px), calc(var(--pyr) * 4px));
+      z-index: 2;
+    }
+
+    &--front {
+      top: 8%;
+      left: 44%;
+      transform: rotate(-2deg) translate(calc(var(--pxr) * 8px), calc(var(--pyr) * 5px));
+      z-index: 3;
+    }
+  }
+
+  &_collage_tape {
+    position: absolute;
+    top: -7px;
+    left: 50%;
+    width: 44%;
+    height: 16px;
+    background: linear-gradient(135deg, rgba(254, 226, 153, 0.88) 0%, rgba(252, 211, 77, 0.65) 100%);
+    border-radius: 1px;
+    box-shadow: 0 2px 4px rgba(113, 63, 18, 0.18);
+    transform: translateX(-50%) rotate(-3deg);
+    pointer-events: none;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: rgba(0, 0, 0, 0.06);
+    }
+
+    &::before { left: 0; }
+    &::after { right: 0; }
+  }
+
+  &_collage_compass {
+    position: absolute;
+    top: -2%;
+    right: -4%;
+    width: 96px;
+    height: 96px;
+    z-index: 4;
+    color: $sd-sky-800;
+    filter: drop-shadow(0 8px 14px rgba(15, 23, 42, 0.2));
+    transform: rotate(calc(var(--pxr) * 12deg + var(--pyr) * 6deg));
+    transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+
+    > svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    @media (max-width: 990px) {
+      width: 78px;
+      height: 78px;
+    }
+
+    @include sd-bp-max($sd-bp-sm) {
+      width: 62px;
+      height: 62px;
+      top: -4%;
+      right: -2%;
+    }
+  }
+
+  &_collage_stamp {
+    position: absolute;
+    bottom: -3%;
+    left: -3%;
+    z-index: 4;
+    width: 96px;
+    height: 96px;
+    border-radius: $sd-radius-pill;
+    background: rgba($sd-white, 0.96);
+    border: 2px dashed rgba($sd-sky-800, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-transform: uppercase;
+    font-family: $sd-font-heading;
+    color: $sd-sky-800;
+    line-height: 1;
+    letter-spacing: 0.12em;
+    font-size: 0.72rem;
+    font-weight: $sd-fw-bold;
+    transform: rotate(-10deg) translate(calc(var(--pxr) * 4px), calc(var(--pyr) * 3px));
+    transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 8px 18px -8px rgba(15, 23, 42, 0.18);
+    pointer-events: none;
+
+    @media (max-width: 990px) {
+      width: 76px;
+      height: 76px;
+      font-size: 0.62rem;
+    }
+
+    @include sd-bp-max($sd-bp-sm) {
+      width: 62px;
+      height: 62px;
+      font-size: 0.55rem;
+      bottom: -4%;
+      left: -1%;
+    }
+
+    &_inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.18rem;
+    }
+
+    &_divider {
+      display: block;
+      width: 1.4rem;
+      height: 1px;
+      background: rgba($sd-sky-800, 0.5);
+    }
+  }
+
+  &_content {
+    @include sd-bp-max($sd-bp-lg) {
+      order: 1;
+    }
+  }
+
+  &_kicker {
+    @include sd-type-eyebrow;
+    margin: 0 0 $sd-space-4;
+  }
+
+  &_title {
+    @include sd-type-h2-section;
+    margin: 0 0 $sd-space-3;
+  }
+
+  &_desc {
+    @include sd-type-body-section;
+    margin: 0 0 $sd-space-5;
+    max-width: 42rem;
+
+    @include sd-bp-max($sd-bp-md) {
+      margin-bottom: $sd-space-4;
+    }
+  }
+
+  &_list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid rgba(15, 23, 42, 0.08);
+  }
+
+  &_list_item {
+    border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+    opacity: 0;
+    transform: translateY(14px);
+    transition:
+      opacity 0.55s ease,
+      transform 0.55s cubic-bezier(0.32, 0.72, 0, 1);
+    transition-delay: var(--cg-delay, 0ms);
+  }
+
+  &_list_link {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: $sd-space-4;
+    padding: $sd-space-4 $sd-space-2;
+    text-decoration: none;
+    color: inherit;
+    transition: padding 0.3s ease, background 0.3s ease;
+
+    @media (hover: hover) {
+      &:hover {
+        background: linear-gradient(90deg, rgba($sd-sky-700, 0.06) 0%, transparent 100%);
+        padding-left: $sd-space-5;
+
+        .travelGuide_list_title {
+          color: $sd-sky-700;
+        }
+
+        .travelGuide_list_arrow {
+          background: $sd-sky-700;
+          border-color: $sd-sky-700;
+          color: $sd-white;
+          transform: translateX(4px);
+        }
+
+        .travelGuide_list_index {
+          color: $sd-sky-500;
+        }
+      }
+    }
+
+    &:active {
+      background: linear-gradient(90deg, rgba($sd-sky-700, 0.1) 0%, transparent 100%);
+      padding-left: $sd-space-3;
+    }
+
+    @include sd-bp-max($sd-bp-sm) {
+      gap: $sd-space-3;
+      padding: $sd-space-3 $sd-space-1;
+    }
+  }
+
+  &_list_index {
+    font-family: $sd-font-heading;
+    font-size: 0.88rem;
+    font-weight: $sd-fw-bold;
+    color: $sd-sky-800;
+    letter-spacing: 0.08em;
+    min-width: 1.75rem;
+    transition: color 0.22s ease;
+  }
+
+  &_list_meta {
+    display: flex;
+    flex-direction: column;
+    gap: $sd-space-1;
+    min-width: 0;
+  }
+
+  &_list_eyebrow {
+    font-family: $sd-font-heading;
+    font-size: 0.72rem;
+    font-weight: $sd-fw-bold;
+    line-height: 1.2;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: $sd-slate-500;
+  }
+
+  &_list_title {
+    @include sd-type-card-title($sd-fw-semibold);
+    margin: 0;
+    color: $sd-slate-900;
+    line-height: 1.32;
+    transition: color 0.22s ease;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  &_list_arrow {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: $sd-radius-pill;
+    background: rgba($sd-sky-700, 0.08);
+    border: 1px solid rgba($sd-sky-700, 0.18);
+    color: $sd-sky-700;
+    transition: background 0.22s ease, color 0.22s ease, border-color 0.22s ease, transform 0.22s ease;
+
+    > svg {
+      width: 1rem;
+      height: 1rem;
+      display: block;
+    }
+  }
+
+  &.is-revealed {
+    .travelGuide_collage_stage {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .travelGuide_list_item {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .travelGuide_collage_stage,
+    .travelGuide_collage_card,
+    .travelGuide_collage_compass,
+    .travelGuide_collage_stamp,
+    .travelGuide_list_item {
+      transition: none !important;
+      opacity: 1 !important;
+    }
+
+    .travelGuide_collage_stage,
+    .travelGuide_list_item {
+      transform: none !important;
+    }
+  }
+}

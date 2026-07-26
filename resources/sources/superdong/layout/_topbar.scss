@@ -1,0 +1,116 @@
+@use "../foundations/tokens" as *;
+
+.sd-topbar {
+  position: relative;
+  z-index: 210;
+  width: 100%;
+  max-width: none;
+  height: $sd-topbar-h;
+  overflow: visible;
+  background: linear-gradient(90deg, $sd-sky-950 0%, $sd-sky-900 55%, $sd-sky-800 100%);
+  color: rgba($sd-white, 0.85);
+  border-bottom: 1px solid rgba($sd-white, 0.08);
+
+  &__inner {
+    @include sd-container;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  &__left {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    flex-shrink: 0;
+    min-width: 0;
+  }
+
+  &__right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.9rem;
+    flex-shrink: 0;
+  }
+
+  &__region {
+    position: relative;
+    flex-shrink: 0;
+
+    &--desktop {
+      @include sd-bp-max($sd-bp-md) {
+        display: none;
+      }
+    }
+  }
+
+  &__promo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: $sd-font-body;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: rgba($sd-white, 0.95);
+  }
+
+  &__promo-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.18rem 0.6rem;
+    border-radius: $sd-radius-pill;
+    background: linear-gradient(135deg, $sd-sun-500, $sd-sun-600);
+    color: $sd-sky-950;
+    font-family: $sd-font-heading;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  &__item {
+    display: none;
+  }
+
+  &__hotline {
+    display: none;
+  }
+
+  &__sep {
+    display: none;
+  }
+
+  &__pill {
+    display: none;
+  }
+
+  @media (max-width: $sd-bp-lg) {
+    &__item--mail,
+    &__right &__sep {
+      display: none;
+    }
+  }
+
+  @media (max-width: $sd-bp-md) {
+    &__promo {
+      font-size: 0.74rem;
+    }
+    &__item--mail {
+      display: none;
+    }
+  }
+
+  @media (max-width: 600px) {
+    font-size: 0.72rem;
+
+    &__promo {
+      gap: 0.4rem;
+    }
+    &__pill:last-child {
+      display: none;
+    }
+  }
+}

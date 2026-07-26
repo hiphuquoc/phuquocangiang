@@ -1,0 +1,44 @@
+{
+  "resources/js/home-v2.js": {
+    "file": "assets/home-v22.js",
+    "name": "home-v2",
+    "src": "resources/js/home-v2.js",
+    "isEntry": true
+  },
+  "resources/js/superdong.js": {
+    "file": "assets/superdong2.js",
+    "name": "superdong",
+    "src": "resources/js/superdong.js",
+    "isEntry": true
+  },
+  "resources/sources/admin/print.scss": {
+    "file": "assets/print2.css",
+    "src": "resources/sources/admin/print.scss",
+    "isEntry": true
+  },
+  "resources/sources/admin/style.scss": {
+    "file": "assets/style2.css",
+    "src": "resources/sources/admin/style.scss",
+    "isEntry": true
+  },
+  "resources/sources/main/home-v2.scss": {
+    "file": "assets/superdong.css",
+    "src": "resources/sources/superdong.scss",
+    "isEntry": true
+  },
+  "resources/sources/main/print.scss": {
+    "file": "assets/print.css",
+    "src": "resources/sources/main/print.scss",
+    "isEntry": true
+  },
+  "resources/sources/main/style.scss": {
+    "file": "assets/style.css",
+    "src": "resources/sources/main/style.scss",
+    "isEntry": true
+  },
+  "resources/sources/superdong.scss": {
+    "file": "assets/superdong.css",
+    "src": "resources/sources/superdong.scss",
+    "isEntry": true
+  }
+}

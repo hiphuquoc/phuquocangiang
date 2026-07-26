@@ -1,0 +1,279 @@
+@use "../foundations/tokens" as *;
+
+/* ===========================================================================
+ * sd-letter — Newsletter envelope
+ * Typography & spacing: docs/design/superdong-design-system.md §4–5
+ * =========================================================================== */
+
+.sd-letter {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  @include sd-section-padding-feature;
+  background:
+    radial-gradient(ellipse 70% 55% at 15% 100%, rgba($sd-sky-400, 0.1), transparent 55%),
+    radial-gradient(ellipse 55% 45% at 88% 12%, rgba($sd-sun-500, 0.06), transparent 50%),
+    linear-gradient(180deg, $sd-cloud-50 0%, $sd-sky-50 100%);
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba($sd-sky-700, 0.04) 1px, transparent 1px);
+    background-size: 22px 22px;
+    pointer-events: none;
+    opacity: 0.4;
+  }
+
+  &__inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  &__stage {
+    position: relative;
+    width: min(100%, 40rem);
+    padding-top: $sd-space-6;
+  }
+
+  &__envelope {
+    position: absolute;
+    inset: 0 0 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  &__env-back {
+    position: absolute;
+    left: 4%;
+    right: 4%;
+    bottom: 0;
+    height: 72%;
+    border-radius: 0 0 $sd-radius-md $sd-radius-md;
+    background: linear-gradient(180deg, $sd-sky-100 0%, $sd-sky-100 100%);
+    border: 1px solid rgba($sd-sky-400, 0.28);
+    box-shadow: $sd-shadow-md;
+  }
+
+  &__env-flap {
+    position: absolute;
+    left: 4%;
+    right: 4%;
+    top: 18%;
+    height: 38%;
+    background: linear-gradient(180deg, $sd-sky-100 0%, $sd-sky-100 100%);
+    border: 1px solid rgba($sd-sky-400, 0.22);
+    clip-path: polygon(0 0, 50% 72%, 100% 0);
+    transform-origin: top center;
+    transform: rotateX(12deg);
+  }
+
+  &__env-front {
+    position: absolute;
+    left: 4%;
+    right: 4%;
+    bottom: 0;
+    height: 48%;
+    background: linear-gradient(180deg, rgba($sd-sky-300, 0.55) 0%, $sd-sky-100 100%);
+    border: 1px solid rgba($sd-sky-400, 0.22);
+    border-top: none;
+    clip-path: polygon(0 100%, 50% 0, 100% 100%);
+  }
+
+  &__paper {
+    position: relative;
+    z-index: 1;
+    margin: 0 $sd-space-2;
+    padding: clamp($sd-space-6, 4vw, $sd-space-8) clamp($sd-space-5, 4vw, $sd-space-8);
+    border-radius: 4px;
+    background:
+      repeating-linear-gradient(
+        transparent,
+        transparent 1.55rem,
+        rgba($sd-sky-500, 0.06) 1.55rem,
+        rgba($sd-sky-500, 0.06) calc(1.55rem + 1px)
+      ),
+      linear-gradient(180deg, $sd-white 0%, rgba($sd-sky-50, 0.35) 100%);
+    border: 1px solid rgba($sd-slate-300, 0.45);
+    box-shadow: $sd-shadow-md;
+    transform: rotate(-0.5deg);
+  }
+
+  &__stamp {
+    position: absolute;
+    top: $sd-space-5;
+    right: $sd-space-5;
+    width: 3.5rem;
+    height: 4rem;
+    padding: 3px;
+    border: 2px dashed rgba($sd-sky-600, 0.45);
+    border-radius: 3px;
+    transform: rotate(6deg);
+    background: rgba($sd-sky-50, 0.8);
+  }
+
+  &__stamp-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    border: 1px solid rgba($sd-sky-500, 0.25);
+    background: rgba($sd-white, 0.9);
+
+    strong {
+      font-family: $sd-font-heading;
+      font-size: 0.95rem;
+      font-weight: $sd-fw-extrabold;
+      letter-spacing: 0.08em;
+      color: $sd-sky-800;
+    }
+
+    em {
+      font-style: normal;
+      font-family: $sd-font-body;
+      font-size: 0.62rem;
+      font-weight: $sd-fw-semibold;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: $sd-slate-500;
+    }
+  }
+
+  &__kicker {
+    display: inline-flex;
+    margin-bottom: $sd-space-4;
+    padding-right: 4rem;
+    @include sd-type-eyebrow;
+  }
+
+  &__title {
+    @include sd-type-h2-section;
+    margin: 0 0 $sd-space-3;
+    max-width: 16ch;
+  }
+
+  &__lead {
+    @include sd-type-body-section;
+    margin: 0 0 $sd-space-8;
+    max-width: 38rem;
+    line-height: 1.65;
+  }
+
+  &__form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $sd-space-3;
+    align-items: flex-end;
+    margin-bottom: $sd-space-4;
+  }
+
+  &__field {
+    flex: 1 1 14rem;
+    display: flex;
+    flex-direction: column;
+    gap: $sd-space-2;
+  }
+
+  &__field-label {
+    @include sd-type-meta;
+    font-size: 0.72rem;
+    font-weight: $sd-fw-semibold;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: $sd-slate-500;
+  }
+
+  &__field input {
+    width: 100%;
+    padding: 0.82rem $sd-space-4;
+    border: 1px solid rgba($sd-slate-300, 0.55);
+    border-radius: $sd-radius-sm;
+    font-family: $sd-font-body;
+    font-size: clamp(0.95rem, 0.9rem + 0.12vw, 1rem);
+    line-height: 1.4;
+    color: $sd-slate-900;
+    background: rgba($sd-white, 0.95);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+    &:focus {
+      outline: none;
+      border-color: rgba($sd-sky-500, 0.55);
+      box-shadow: 0 0 0 3px rgba($sd-sky-500, 0.14);
+    }
+
+    &::placeholder {
+      color: $sd-slate-500;
+    }
+  }
+
+  &__submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: $sd-space-2;
+    min-height: 2.85rem;
+    padding: 0 1.35rem;
+    border: none;
+    border-radius: $sd-radius-pill;
+    @include sd-type-cta-card($sd-fw-bold);
+    color: $sd-white;
+    background: linear-gradient(135deg, $sd-sky-600, $sd-sky-800);
+    box-shadow: 0 8px 24px -10px rgba($sd-sky-800, 0.55);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    svg {
+      width: 1rem;
+      height: 1rem;
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 12px 28px -10px rgba($sd-sky-800, 0.6);
+      }
+    }
+  }
+
+  &__note {
+    margin: 0 0 $sd-space-6;
+    @include sd-type-meta;
+    font-size: clamp(0.78rem, 0.74rem + 0.1vw, 0.82rem);
+    line-height: 1.4;
+    color: $sd-slate-500;
+  }
+
+  &__sign {
+    margin: 0;
+    padding-top: $sd-space-4;
+    border-top: 1px solid rgba($sd-slate-300, 0.45);
+    font-family: $sd-font-heading;
+    font-size: clamp(1rem, 0.92rem + 0.25vw, 1.15rem);
+    font-weight: $sd-fw-bold;
+    font-style: italic;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    color: $sd-sky-800;
+  }
+}
+
+@media (max-width: #{$sd-bp-sm - 1px}) {
+  .sd-letter {
+    &__submit {
+      width: 100%;
+    }
+
+    &__paper {
+      transform: none;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sd-letter__paper {
+    transform: none;
+  }
+}
