@@ -1,211 +1,307 @@
 @use "../foundations/tokens" as *;
 
-// ─── Booking widget shell (Clean & Modern OTA Style) ─────────────────
+// =============================================================================
+// Booking widget — SINGLE source of truth
+// Home + listing dùng chung markup `superdong/sections/booking/widget`.
+// Không override layout ở _tour-location / _hero / _buttons.
+//
+// Cấu trúc:
+//   .sd-booking                 wrapper trong suốt
+//     .sd-booking__tabs         tab dải trên/trái, dính mép panel
+//     .sd-booking__panel        card trắng (nền + viền + shadow)
+//       .sd-booking__body
+//       .sd-booking__submit
+// =============================================================================
 
 .sd-booking {
   position: relative;
+  z-index: 5;
+  display: block;
   width: 100%;
   min-width: 0;
   max-width: 100%;
-  margin-top: 2.5rem;
-  background: #f1f5f9; /* Nền form xám nhẹ Slate-100 */
-  border-radius: 24px;
-  padding: 1.95rem 1.45rem 1.45rem; /* Mở rộng padding phía trên cho thoáng */
-  box-shadow:
-    0 24px 60px -12px rgba(15, 23, 42, 0.2),
-    0 4px 16px -4px rgba(15, 23, 42, 0.05);
-  border: 1px solid rgba(203, 213, 225, 0.85);
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
   overflow: visible;
 
-  // ── Tabs dạng Pill Compact (Floating nâng cao căn giữa) ──
+  // ── Tabs: luôn trên / trái box form ──────────────────────────────────────
   &__tabs {
-    position: absolute;
-    top: -2.15rem;
-    left: 50%;
-    transform: translateX(-50%);
+    position: relative;
+    z-index: 2;
     display: inline-flex;
     align-items: center;
-    width: auto;
-    max-width: calc(100% - 2rem);
-    gap: 3px;
-    padding: 0.2rem;
+    gap: 2px;
     margin: 0;
-    background: #ffffff;
-    border: 1px solid rgba(203, 213, 225, 0.9);
-    border-radius: 999px;
-    box-shadow: 0 10px 28px -6px rgba(15, 23, 42, 0.16);
-    z-index: 10;
-    box-sizing: border-box;
-
-    @media (max-width: 576px) {
-      display: flex;
-      left: 0.5rem;
-      right: 0.5rem;
-      transform: none;
-      max-width: calc(100% - 1rem);
-      overflow-x: auto;
-      overflow-y: hidden;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-
-      &::-webkit-scrollbar {
-        display: none;
-      }
-    }
+    padding: 3px;
+    background: $sd-cloud-100;
+    border: 1px solid rgba($sd-slate-300, 0.7);
+    border-bottom: 0;
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0 -2px 8px -4px rgba($sd-sky-950, 0.08);
+    white-space: nowrap;
   }
 
+  // Specificity > `.sd-home-v2 button` để không bị reset font
+  button#{&}__tab,
   &__tab {
-    position: relative;
-    z-index: 1;
     display: inline-flex;
     align-items: center;
-    justify-content: center;
     gap: 0.35rem;
-    padding: 0.38rem 0.85rem;
-    border: none;
-    border-radius: 999px;
+    flex: 0 0 auto;
+    min-height: 0;
+    padding: 0.55rem 0.78rem;
+    border: 0;
+    border-radius: 8px 8px 0 0;
     background: transparent;
+    color: $sd-slate-500;
     font-family: $sd-font-heading;
-    font-size: 0.78rem;
-    font-weight: 600;
-    color: #475569;
+    font-size: 0.9rem;
+    font-weight: $sd-fw-semibold;
+    letter-spacing: -0.005em;
+    line-height: 1.25;
     cursor: pointer;
     white-space: nowrap;
-    min-width: 0;
-    flex: 0 0 auto;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-
-    @media (max-width: 576px) {
-      flex: 0 0 auto;
-      padding: 0.32rem 0.7rem;
-      font-size: 0.75rem;
-    }
+    transition: background 0.18s ease, color 0.18s ease;
 
     svg {
-      width: 13px;
-      height: 13px;
+      width: 12px;
+      height: 12px;
       flex-shrink: 0;
       color: currentColor;
-      transition: color 0.2s ease;
-    }
-
-    span {
-      white-space: nowrap;
+      opacity: 0.9;
     }
 
     @media (hover: hover) {
       &:hover:not(.is-active) {
-        background: rgba(2, 132, 199, 0.08);
-        color: #0284c7;
+        background: rgba($sd-sky-500, 0.08);
+        color: $sd-sky-700;
 
         svg {
-          color: #0284c7;
+          opacity: 1;
         }
       }
     }
 
     &:focus-visible {
-      outline: none;
-      color: #0284c7;
+      outline: 2px solid $sd-sky-600;
+      outline-offset: 2px;
     }
 
     &.is-active {
-      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
-      color: #ffffff;
-      font-weight: 700;
-      z-index: 12;
-      box-shadow: 0 4px 14px -4px rgba(2, 132, 199, 0.45);
+      background: linear-gradient(135deg, $sd-sky-600 0%, $sd-sky-700 100%);
+      color: $sd-white;
+      font-weight: $sd-fw-bold;
+      box-shadow: 0 2px 8px -2px rgba($sd-sky-600, 0.38);
 
       svg {
-        color: #ffffff;
-      }
-
-      &::after {
-        display: none;
+        color: $sd-white;
+        opacity: 1;
       }
     }
   }
 
+  // ── Panel card — nền tối nhẹ để tôn ô input trắng ─────────────────────────
   &__panel {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    min-width: 0;
+    padding: clamp(1.15rem, 2.2vw, 1.45rem);
+    background: linear-gradient(180deg, $sd-cloud-100 0%, $sd-cloud-50 100%);
+    border: 1px solid rgba($sd-slate-300, 0.7);
+    border-radius: 0 $sd-radius-md $sd-radius-md $sd-radius-md;
+    box-shadow:
+      0 2px 12px -4px rgba($sd-sky-950, 0.1),
+      0 20px 48px -24px rgba($sd-sky-950, 0.16);
+
     &[hidden] {
       display: none !important;
+    }
+
+    &:not([hidden]) {
+      display: flex;
+      flex-direction: column;
+      gap: 1.15rem;
     }
   }
 
   &__body {
     display: flex;
     flex-direction: column;
-    gap: 1.15rem; /* Khoảng cách giữa các hàng rộng rãi, không bị dính */
-    margin-bottom: 1.35rem;
+    gap: 1rem;
     min-width: 0;
+    margin: 0;
   }
 
   &__row {
     display: grid;
-    gap: 1.15rem; /* Khoảng cách giữa các ô input 1.15rem thoáng ráo */
     grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
     min-width: 0;
-
-    @include sd-bp($sd-bp-sm) {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
 
     &--full {
       grid-template-columns: minmax(0, 1fr);
     }
-
-    &--dates {
-      @include sd-bp($sd-bp-sm) {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
   }
 
-  // ── Primary Action Button ──
-  &__submit {
-    position: relative;
+  // Route field: không span grid (tránh vỡ layout listing)
+  .sd-fctrl--route {
+    grid-column: auto;
     width: 100%;
-    min-height: 58px;
-    padding: 0.85rem 1.5rem;
-    border: none;
-    border-radius: 14px;
-    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
-    color: #ffffff;
-    font-family: $sd-font-heading;
-    font-size: 0.98rem;
-    font-weight: 700;
-    letter-spacing: -0.01em;
-    cursor: pointer;
+    min-width: 0;
+  }
+
+  &__submit {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 12px 28px -6px rgba(2, 132, 199, 0.45);
+    gap: 0.45rem;
+    width: 100%;
+    min-height: 52px;
+    padding: 0.75rem 1.35rem;
+    border: 0;
+    border-radius: 12px;
+    background: linear-gradient(135deg, $sd-sky-600 0%, $sd-sky-700 100%);
+    color: $sd-white;
+    font-family: $sd-font-heading;
+    font-size: 0.92rem;
+    font-weight: $sd-fw-bold;
+    letter-spacing: -0.01em;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 10px 26px -6px rgba($sd-sky-600, 0.42);
+    transition: background 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
 
     svg {
-      width: 18px;
-      height: 18px;
+      width: 16px;
+      height: 16px;
       flex-shrink: 0;
+      color: $sd-white;
     }
 
-    .sd-booking__submit-arrow {
-      transition: transform 0.2s ease;
+    &-arrow {
+      transition: transform 0.18s ease;
     }
 
     @media (hover: hover) {
       &:hover {
-        transform: translateY(-1.5px);
-        background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
-        box-shadow: 0 16px 34px -6px rgba(2, 132, 199, 0.55);
+        background: linear-gradient(135deg, $sd-sky-500 0%, $sd-sky-600 100%);
+        transform: translateY(-1px);
+        box-shadow: 0 14px 32px -6px rgba($sd-sky-600, 0.5);
 
         .sd-booking__submit-arrow {
-          transform: translateX(4px);
+          transform: translateX(3px);
         }
       }
+    }
+  }
 
-      &:active {
-        transform: translateY(0);
+  // ── Home (card hẹp trong hero): xếp dọc gọn ──────────────────────────────
+  &:not(.sd-booking--listing) {
+    max-width: 100%;
+
+    .sd-booking__panel:not([hidden]) {
+      padding: 1.35rem 1.25rem 1.25rem;
+      gap: 1.2rem;
+    }
+
+    .sd-booking__body {
+      gap: 1.05rem;
+    }
+
+    .sd-booking__body--ship {
+      display: flex;
+      flex-direction: column;
+      gap: 1.05rem;
+    }
+
+    .sd-route {
+      width: 100%;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      gap: 0.55rem;
+    }
+  }
+
+  // ── Listing (banner rộng): 1 hàng trên desktop ───────────────────────────
+  &--listing {
+    max-width: 68rem;
+    margin-inline: auto;
+
+    @include sd-bp($sd-bp-md) {
+      .sd-booking__panel:not([hidden]) {
+        flex-direction: row;
+        align-items: stretch;
+        gap: 1rem;
+        padding: 1.15rem 1.25rem;
+      }
+
+      .sd-booking__body {
+        flex: 1 1 auto;
+        min-width: 0;
+        gap: 1rem;
+      }
+
+      .sd-booking__body--ship {
+        display: grid;
+        grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr) minmax(0, 1fr);
+        align-items: stretch;
+        gap: 0.9rem;
+      }
+
+      .sd-booking__body--ship > .sd-fctrl--route,
+      .sd-booking__body--ship > .sd-booking__row {
+        min-width: 0;
+      }
+
+      .sd-booking__body:not(.sd-booking__body--ship) {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        align-items: stretch;
+        gap: 0.9rem;
+      }
+
+      .sd-booking__submit {
+        flex: 0 0 auto;
+        align-self: stretch;
+        width: auto;
+        min-width: 11.5rem;
+        max-width: 14rem;
+        min-height: 0;
+        height: auto;
+        padding-inline: 1.25rem;
+        white-space: nowrap;
+      }
+
+      .sd-route {
+        height: 100%;
+        align-items: stretch;
+        gap: 0.55rem;
+      }
+
+      .sd-route__col,
+      .sd-route .sd-fctrl__box {
+        height: 100%;
+      }
+    }
+
+    @include sd-bp-max($sd-bp-sm) {
+      .sd-booking__panel:not([hidden]) {
+        border-radius: 0 16px 16px 16px;
+        padding: 1.1rem 1rem;
+        gap: 1.05rem;
+      }
+
+      .sd-booking__body {
+        gap: 1rem;
+      }
+
+      .sd-booking__tabs {
+        max-width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
       }
     }
   }

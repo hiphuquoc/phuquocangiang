@@ -71,10 +71,13 @@ main#main {
     text-decoration: none;
   }
 
+  // Chỉ kế thừa font-family — không dùng `font: inherit` (shorthand)
+  // vì specificity `.sd-home-v2 button` sẽ đè font-size của component
+  // (vd. `.sd-booking__tab`).
   button,
   input,
   select {
-    font: inherit;
+    font-family: inherit;
   }
 
   ul,

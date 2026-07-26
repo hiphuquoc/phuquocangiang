@@ -13,6 +13,12 @@
     grid-column: 1 / -1;
   }
 
+  // Route pair tự layout trong .sd-route — không span full grid cha
+  &--route {
+    grid-column: auto;
+    width: 100%;
+  }
+
   &__label {
     font-family: $sd-font-heading;
     font-size: 0.72rem;

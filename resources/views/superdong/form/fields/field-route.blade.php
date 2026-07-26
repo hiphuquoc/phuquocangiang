@@ -4,7 +4,7 @@
   $fromValue = $fromValue ?? array_key_first($fromOptions);
   $toValue = $toValue ?? array_key_first($toOptions);
 @endphp
-<div class="sd-fctrl sd-fctrl--route sd-fctrl--full" data-sd-route>
+<div class="sd-fctrl sd-fctrl--route" data-sd-route>
   <div class="sd-route">
     <div class="sd-route__col" data-sd-select>
       <div class="sd-fctrl__box sd-fctrl__box--stacked">
