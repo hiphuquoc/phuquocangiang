@@ -305,8 +305,9 @@ if (!function_exists('seo_content_for_admin')) {
 
 if (!function_exists('media_url')) {
     /**
-     * URL hiển thị ảnh — GCS proxy /media/gcs/… hoặc legacy /storage/….
-     * Legacy /storage/images/upload/foo-750.webp sẽ map sang media/uploads/foo.webp nếu object tồn tại trên GCS.
+     * URL hiển thị ảnh.
+     * GCS (mặc định): https://storage.googleapis.com/{bucket}/{object}
+     * Legacy: /storage/... — map sang GCS nếu object đã tồn tại.
      */
     function media_url(?string $path): ?string
     {
@@ -323,15 +324,14 @@ if (!function_exists('media_url')) {
 
         $cloudPath = $storage->toCloudObjectPath($path);
 
-        if ($cloudPath !== null && \Illuminate\Support\Facades\Route::has('media.gcs')) {
-            // Legacy chỉ proxy khi object đã có trên GCS; path cloud thuần luôn proxy.
+        if ($cloudPath !== null) {
+            // Legacy chỉ dùng URL GCS khi object đã có; path cloud thuần luôn dùng GCS/public URL.
             if ($storage->isCloudPath($path) || $storage->exists($cloudPath)) {
-                return route('media.gcs', ['path' => $cloudPath]);
+                return $storage->displayUrl($cloudPath);
             }
         }
 
         if ($storage->isLegacyLocalPath($path)) {
-            // Giữ leading slash cho path local cũ.
             return str_starts_with($path, '/') ? $path : '/' . ltrim($path, '/');
         }
 

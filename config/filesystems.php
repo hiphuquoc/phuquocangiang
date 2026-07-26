@@ -75,7 +75,13 @@ return [
             // 'project_id' => env('GOOGLE_CLOUD_PROJECT_ID'), // optional: is included in key file
             'bucket' => env('GOOGLE_CLOUD_STORAGE_BUCKET'),
             'path_prefix' => env('GOOGLE_CLOUD_STORAGE_PATH_PREFIX', ''), // optional: /default/path/to/apply/in/bucket
-            'storage_api_uri' => env('GOOGLE_CLOUD_STORAGE_API_URI', ''), // see: Public URLs below
+            // Public URL base — vd: https://storage.googleapis.com/phuquocisland
+            'storage_api_uri' => env(
+                'GOOGLE_CLOUD_STORAGE_API_URI',
+                env('GOOGLE_CLOUD_STORAGE_BUCKET')
+                    ? 'https://storage.googleapis.com/' . trim((string) env('GOOGLE_CLOUD_STORAGE_BUCKET'), '/')
+                    : null
+            ),
             'apiEndpoint' => env('GOOGLE_CLOUD_STORAGE_API_ENDPOINT', ''), // set storageClient apiEndpoint
             'visibility' => 'public', // optional: public|private
             'visibility_handler' => \League\Flysystem\GoogleCloudStorage\UniformBucketLevelAccessVisibility::class, // optional: set to \League\Flysystem\GoogleCloudStorage\UniformBucketLevelAccessVisibility::class to enable uniform bucket level access

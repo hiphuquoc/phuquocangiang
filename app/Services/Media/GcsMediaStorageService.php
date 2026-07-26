@@ -226,7 +226,29 @@ class GcsMediaStorageService
 
     public function publicUrl(string $objectPath): string
     {
-        return Storage::disk($this->diskName())->url($this->normalizePath($objectPath));
+        $path = $this->normalizePath($objectPath);
+        $base = rtrim((string) config('media.public_base_url', ''), '/');
+
+        if ($base !== '') {
+            return $base . '/' . ltrim($path, '/');
+        }
+
+        return Storage::disk($this->diskName())->url($path);
+    }
+
+    /**
+     * URL hiển thị cho object GCS — public bucket URL hoặc proxy /media/gcs.
+     */
+    public function displayUrl(string $objectPath): string
+    {
+        $path = $this->normalizePath($objectPath);
+        $mode = (string) config('media.url_mode', 'public');
+
+        if ($mode === 'proxy' && \Illuminate\Support\Facades\Route::has('media.gcs')) {
+            return route('media.gcs', ['path' => $path]);
+        }
+
+        return $this->publicUrl($path);
     }
 
     public function mimeForPath(string $path): string
