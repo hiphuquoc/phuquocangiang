@@ -1,188 +1,127 @@
 @use "../foundations/tokens" as *;
 
-// ─── Booking widget shell ───────────────────────────────────────────────────
+// ─── Booking widget shell (Clean & Modern OTA Style) ─────────────────
 
 .sd-booking {
   position: relative;
   width: 100%;
   min-width: 0;
   max-width: 100%;
-  overflow-x: clip;
-  background:
-    linear-gradient(165deg, rgba($sd-white, 0.98) 0%, rgba($sd-sky-50, 0.55) 100%);
-  border-radius: $sd-radius-xl;
-  padding: clamp($sd-space-4, 2vw, $sd-space-5);
+  margin-top: 2.5rem;
+  background: #f1f5f9; /* Nền form xám nhẹ Slate-100 */
+  border-radius: 24px;
+  padding: 1.95rem 1.45rem 1.45rem; /* Mở rộng padding phía trên cho thoáng */
   box-shadow:
-    0 24px 60px -28px rgba($sd-sky-950, 0.45),
-    0 8px 24px -12px rgba($sd-sky-800, 0.18),
-    inset 0 1px 0 rgba($sd-white, 0.95);
-  border: 1px solid rgba($sd-white, 0.65);
-  backdrop-filter: blur(18px);
+    0 24px 60px -12px rgba(15, 23, 42, 0.2),
+    0 4px 16px -4px rgba(15, 23, 42, 0.05);
+  border: 1px solid rgba(203, 213, 225, 0.85);
+  overflow: visible;
 
-  &:has([data-sd-date-picker].is-open),
-  &:has([data-sd-passengers].is-open),
-  &:has([data-sd-select].is-open) {
-    overflow: visible;
-  }
-
-  &__head {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: $sd-space-3;
-    margin-bottom: $sd-space-3;
-    min-width: 0;
-  }
-
-  &__head-text {
-    min-width: 0;
-
-    strong {
-      display: block;
-      overflow-wrap: anywhere;
-      font-family: $sd-font-heading;
-      font-size: 1rem;
-      font-weight: 800;
-      color: $sd-slate-900;
-      letter-spacing: -0.02em;
-      line-height: 1.2;
-    }
-  }
-
-  &__head-badge {
+  // ── Tabs dạng Pill Compact (Floating nâng cao căn giữa) ──
+  &__tabs {
+    position: absolute;
+    top: -2.15rem;
+    left: 50%;
+    transform: translateX(-50%);
     display: inline-flex;
     align-items: center;
-    gap: 0.35rem;
-    padding: 0.35rem 0.65rem;
-    border-radius: $sd-radius-pill;
-    background: rgba($sd-sky-500, 0.1);
-    color: $sd-sky-700;
-    font-family: $sd-font-heading;
-    font-size: 0.68rem;
-    font-weight: 700;
-    white-space: nowrap;
-    flex-shrink: 0;
+    width: auto;
+    max-width: calc(100% - 2rem);
+    gap: 3px;
+    padding: 0.2rem;
+    margin: 0;
+    background: #ffffff;
+    border: 1px solid rgba(203, 213, 225, 0.9);
+    border-radius: 999px;
+    box-shadow: 0 10px 28px -6px rgba(15, 23, 42, 0.16);
+    z-index: 10;
+    box-sizing: border-box;
 
-    svg {
-      width: 13px;
-      height: 13px;
-    }
+    @media (max-width: 576px) {
+      display: flex;
+      left: 0.5rem;
+      right: 0.5rem;
+      transform: none;
+      max-width: calc(100% - 1rem);
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
 
-    @media (max-width: 480px) {
-      display: none;
-    }
-  }
-
-  &__tabs {
-    position: relative;
-    display: flex;
-    gap: 0.22rem;
-    padding: 0.25rem 0.15rem;
-    margin-bottom: $sd-space-4;
-    border-radius: $sd-radius-md;
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-    overflow-x: auto;
-    overscroll-behavior-x: contain;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    background:
-      radial-gradient(90% 120% at 0% 0%, rgba($sd-sky-400, 0.2) 0%, transparent 58%),
-      radial-gradient(80% 100% at 100% 100%, rgba($sd-sky-500, 0.16) 0%, transparent 55%),
-      linear-gradient(128deg, rgba($sd-sky-100, 0.92) 0%, rgba($sd-sky-50, 0.78) 52%, rgba($sd-white, 0.55) 100%);
-    box-shadow:
-      0 14px 32px -22px rgba($sd-sky-800, 0.38),
-      inset 0 1px 0 rgba($sd-white, 0.72);
-
-    &::-webkit-scrollbar {
-      display: none;
+      &::-webkit-scrollbar {
+        display: none;
+      }
     }
   }
 
   &__tab {
     position: relative;
     z-index: 1;
-    flex: 1 1 0;
-    min-width: 0;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.28rem;
-    padding: 0.42rem 0.5rem;
+    gap: 0.35rem;
+    padding: 0.38rem 0.85rem;
     border: none;
-    border-radius: 25px;
+    border-radius: 999px;
     background: transparent;
     font-family: $sd-font-heading;
-    font-size: 0.68rem;
-    font-weight: 800;
-    letter-spacing: -0.015em;
-    color: $sd-sky-800;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #475569;
     cursor: pointer;
-    transition:
-      background 0.22s ease,
-      color 0.22s ease,
-      box-shadow 0.22s ease,
-      transform 0.22s ease;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    min-width: 0;
+    flex: 0 0 auto;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 
-    @include sd-bp-max($sd-bp-md) {
-      padding: 0.42rem 0.38rem;
-      font-size: 0.62rem;
-    }
-
-    @include sd-bp-max($sd-bp-sm) {
+    @media (max-width: 576px) {
       flex: 0 0 auto;
-      min-width: 2.35rem;
-      padding: 0.48rem 0.35rem;
-      font-size: 0;
-      line-height: 0;
-
-      svg {
-        width: 16px;
-        height: 16px;
-      }
+      padding: 0.32rem 0.7rem;
+      font-size: 0.75rem;
     }
 
     svg {
       width: 13px;
       height: 13px;
       flex-shrink: 0;
-      color: $sd-sky-600;
-      opacity: 0.9;
-      transition: opacity 0.22s ease, color 0.22s ease, transform 0.22s ease;
+      color: currentColor;
+      transition: color 0.2s ease;
+    }
+
+    span {
+      white-space: nowrap;
     }
 
     @media (hover: hover) {
       &:hover:not(.is-active) {
-        color: $sd-sky-900;
-        background: rgba($sd-white, 0.46);
+        background: rgba(2, 132, 199, 0.08);
+        color: #0284c7;
 
         svg {
-          opacity: 1;
-          color: $sd-sky-700;
+          color: #0284c7;
         }
       }
     }
 
     &:focus-visible {
       outline: none;
-      box-shadow: 0 0 0 3px rgba($sd-sky-500, 0.28);
+      color: #0284c7;
     }
 
     &.is-active {
-      background: rgba($sd-white, 0.97);
-      color: $sd-sky-900;
-      box-shadow:
-        0 8px 18px -14px rgba($sd-sky-800, 0.38),
-        inset 0 1px 0 rgba($sd-white, 1);
-      transform: translateY(-0.5px);
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      color: #ffffff;
+      font-weight: 700;
+      z-index: 12;
+      box-shadow: 0 4px 14px -4px rgba(2, 132, 199, 0.45);
 
       svg {
-        opacity: 1;
-        color: $sd-sky-600;
+        color: #ffffff;
+      }
+
+      &::after {
+        display: none;
       }
     }
   }
@@ -196,14 +135,14 @@
   &__body {
     display: flex;
     flex-direction: column;
-    gap: $sd-space-4;
-    margin-bottom: $sd-space-4;
+    gap: 1.15rem; /* Khoảng cách giữa các hàng rộng rãi, không bị dính */
+    margin-bottom: 1.35rem;
     min-width: 0;
   }
 
   &__row {
     display: grid;
-    gap: $sd-space-3;
+    gap: 1.15rem; /* Khoảng cách giữa các ô input 1.15rem thoáng ráo */
     grid-template-columns: minmax(0, 1fr);
     min-width: 0;
 
@@ -222,38 +161,52 @@
     }
   }
 
+  // ── Primary Action Button ──
   &__submit {
+    position: relative;
     width: 100%;
-    padding: 0.95rem 1.25rem;
+    min-height: 58px;
+    padding: 0.85rem 1.5rem;
     border: none;
-    border-radius: $sd-radius-md;
-    background: linear-gradient(135deg, $sd-sky-500, $sd-sky-800);
-    color: $sd-text-white;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    color: #ffffff;
     font-family: $sd-font-heading;
-    font-size: 0.94rem;
-    font-weight: 800;
+    font-size: 0.98rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.45rem;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    box-shadow: 0 14px 32px -14px rgba($sd-sky-800, 0.55);
+    gap: 0.5rem;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 12px 28px -6px rgba(2, 132, 199, 0.45);
 
-    span {
+    svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .sd-booking__submit-arrow {
       transition: transform 0.2s ease;
     }
 
     @media (hover: hover) {
       &:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 16px 34px -14px rgba($sd-sky-800, 0.65);
+        transform: translateY(-1.5px);
+        background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+        box-shadow: 0 16px 34px -6px rgba(2, 132, 199, 0.55);
 
-        span {
-          transform: translateX(3px);
+        .sd-booking__submit-arrow {
+          transform: translateX(4px);
         }
+      }
+
+      &:active {
+        transform: translateY(0);
       }
     }
   }
 }
-

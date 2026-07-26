@@ -55,9 +55,12 @@
       </div>
 
       <div class="travelGuide_content">
-        <span class="travelGuide_kicker">Cẩm nang &amp; lịch trình</span>
-        <h2 class="travelGuide_title" id="{{ $tgSectionId }}">{{ $guidesHead['title'] ?? ('Bí kíp khám phá ' . $islandLabel) }}</h2>
-        <p class="travelGuide_desc">{{ $guidesHead['desc'] ?? ('Lịch trình gợi ý, mẹo đi lại và ẩm thực — tổng hợp cho chuyến đi ' . $islandLabel . '.') }}</p>
+        <div class="sd-section-head__eyebrow-wrapper">
+          <span class="sd-section-head__accent-dot" aria-hidden="true"></span>
+          <span class="sd-section-head__eyebrow">Cẩm nang &amp; lịch trình</span>
+        </div>
+        <h2 class="sd-section-head__title" id="{{ $tgSectionId }}">{!! $guidesHead['title'] ?? ('Bí kíp khám phá ' . $islandLabel) !!}</h2>
+        <p class="sd-section-head__desc" style="margin-bottom: 1.5rem;">{{ $guidesHead['desc'] ?? ('Lịch trình gợi ý, mẹo đi lại và ẩm thực — tổng hợp cho chuyến đi ' . $islandLabel . '.') }}</p>
         <ul class="travelGuide_list" role="list">
           @foreach($guides as $idx => $guide)
             <li class="travelGuide_list_item" style="--cg-delay: {{ $idx * 70 }}ms">

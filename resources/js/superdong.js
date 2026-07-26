@@ -660,6 +660,50 @@
     btnClear?.addEventListener('click', () => clearSelection());
     btnDone?.addEventListener('click', () => closePanel());
 
+    root.querySelectorAll('[data-date-shortcut]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const type = btn.getAttribute('data-date-shortcut');
+        const now = new Date();
+        now.setHours(0, 0, 0, 0);
+
+        if (type === 'today') {
+          if (isSelectable(now)) {
+            selectDate(now);
+            viewMonth = startOfMonth(now);
+          }
+        } else if (type === 'tomorrow') {
+          const tomorrow = new Date(now);
+          tomorrow.setDate(tomorrow.getDate() + 1);
+          if (isSelectable(tomorrow)) {
+            selectDate(tomorrow);
+            viewMonth = startOfMonth(tomorrow);
+          }
+        } else if (type === 'weekend') {
+          const day = now.getDay();
+          const diffToSat = (6 - day + 7) % 7 || 7;
+          const sat = new Date(now);
+          sat.setDate(sat.getDate() + diffToSat);
+          const sun = new Date(sat);
+          sun.setDate(sun.getDate() + 1);
+
+          if (mode === 'range') {
+            if (isSelectable(sat) && isSelectable(sun)) {
+              selectedStart = sat;
+              selectedEnd = sun;
+              syncInputs();
+              syncSummary();
+              renderCalendar();
+            }
+          } else {
+            if (isSelectable(sat)) {
+              selectDate(sat);
+            }
+          }
+          viewMonth = startOfMonth(sat);
+        }
+      });
+    });
+
     syncInputs();
     syncSummary();
     renderCalendar();

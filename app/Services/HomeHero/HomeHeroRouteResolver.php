@@ -143,8 +143,10 @@ class HomeHeroRouteResolver
 
     private function resolveFromLabel(Ship $ship): string
     {
-        if (!empty($ship->portDeparture?->name)) {
-            return (string) $ship->portDeparture->name;
+        // Lấy display_name hoặc name của điểm xuất phát (ShipDeparture)
+        $departureName = $ship->departure?->display_name ?: $ship->departure?->name;
+        if (!empty($departureName)) {
+            return (string) $departureName;
         }
 
         $district = $ship->departure?->district?->district_name;
@@ -157,8 +159,9 @@ class HomeHeroRouteResolver
             return (string) $province;
         }
 
-        if (!empty($ship->departure?->name)) {
-            return (string) $ship->departure->name;
+        $portName = $ship->portDeparture?->display_name ?: $ship->portDeparture?->name;
+        if (!empty($portName)) {
+            return (string) $portName;
         }
 
         return '—';

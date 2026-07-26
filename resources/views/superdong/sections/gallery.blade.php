@@ -16,10 +16,13 @@
   </div>
 
   <div class="sd-gallery__intro">
-    <span class="sd-gallery__label" data-reveal>{{ $gallerySection['eyebrow'] ?? 'Trải nghiệm đảo' }}</span>
-    <h2 class="sd-gallery__title" id="sd-gallery-title" data-reveal>{{ $gallerySection['title'] ?? ($islandName . ' qua từng khoảnh khắc đẹp') }}</h2>
+    <div class="sd-section-head__eyebrow-wrapper" data-reveal>
+      <span class="sd-section-head__accent-dot" aria-hidden="true"></span>
+      <span class="sd-section-head__eyebrow">{{ $gallerySection['eyebrow'] ?? 'Trải nghiệm đảo' }}</span>
+    </div>
+    <h2 class="sd-section-head__title" id="sd-gallery-title" data-reveal>{!! $gallerySection['title'] ?? ($islandName . ' Qua Từng Khoảnh Khắc Đẹp') !!}</h2>
     @if(!empty($gallerySection['lead']))
-      <p class="sd-gallery__lead" data-reveal>{{ $gallerySection['lead'] }}</p>
+      <p class="sd-section-head__desc" data-reveal>{{ $gallerySection['lead'] }}</p>
     @endif
     <div class="sd-gallery__meta" data-reveal>
       <span class="sd-gallery__count">

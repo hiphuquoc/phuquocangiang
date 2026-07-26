@@ -126,7 +126,8 @@ class RoutingController extends Controller {
         if (empty($html)) {
             return ErrorController::error404();
         }
-        echo $html;
+
+        return response($html, 200)->header('Content-Type', 'text/html; charset=UTF-8');
     }
 
     /**

@@ -1,0 +1,250 @@
+@use "../foundations/tokens" as *;
+
+/* ===========================================================================
+ * Master Unified Button Design System (.sd-btn)
+ * Standardized Order: [ Text ] [ Arrow / Icon -> ]
+ * Cohesive Luxury UX/UI Palette, Micro-Animations & Responsive Behavior
+ * =========================================================================== */
+
+/* Base Reset & Core Button System */
+.sd-btn,
+a.sd-btn,
+button.sd-btn,
+.sd-hero__btn,
+a.sd-hero__btn,
+.sd-booking__submit,
+.sd-ship-row__btn-book,
+.sd-ship-row__btn-detail,
+.sd-card__btn-primary,
+.sd-card__btn-secondary {
+  position: relative;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.45rem !important;
+  padding: 0.65rem 1.35rem !important;
+  border-radius: 12px !important;
+  font-family: $sd-font-heading !important;
+  font-size: 0.88rem !important;
+  font-weight: 700 !important;
+  line-height: 1.25 !important;
+  text-decoration: none !important;
+  white-space: nowrap !important;
+  cursor: pointer !important;
+  outline: none !important;
+  border: 1px solid transparent;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+
+  *,
+  span {
+    font-family: inherit !important;
+    font-size: inherit !important;
+    font-weight: inherit !important;
+    transition: inherit !important;
+  }
+
+  svg {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+}
+
+/* 1. Primary Ocean Blue Solid Button */
+.sd-btn-primary,
+a.sd-btn-primary,
+.sd-hero__btn--solid,
+a.sd-hero__btn--solid,
+.sd-booking__submit,
+.sd-ship-row__btn-book,
+.sd-card__btn-primary {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+  box-shadow: 0 4px 14px -3px rgba(2, 132, 199, 0.42) !important;
+
+  *,
+  span,
+  svg {
+    color: #ffffff !important;
+    stroke: #ffffff !important;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      background: linear-gradient(135deg, #0369a1 0%, #075985 100%) !important;
+      color: #ffffff !important;
+      transform: translateY(-2px) !important;
+      box-shadow: 0 8px 20px -4px rgba(2, 132, 199, 0.55) !important;
+
+      *,
+      span,
+      svg {
+        color: #ffffff !important;
+        stroke: #ffffff !important;
+      }
+
+      svg {
+        transform: translateX(3px) !important;
+      }
+    }
+  }
+
+  &:active {
+    transform: translateY(0) !important;
+    box-shadow: 0 2px 8px -2px rgba(2, 132, 199, 0.4) !important;
+  }
+}
+
+/* 2. Secondary Outline Clean Button */
+.sd-btn-secondary,
+a.sd-btn-secondary,
+.sd-ship-row__btn-detail,
+.sd-card__btn-secondary {
+  background: #ffffff !important;
+  border: 1px solid #cbd5e1 !important;
+  color: #334155 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03) !important;
+
+  *,
+  span,
+  svg {
+    color: #334155 !important;
+    stroke: #334155 !important;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      background: #f8fafc !important;
+      color: #0284c7 !important;
+      border-color: #0284c7 !important;
+      transform: translateY(-2px) !important;
+
+      *,
+      span,
+      svg {
+        color: #0284c7 !important;
+        stroke: #0284c7 !important;
+      }
+
+      svg {
+        transform: translateX(3px) !important;
+      }
+    }
+  }
+}
+
+/* 3. Accent Sun Orange Conversion Button */
+.sd-btn-accent,
+.sd-btn-orange {
+  background: linear-gradient(135deg, #ff6700 0%, #ea580c 100%) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+  box-shadow: 0 4px 14px -3px rgba(255, 103, 0, 0.42) !important;
+
+  *,
+  span,
+  svg {
+    color: #ffffff !important;
+    stroke: #ffffff !important;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%) !important;
+      color: #ffffff !important;
+      transform: translateY(-2px) !important;
+      box-shadow: 0 8px 20px -4px rgba(255, 103, 0, 0.55) !important;
+
+      *,
+      span,
+      svg {
+        color: #ffffff !important;
+        stroke: #ffffff !important;
+      }
+
+      svg {
+        transform: translateX(3px) !important;
+      }
+    }
+  }
+}
+
+/* 4. Ghost Pill Neutral Button */
+.sd-btn-ghost {
+  background: rgba(2, 132, 199, 0.08) !important;
+  border: 1px solid rgba(2, 132, 199, 0.2) !important;
+  color: #0284c7 !important;
+
+  *,
+  span,
+  svg {
+    color: #0284c7 !important;
+    stroke: #0284c7 !important;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      background: rgba(2, 132, 199, 0.15) !important;
+      border-color: rgba(2, 132, 199, 0.35) !important;
+      color: #0369a1 !important;
+      transform: translateY(-2px) !important;
+
+      *,
+      span,
+      svg {
+        color: #0369a1 !important;
+        stroke: #0369a1 !important;
+      }
+
+      svg {
+        transform: translateX(3px) !important;
+      }
+    }
+  }
+}
+
+/* 5. Special Hero Glassmorphism Ghost Button */
+a.sd-hero__btn--ghost,
+.sd-hero__btn--ghost {
+  background: rgba(255, 255, 255, 0.16) !important;
+  border: 1px solid rgba(255, 255, 255, 0.42) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18) !important;
+
+  *,
+  span,
+  svg {
+    color: #ffffff !important;
+    stroke: #ffffff !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      background: rgba(255, 255, 255, 0.28) !important;
+      border-color: rgba(255, 255, 255, 0.75) !important;
+      color: #ffffff !important;
+      transform: translateY(-2px) !important;
+      box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.32) !important;
+
+      *,
+      span,
+      svg {
+        color: #ffffff !important;
+        stroke: #ffffff !important;
+      }
+    }
+  }
+}
+
+/* Cohesive Mobile Responsiveness */
+@media (max-width: 640px) {
+  .sd-btn--full-mobile {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+}

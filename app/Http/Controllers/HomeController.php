@@ -132,7 +132,7 @@ class HomeController extends Controller {
     /**
      * Trang chủ giao diện mới (home-v2) — Blade + Vite SCSS/JS.
      */
-    private function renderHomeV2(HtmlCacheService $cache): void
+    private function renderHomeV2(HtmlCacheService $cache)
     {
         request()->attributes->set('superdong_page', [
             'type' => 'home',
@@ -161,7 +161,7 @@ class HomeController extends Controller {
             return view('main.home-v2.index', compact('hero', 'island', 'islandGallery', 'homeReviews', 'homeFaq', 'homeNewsletter'))->render();
         }, true);
 
-        echo $html ?: '';
+        return response($html ?: '', 200)->header('Content-Type', 'text/html; charset=UTF-8');
     }
 
     /* ===== tiện nghi thay tất cả các ảnh hỗ trợ Loading ===== */

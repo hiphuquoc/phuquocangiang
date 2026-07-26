@@ -517,14 +517,18 @@
   &__cta {
     display: inline-flex;
     align-items: center;
-    gap: $sd-space-2;
+    gap: 0.45rem;
     align-self: flex-start;
     margin-top: 0;
-    padding: 0.45rem 0.85rem 0.45rem 0.95rem;
-    border-radius: $sd-radius-pill;
-    @include sd-type-cta-card;
-    color: $sd-sky-950;
-    background: $sd-sun-500;
+    padding: 0.6rem 1.2rem;
+    border-radius: 12px;
+    font-family: $sd-font-heading;
+    font-size: 0.88rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #ffffff;
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    box-shadow: 0 4px 12px -3px rgba(2, 132, 199, 0.45);
     text-transform: none;
     opacity: 0;
     transform: translateY(6px);
@@ -532,10 +536,11 @@
     transition: opacity 0.28s ease, transform 0.28s ease, background 0.22s ease, box-shadow 0.22s ease;
 
     svg {
-      width: 14px;
-      height: 14px;
+      width: 15px;
+      height: 15px;
       flex-shrink: 0;
       transition: transform 0.22s ease;
+      stroke: #ffffff;
     }
 
     @media (hover: none) {

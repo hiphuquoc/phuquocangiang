@@ -116,35 +116,10 @@ class TourPageService
         $images = [];
 
         $cover = $this->context->coverImage($item->seo, 'large');
-        $thumb = $cover !== '' ? $this->context->coverImage($item->seo, 'small') : '';
-
-        // Soft-fix: legacy /storage cover → prefer GCS URL when toCloud maps (no exists probe).
-        if ($cover !== '' && str_starts_with($cover, '/storage') && $item->seo) {
-            $raw = $item->seo->getRawOriginal('image') ?: $item->seo->getRawOriginal('image_small');
-            if (!empty($raw)) {
-                $storage = app(\App\Services\Media\GcsMediaStorageService::class);
-                $cloudPath = $storage->toCloudObjectPath($raw);
-                if ($cloudPath !== null) {
-                    $cloudUrl = media_url($cloudPath);
-                    if (!empty($cloudUrl) && !str_starts_with((string) $cloudUrl, '/storage')) {
-                        $cover = $cloudUrl;
-                        $rawSmall = $item->seo->getRawOriginal('image_small') ?: $raw;
-                        $cloudSmall = $storage->toCloudObjectPath($rawSmall);
-                        if ($cloudSmall !== null) {
-                            $thumbUrl = media_url($cloudSmall);
-                            if (!empty($thumbUrl) && !str_starts_with((string) $thumbUrl, '/storage')) {
-                                $thumb = $thumbUrl;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
         if ($cover !== '') {
             $images[] = [
                 'src' => $cover,
-                'thumb' => $thumb !== '' ? $thumb : null,
+                'thumb' => $this->context->coverImage($item->seo, 'small'),
                 'alt' => $name,
             ];
         }
@@ -154,13 +129,13 @@ class TourPageService
                 continue;
             }
             $raw = $file->getRawOriginal('file_path') ?? $file->file_path ?? null;
-            $src = media_url($raw);
+            $src = media_variant_url($raw, 'original') ?? media_url($raw);
             if (empty($src)) {
                 continue;
             }
             $images[] = [
                 'src' => $src,
-                'thumb' => $src,
+                'thumb' => media_variant_url($raw, 'small') ?? $src,
                 'alt' => $name,
             ];
         }

@@ -118,35 +118,41 @@ $gal-grid-gap: 3px;
     opacity: 0.85;
   }
 
-  /* Intro — đồng bộ sd-rental / sd-section-head trên nền tối */
+  /* Intro — trên nền tối sky-950 ghi đè màu eyebrow-wrapper / title / desc */
   &__intro {
     position: relative;
     z-index: 1;
     @include sd-container;
     max-width: calc(42rem + #{$sd-gutter-inline} * 2);
     margin-bottom: $sd-section-head-mb;
-  }
 
-  &__label {
-    @include sd-type-eyebrow;
-    margin: 0 0 $sd-space-4;
-    color: $sd-sky-300;
-    background: rgba($sd-sky-500, 0.14);
-    border-color: rgba($sd-sky-400, 0.22);
-  }
+    /* Override: eyebrow-wrapper tông vàng gold sang trọng trên nền tối */
+    .sd-section-head__eyebrow-wrapper {
+      background: linear-gradient(135deg, rgba($sd-sun-500, 0.14) 0%, rgba($sd-sun-600, 0.2) 100%);
+      border-color: rgba($sd-sun-500, 0.35);
+      box-shadow: 0 2px 12px rgba($sd-sun-500, 0.18);
+    }
 
-  &__title {
-    @include sd-type-h2-section;
-    margin: 0 0 $sd-space-3;
-    max-width: 18ch;
-    color: $sd-text-white;
-  }
+    .sd-section-head__accent-dot {
+      background: $sd-sun-500;
+      box-shadow: 0 0 10px rgba($sd-sun-500, 0.85);
+    }
 
-  &__lead {
-    @include sd-type-body-section;
-    margin: 0;
-    max-width: 42rem;
-    color: rgba($sd-white, 0.68);
+    .sd-section-head__eyebrow {
+      color: $sd-sun-500;
+      text-shadow: 0 0 18px rgba($sd-sun-500, 0.4);
+    }
+
+    /* Override: title — trắng tinh */
+    .sd-section-head__title {
+      color: $sd-white;
+      max-width: 20ch;
+    }
+
+    /* Override: desc — trắng mờ */
+    .sd-section-head__desc {
+      color: rgba($sd-white, 0.68);
+    }
   }
 
   &__meta {

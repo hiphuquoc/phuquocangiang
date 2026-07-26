@@ -130,13 +130,13 @@ class ServicePageService
                 continue;
             }
             $raw = $file->getRawOriginal('file_path') ?? $file->file_path ?? null;
-            $src = media_url($raw);
+            $src = media_variant_url($raw, 'original') ?? media_url($raw);
             if (empty($src)) {
                 continue;
             }
             $images[] = [
                 'src' => $src,
-                'thumb' => $src,
+                'thumb' => media_variant_url($raw, 'small') ?? $src,
                 'alt' => $name,
             ];
         }

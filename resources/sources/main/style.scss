@@ -7058,252 +7058,325 @@ blockquote{
 .bookFormSort {
     position: relative;
     z-index: 101;
-    /* Banner overlap — target ~1.5rem (24px) đồng nhất ở mọi breakpoint.
-       Sau khi slim head, margin-top được giảm tương ứng để overlap giữ
-       cân bằng (≈ 24-28px). Head mảnh hơn → widget có dáng "premium
-       segmented control" hơn, ít chiếm diện tích banner. */
-    margin-top: -4.6rem; /* desktop ≥ 1200px — head ~44 + mg 6 = 50 → overlap ≈ 24px */
+    margin-top: -4.8rem; /* desktop ≥ 1200px — head ~48 + mg 6 = 54 → overlap ≈ 28px */
 
     /*
-     * Tab strip — pill segmented control TRANSLUCENT GLASS:
-     * surface white 0.85 alpha + backdrop-filter blur cho nền banner
-     * lộ qua một xíu → tạo điểm nhấn glassmorphic "độc đáo", refined.
-     * Inset top highlight 1px giữ cảm giác polished pill. Saturate boost
-     * giúp màu sắc behind không bị xám đục khi blur.
-     * inline-flex để cluster hugs content, gap nhỏ cho cluster nhỏ gọn.
+     * Tab strip — Glassmorphic Pill Segmented Control gọn gàng:
+     * Nổi nhẹ trên slider, ôm gọn vừa theo nội dung (hug content), không trải dài full-width.
+     * Tiết kiệm diện tích với padding vừa vặn.
      */
     &_head {
-        display: inline-flex;
-        flex-wrap: wrap;
-        align-items: stretch;
-        gap: 0.28rem;
-        max-width: 100%;
-        padding: 0.28rem;
-        margin-bottom: 0.4rem;
-        background: rgba(255, 255, 255, 0.85);
-        backdrop-filter: blur(12px) saturate(1.4);
-        -webkit-backdrop-filter: blur(12px) saturate(1.4);
-        border: 1px solid rgba(255, 255, 255, 0.65);
-        border-radius: 999px;
+        display: inline-flex !important;
+        align-items: center !important;
+        width: auto !important;
+        max-width: 100% !important;
+        gap: 0.2rem !important;
+        padding: 0.22rem !important;
+        margin-bottom: 0.45rem !important;
+        background: rgba(255, 255, 255, 0.95) !important;
+        backdrop-filter: blur(16px) saturate(1.8) !important;
+        -webkit-backdrop-filter: blur(16px) saturate(1.8) !important;
+        border: 1px solid rgba(255, 255, 255, 0.85) !important;
+        border-radius: 999px !important;
         box-shadow:
-            0 10px 24px -20px rgba(15, 23, 42, 0.22),
-            inset 0 1px 0 rgba(255, 255, 255, 0.95);
-        position: relative;
-        z-index: 1;
+            0 10px 24px -14px rgba(15, 23, 42, 0.16),
+            inset 0 1px 1px rgba(255, 255, 255, 0.9) !important;
+        position: relative !important;
+        z-index: 10 !important;
 
+        &_item,
         > * {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            flex: 0 0 auto !important;
+            width: auto !important;
             margin: 0 !important;
-            padding: 0.42rem 1.05rem;
+            padding: 0.45rem 1rem !important;
             background: transparent !important;
             border: 0 !important;
             border-radius: 999px !important;
-            color: $colorTitle;
-            font-family: $fontText;
-            font-size: 0.88rem;
-            font-weight: 600;
-            line-height: 1.2;
-            cursor: pointer;
-            opacity: 1;
-            white-space: nowrap;
+            color: #475569 !important;
+            font-family: $fontText !important;
+            font-size: 0.86rem !important;
+            font-weight: 600 !important;
+            line-height: 1.2 !important;
+            cursor: pointer !important;
+            opacity: 1 !important;
+            white-space: nowrap !important;
             transition:
-                background-color 0.18s ease,
-                color 0.18s ease,
-                box-shadow 0.22s ease,
-                transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+                background-color 0.2s ease,
+                color 0.2s ease,
+                box-shadow 0.2s ease,
+                transform 0.2s ease !important;
 
             i {
-                margin-right: 0.42rem;
-                font-size: 0.9rem;
-                line-height: 1;
-                color: currentColor;
-                transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+                margin-right: 0.4rem !important;
+                font-size: 0.88rem !important;
+                line-height: 1 !important;
+                color: currentColor !important;
+                transition: transform 0.2s ease !important;
+            }
+
+            span {
+                font-weight: 600 !important;
+                font-size: 0.86rem !important;
+                color: currentColor !important;
             }
 
             &.active {
-                background: $colorLv1 !important;
-                color: #fff;
-                box-shadow: 0 4px 12px -6px rgba($colorLv1, 0.5);
+                background: linear-gradient(135deg, $colorLv1 0%, darken($colorLv1, 7%) 100%) !important;
+                color: #ffffff !important;
+                box-shadow: 0 4px 14px -4px rgba($colorLv1, 0.45) !important;
+
+                span {
+                    color: #ffffff !important;
+                }
             }
 
             &:not(.active):hover {
                 background: rgba($colorLv1, 0.08) !important;
-                color: $colorLv2;
-                i { transform: translateY(-1px); }
+                color: $colorLv1 !important;
+                i { transform: translateY(-1px) !important; }
             }
         }
     }
 
     /*
-     * Body card — surface chính của form.
-     * Background slate-50 (#f7f9fc) — tone "cool off-white" hơi pha xanh
-     * slate, tạo SỰ KHÁC BIỆT tinh tế với nội dung trắng xung quanh mà
-     * KHÔNG nặng nề. Inputs bên trong giữ #fff → tạo lớp visual depth
-     * (form area tinted, input pop trắng → CTA blue solid).
+     * Body card — Nền form màu xám nhẹ Slate-100 (#f1f5f9), bo góc 24px cao cấp.
+     * Ô nhập liệu bên trong màu TRẮNG (#ffffff) nổi bật hoàn hảo trên nền xám.
      */
     &_body {
-        width: 100%;
-        margin-top: 0;
-        padding: 1.3rem 1.35rem 1.35rem;
-        background: #f7f9fc;
-        border: 1px solid rgba(148, 163, 184, 0.22);
-        border-radius: 20px;
-        box-shadow: 0 28px 60px -34px rgba(15, 23, 42, 0.28);
-        font-size: 1rem;
-        position: relative;
-        z-index: 0;
+        width: 100% !important;
+        margin-top: 0 !important;
+        padding: 1.45rem 1.55rem 1.55rem !important;
+        background: #f1f5f9 !important; /* Đổi nền form sang màu xám nhẹ */
+        border: 1px solid rgba(203, 213, 225, 0.8) !important;
+        border-radius: 24px !important;
+        box-shadow:
+            0 24px 60px -20px rgba(15, 23, 42, 0.18),
+            0 4px 16px -4px rgba(15, 23, 42, 0.04) !important;
+        font-size: 1rem !important;
+        position: relative !important;
+        z-index: 0 !important;
 
         label {
-            font-family: $fontText;
-            font-weight: 600;
-            color: $colorTitle;
-            margin-bottom: 0.3rem;
-            letter-spacing: 0;
+            font-family: $fontText !important;
+            font-weight: 600 !important;
+            font-size: 0.78rem !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
+            color: #475569 !important;
+            margin-bottom: 0.25rem !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 0.35rem !important;
+
+            i {
+                font-size: 0.85rem !important;
+                color: $colorLv1 !important;
+            }
         }
 
         /*
-         * Inputs — chỉ refine bề mặt (border slate, radius, focus ring
-         * blue mảnh). Giữ height/structure của `.inputWithLabelInside`
-         * global để không phá form ở các trang khác.
+         * Inputs — Nền TRẮNG (#ffffff) nổi bật trên khung form xám, cao ráo 62px, shadow nhẹ nâng bề mặt.
          */
         .inputWithLabelInside,
         .textareaWithLabelInside {
-            border-color: rgba(148, 163, 184, 0.32);
-            border-radius: 12px;
-            background: #fff;
-            transition: border-color 0.18s ease, box-shadow 0.18s ease;
+            height: 62px !important;
+            border: 1px solid rgba(203, 213, 225, 0.9) !important;
+            border-radius: 14px !important;
+            background: #ffffff !important; /* Nền ô input màu TRẮNG NỔI BẬT */
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04) !important;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease !important;
+
+            label {
+                padding: 0.55rem 0.85rem 0 !important;
+                margin-top: 0 !important;
+                font-size: 0.76rem !important;
+                color: #64748b !important;
+                background: transparent !important;
+            }
+
+            > input {
+                height: 100% !important;
+                padding: 24px 0.85rem 6px 0.85rem !important;
+                font-size: 1.02rem !important;
+                font-weight: 700 !important;
+                color: #0f172a !important;
+                background: transparent !important;
+            }
+
+            .select2-container--default .select2-selection--single {
+                height: 36px !important;
+                margin-top: 0 !important;
+                background: transparent !important;
+                border: none !important;
+            }
+
+            .select2-container .select2-selection--single .select2-selection__rendered {
+                margin-top: -36px !important;
+                padding: 24px 0.85rem 6px 0.85rem !important;
+                font-size: 1.02rem !important;
+                font-weight: 700 !important;
+                color: #0f172a !important;
+                background: transparent !important;
+            }
 
             &:hover {
-                border-color: rgba($colorLv1, 0.42);
+                border-color: rgba($colorLv1, 0.6) !important;
+                box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08) !important;
             }
 
             &:focus-within {
-                border-color: rgba($colorLv1, 0.6);
-                box-shadow: 0 0 0 3px rgba($colorLv1, 0.12);
+                border-color: $colorLv1 !important;
+                background: #ffffff !important;
+                box-shadow: 0 0 0 3.5px rgba($colorLv1, 0.18) !important;
             }
+        }
+
+        /* Popover danh sách khách chọn số lượng */
+        .inputWithForm_form {
+            border-radius: 16px !important;
+            box-shadow: 0 20px 50px -10px rgba(15, 23, 42, 0.25) !important;
+            border: 1px solid rgba(203, 213, 225, 0.9) !important;
+            padding: 1rem 1.2rem !important;
+            background: #ffffff !important;
+            z-index: 100 !important;
         }
 
         /*
          * CTA submit (Tìm chuyến / Đặt tour / Tìm chỗ nghỉ).
-         * Solid brand-blue, đồng bộ với btnCardPrimary card grid.
+         * Thiết kế cao ráo 60px, gradient brand blue nổi bật.
          */
         .buttonSecondary,
         .buttonPrimary {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            min-height: 52px;
-            padding: 0.78rem 1.45rem;
-            background: $colorLv1;
-            color: #fff;
-            font-family: $fontTitle;
-            font-size: 0.95rem;
-            font-weight: 600;
-            line-height: 1.2;
-            letter-spacing: 0;
-            border: 0;
-            border-radius: 12px;
-            box-shadow: 0 10px 24px -18px rgba($colorLv1, 0.55);
-            cursor: pointer;
-            white-space: nowrap;
-            transition: background-color 0.18s ease, box-shadow 0.18s ease;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 0.6rem !important;
+            min-height: 62px !important;
+            padding: 0.85rem 1.75rem !important;
+            background: linear-gradient(135deg, $colorLv1 0%, darken($colorLv1, 7%) 100%) !important;
+            color: #ffffff !important;
+            font-family: $fontTitle !important;
+            font-size: 1.02rem !important;
+            font-weight: 700 !important;
+            line-height: 1.2 !important;
+            letter-spacing: 0.2px !important;
+            border: 0 !important;
+            border-radius: 14px !important;
+            box-shadow: 0 12px 28px -10px rgba($colorLv1, 0.5) !important;
+            cursor: pointer !important;
+            white-space: nowrap !important;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
 
             i {
-                margin: 0;
-                font-size: 0.92rem;
-                line-height: 1;
+                margin: 0 !important;
+                font-size: 1rem !important;
+                line-height: 1 !important;
+                transition: transform 0.2s ease !important;
             }
 
             &:hover {
-                background: $colorLv2;
-                color: #fff;
-                box-shadow: 0 14px 30px -16px rgba($colorLv1, 0.6);
+                background: linear-gradient(135deg, lighten($colorLv1, 4%) 0%, $colorLv1 100%) !important;
+                color: #ffffff !important;
+                transform: translateY(-2px) !important;
+                box-shadow: 0 16px 34px -10px rgba($colorLv1, 0.6) !important;
+
+                i {
+                    transform: scale(1.12) !important;
+                }
             }
 
             &:active {
-                background: darken($colorLv2, 5%);
+                transform: translateY(0) !important;
             }
 
             &:focus-visible {
-                outline: 2px solid rgba($colorLv1, 0.5);
-                outline-offset: 2px;
+                outline: 3px solid rgba($colorLv1, 0.4) !important;
+                outline-offset: 2px !important;
             }
         }
     }
 
     @media (max-width: 1199px) {
-        /* Tablet/mobile single-row head slim ~38 + mg 6 = 44 → overlap ≈ 24px */
         margin-top: -4.2rem;
 
-        &_body { padding: 1.15rem 1.2rem 1.2rem; }
+        &_body { padding: 1.15rem 1.2rem 1.2rem !important; }
     }
 
     @media (max-width: 767px) {
         &_head {
-            gap: 0.22rem;
-            padding: 0.25rem;
-            margin-bottom: 0.4rem;
+            display: inline-flex !important;
+            width: auto !important;
+            max-width: 100% !important;
+            overflow-x: auto !important;
+            scrollbar-width: none !important;
+            -webkit-overflow-scrolling: touch !important;
+            &::-webkit-scrollbar { display: none !important; }
+            gap: 0.15rem !important;
+            padding: 0.18rem !important;
+            margin-bottom: 0.35rem !important;
 
             > * {
-                padding: 0.36rem 0.85rem;
-                font-size: 0.82rem;
+                flex: 0 0 auto !important;
+                width: auto !important;
+                padding: 0.35rem 0.78rem !important;
+                font-size: 0.8rem !important;
 
                 i {
-                    margin-right: 0.34rem;
-                    font-size: 0.86rem;
+                    margin-right: 0.3rem !important;
+                    font-size: 0.84rem !important;
                 }
             }
         }
 
         &_body {
-            padding: 1rem 0.95rem 1.05rem;
-            border-radius: 16px;
-            font-size: 0.95rem;
-            box-shadow: 0 22px 44px -28px rgba(15, 23, 42, 0.26);
+            padding: 1rem 0.95rem 1.05rem !important;
+            border-radius: 16px !important;
+            font-size: 0.95rem !important;
+            box-shadow: 0 22px 44px -28px rgba(15, 23, 42, 0.26) !important;
 
             .buttonSecondary,
             .buttonPrimary {
-                min-height: 48px;
-                padding: 0.7rem 1.2rem;
-                font-size: 0.9rem;
-                border-radius: 11px;
+                min-height: 48px !important;
+                padding: 0.7rem 1.2rem !important;
+                font-size: 0.9rem !important;
+                border-radius: 11px !important;
             }
         }
     }
 
     @media (max-width: 577px) {
-        /* Mobile nhỏ: head slim wrap 2 rows (~58-62px) → margin sâu hơn
-           để bù lại + overlap vẫn giữ ≈ 24px. */
-        margin-top: -5.4rem;
+        margin-top: -4.5rem;
 
         &_head {
-            display: flex;
-            width: 100%;
-            border-radius: 14px;
-            padding: 0.22rem;
-            gap: 0.18rem;
-            margin-bottom: 0.35rem;
+            display: inline-flex !important;
+            width: auto !important;
+            max-width: 100% !important;
+            border-radius: 999px !important;
+            padding: 0.15rem !important;
+            gap: 0.12rem !important;
+            margin-bottom: 0.35rem !important;
 
             > * {
-                flex: 1 1 calc(33.33% - 0.13rem);
-                min-width: calc(33.33% - 0.13rem);
-                padding: 0.36rem 0.45rem;
-                font-size: 0.78rem;
-                border-radius: 11px !important;
+                flex: 0 0 auto !important;
+                width: auto !important;
+                padding: 0.32rem 0.65rem !important;
+                font-size: 0.76rem !important;
+                border-radius: 999px !important;
 
                 i {
-                    margin-right: 0.28rem;
-                    font-size: 0.82rem;
+                    margin-right: 0.25rem !important;
+                    font-size: 0.78rem !important;
                 }
             }
         }
 
         &_body {
-            padding: 0.9rem;
-            border-radius: 14px;
+            padding: 0.9rem !important;
+            border-radius: 14px !important;
         }
     }
 }
@@ -7490,29 +7563,50 @@ blockquote{
         flex: 1 1 0;
         min-width: 0;
         margin: 0 !important;
-        border-radius: 12px;
+        border-radius: 14px;
     }
 
     &_icon {
         position: absolute;
         left: 50%;
         top: 50%;
-        z-index: 2;
-        width: 34px;
-        height: 34px;
+        z-index: 5;
+        width: 38px;
+        height: 38px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        background: $colorLv1;
-        border: 3px solid #fff;
+        background: #ffffff;
+        border: 2px solid #e2e8f0;
+        color: $colorLv1;
         border-radius: 50%;
-        box-shadow: 0 6px 14px -6px rgba($colorLv1, 0.55);
+        box-shadow: 0 8px 20px -4px rgba(15, 23, 42, 0.16);
         transform: translate3d(-50%, -50%, 0);
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+        i {
+            font-size: 0.95rem;
+            line-height: 1;
+            transition: transform 0.3s ease;
+        }
 
         img {
             width: 16px;
             height: 16px;
             display: block;
+        }
+
+        &:hover {
+            background: $colorLv1;
+            color: #ffffff;
+            border-color: $colorLv1;
+            box-shadow: 0 10px 24px -4px rgba($colorLv1, 0.45);
+            transform: translate3d(-50%, -50%, 0) scale(1.12) rotate(180deg);
+        }
+
+        &:active {
+            transform: translate3d(-50%, -50%, 0) scale(0.95) rotate(180deg);
         }
     }
 
@@ -7520,9 +7614,12 @@ blockquote{
         gap: 0.55rem;
 
         &_icon {
-            width: 30px;
-            height: 30px;
-            border-width: 2.5px;
+            width: 32px;
+            height: 32px;
+
+            i {
+                font-size: 0.85rem;
+            }
 
             img {
                 width: 14px;

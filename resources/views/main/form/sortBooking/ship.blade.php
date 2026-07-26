@@ -7,7 +7,7 @@
         <div class="bookFormSortShip_column_item">
             <div class="inputWithIconBetween">
                 <div class="inputWithIconBetween_item inputWithLabelInside location">
-                    <label for="js_loadShipLocationByShipDeparture_element">{{ t('form_departure_point') }}</label>
+                    <label for="js_loadShipLocationByShipDeparture_element"><i class="fa-solid fa-anchor"></i> {{ t('form_departure_point') }}</label>
                     <select id="js_loadShipLocationByShipDeparture_element" class="select2 form-select select2-hidden-accessible" name="ship_port_departure_id" onchange="loadShipLocationByShipDeparture(this, 'js_loadShipLocationByShipDeparture_idWrite');" tabindex="-1" aria-hidden="true">
                         {{-- <option value="">- Lựa chọn -</option> --}}
                         @foreach($dataShipPort as $port)
@@ -23,11 +23,11 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="inputWithIconBetween_icon">
-                    <img src="/images/main/svg/icon-round.svg" alt="{{ t('form_aria_book_ship') }}" title="{{ t('form_aria_book_ship') }}" />
+                <div class="inputWithIconBetween_icon" onclick="swapShipPorts();" title="{{ t('form_swap_ports') ?? 'Đảo chiều điểm đi / điểm đến' }}" role="button" tabindex="0">
+                    <i class="fa-solid fa-arrow-right-arrow-left"></i>
                 </div>
                 <div class="inputWithIconBetween_item inputWithLabelInside location">
-                    <label for="js_loadShipLocationByShipDeparture_idWrite">{{ t('form_arrival_point') }}</label>
+                    <label for="js_loadShipLocationByShipDeparture_idWrite"><i class="fa-solid fa-location-dot"></i> {{ t('form_arrival_point') }}</label>
                     <select id="js_loadShipLocationByShipDeparture_idWrite" class="select2 form-select select2-hidden-accessible" name="ship_port_location_id" tabindex="-1" aria-hidden="true">
                         {{-- <option value="">- Lựa chọn -</option> --}}
                     </select>
@@ -39,7 +39,7 @@
             <!-- One column -->
             <div class="bookFormSortShip_input_item">
                 <div class="inputWithLabelInside date">
-                    <label for="input_date_ship_1">{{ t('booking_departure_date') }}</label>
+                    <label for="input_date_ship_1"><i class="fa-regular fa-calendar-days"></i> {{ t('booking_departure_date') }}</label>
                     <input type="text" class="form-control flatpickr-basic flatpickr-input active" id="input_date_ship_1" name="date_1" value="{{ date('Y-m-d', time() + 86400) }}" aria-label="{{ t('form_ship_date_aria') }}" readonly="readonly" required>
                 </div>
             </div>
@@ -49,7 +49,7 @@
         <!-- One column -->
         <div class="bookFormSortShip_column_item">
             <div class="inputWithLabelInside peopleGroup inputWithForm">
-                <label for="bookFormSort_date">{{ t('form_passenger_count') }}</label>
+                <label for="js_setValueQuantityShip_idWrite"><i class="fa-solid fa-users"></i> {{ t('form_passenger_count') }}</label>
                 {{-- <div class="inputWithForm"> --}}
                     <input type="text" id="js_setValueQuantityShip_idWrite" class="form-control inputWithForm_input" name="quantity" value="{{ t('pax_count_summary', ['adult' => 1, 'child' => 0, 'old' => 0]) }}" readonly="readonly" aria-label="{{ t('form_pax_ship_aria') }}" required>
                     <div class="inputWithForm_form">
@@ -57,9 +57,10 @@
                             <div class="formBox_labelOneRow">
                                 <div class="formBox_labelOneRow_item">
                                     <div class="labelWithIcon">
-                                        <div class="labelWithIcon_icon adult"></div>
+                                        <div class="labelWithIcon_icon adult"><i class="fa-solid fa-user"></i></div>
                                         <div class="labelWithIcon_label">
-                                            {{ t('pax_age_adult_range', ['from' => date('Y', time()) - 12, 'to' => date('Y', time()) - 59]) }}
+                                            <div class="labelWithIcon_title">{{ t('pax_adult') }}</div>
+                                            <div class="labelWithIcon_sub">{{ t('pax_age_adult_range', ['from' => date('Y', time()) - 12, 'to' => date('Y', time()) - 59]) }}</div>
                                         </div>
                                     </div>
                                     <div class="inputNumberCustom"> 
@@ -74,9 +75,10 @@
                                 </div>
                                 <div class="formBox_labelOneRow_item">
                                     <div class="labelWithIcon">
-                                        <div class="labelWithIcon_icon children"></div>
+                                        <div class="labelWithIcon_icon children"><i class="fa-solid fa-child"></i></div>
                                         <div class="labelWithIcon_label">
-                                            {{ t('pax_age_child_range', ['from' => date('Y', time()) - 6, 'to' => date('Y', time()) - 11]) }}
+                                            <div class="labelWithIcon_title">{{ t('pax_child') }}</div>
+                                            <div class="labelWithIcon_sub">{{ t('pax_age_child_range', ['from' => date('Y', time()) - 6, 'to' => date('Y', time()) - 11]) }}</div>
                                         </div>
                                     </div>
                                     <div class="inputNumberCustom"> 
@@ -91,9 +93,10 @@
                                 </div>
                                 <div class="formBox_labelOneRow_item">
                                     <div class="labelWithIcon">
-                                        <div class="labelWithIcon_icon adult"></div>
+                                        <div class="labelWithIcon_icon old"><i class="fa-solid fa-user-tie"></i></div>
                                         <div class="labelWithIcon_label">
-                                            {{ t('pax_age_old_range', ['from' => date('Y', time()) - 60]) }}
+                                            <div class="labelWithIcon_title">{{ t('pax_old') }}</div>
+                                            <div class="labelWithIcon_sub">{{ t('pax_age_old_range', ['from' => date('Y', time()) - 60]) }}</div>
                                         </div>
                                     </div>
                                     <div class="inputNumberCustom"> 

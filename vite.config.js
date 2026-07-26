@@ -15,7 +15,13 @@ export default defineConfig({
                 'resources/sources/main/print.scss',
                 'resources/sources/admin/print.scss',
             ],
-            refresh: true,
+            refresh: [
+                'resources/views/**',
+                'resources/sources/**',
+                'resources/js/**',
+                'app/Http/Controllers/**',
+                'routes/**',
+            ],
             detectTls: process.env.VITE_DETECT_TLS || false,
         }),
     ],
@@ -31,6 +37,10 @@ export default defineConfig({
         cors: true,
         hmr: {
             host: process.env.VITE_HMR_HOST || '127.0.0.1',
+        },
+        watch: {
+            usePolling: true,
+            interval: 100,
         },
     },
     build: {

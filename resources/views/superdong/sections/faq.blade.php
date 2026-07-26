@@ -10,9 +10,12 @@
   <div class="sd-section__inner">
     <div class="sd-faq-section__layout">
       <aside class="sd-faq-section__aside" data-reveal>
-        <span class="sd-faq-section__kicker">{{ $faqSection['kicker'] ?? 'Hỏi đáp' }}</span>
-        <h2 class="sd-faq-section__title" id="sd-faq-title">{{ $faqSection['title'] ?? 'Câu hỏi thường gặp' }}</h2>
-        <p class="sd-faq-section__desc">{{ $faqSection['description'] ?? '' }}</p>
+        <div class="sd-section-head__eyebrow-wrapper">
+          <span class="sd-section-head__accent-dot" aria-hidden="true"></span>
+          <span class="sd-section-head__eyebrow">{{ $faqSection['kicker'] ?? 'Hỏi đáp' }}</span>
+        </div>
+        <h2 class="sd-section-head__title" id="sd-faq-title">{!! $faqSection['title'] ?? 'Câu hỏi thường gặp' !!}</h2>
+        <p class="sd-section-head__desc">{{ $faqSection['description'] ?? '' }}</p>
 
         @if(!empty($faqSection['help_title']) || !empty($faqSection['help_body']))
           <div class="sd-faq-section__help">

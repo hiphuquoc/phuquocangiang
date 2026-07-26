@@ -90,7 +90,8 @@ class HtmlCacheService
      */
     public function getOrRender(string $cacheKey, callable $renderCallback, bool $allowHomepagePersist = false): ?string
     {
-        if (!$this->useHtmlCache || $cacheKey === '') {
+        /* Khi npm run dev đang chạy (file public/hot tồn tại), tắt cache HTML để Blade re-render live mỗi request */
+        if (!$this->useHtmlCache || $cacheKey === '' || is_file(public_path('hot'))) {
             return $renderCallback();
         }
 
@@ -111,7 +112,8 @@ class HtmlCacheService
                 ]);
             }
         }
-        return $html ?: null;
+
+        return !empty($html) ? $this->prepareHtmlForServe($html) : null;
     }
 
     /**
@@ -536,28 +538,73 @@ class HtmlCacheService
     }
 
     /**
-     * Khi `public/hot` tồn tại, @vite render URL dev server. Ghi cache sẽ làm
-     * lần sau vỡ CSS/JS — thay bằng tag production từ manifest.
+     * Khi `public/hot` tồn tại (hoặc HTML cache cũ còn URL source/dev),
+     * @vite render URL dev/source. Ghi/serve cache sẽ vỡ CSS/JS — thay bằng
+     * tag production từ manifest đúng entry (superdong vs main).
      */
     private function rewriteViteDevUrlsToBuildAssets(string $html): string
     {
-        $hasViteDev = (bool) preg_match('#@vite/client|://[^"\'>\s]*:5173/#', $html);
-        $hasRelativeBuild = (bool) preg_match('#\s(?:href|src)=["\']build/#i', $html);
-
-        if (!$hasViteDev && !$hasRelativeBuild) {
-            return $html;
+        /* Nếu file public/hot đang tồn tại (npm run dev đang bật), giữ nguyên script @vite/client để trình duyệt kết nối Vite HMR Live Reload! */
+        if (is_file(public_path('hot'))) {
+            return $this->ensureRootAbsoluteBuildAssets($html);
         }
 
-        if ($hasViteDev) {
-            $productionTags = $this->renderProductionViteTags([
-                'resources/sources/main/style.scss',
-            ]);
+        $hasViteDev = (bool) preg_match('#@vite/client|://[^"\'>\s]*:5173/#', $html);
+        $hasSourceAssets = (bool) preg_match(
+            '#\s(?:href|src)=["\'][^"\']*/resources/(?:sources|js)/[^"\']+\.(?:scss|css|js)(?:\?[^"\']*)?["\']#i',
+            $html
+        );
+        $hasRelativeBuild = (bool) preg_match('#\s(?:href|src)=["\']build/#i', $html);
+        $isSuperdong = (bool) preg_match(
+            '#\bsd-home-v2\b|superdong\.scss|/js/superdong\.js|/build/assets/superdong|/build/assets/home-v2#i',
+            $html
+        );
+        $hasWrongMainCssOnSuperdong = $isSuperdong
+            && (bool) preg_match('#/build/assets/style(?:\d*)\.css#i', $html)
+            && !preg_match('#/build/assets/superdong(?:\d*)\.css#i', $html);
 
-            $html = preg_replace('#<script\b[^>]*(?:@vite/client|:5173/)[^>]*>\s*</script>#is', '', $html) ?? $html;
-            $html = preg_replace('#<link\b[^>]*:5173/[^>]*\/?>#i', '', $html) ?? $html;
-            $html = preg_replace('#<script\b[^>]*:5173/[^>]*>\s*</script>#is', '', $html) ?? $html;
+        if (!$hasViteDev && !$hasSourceAssets && !$hasRelativeBuild && !$hasWrongMainCssOnSuperdong) {
+            return $this->ensureRootAbsoluteBuildAssets($html);
+        }
 
-            if ($productionTags !== '' && !preg_match('#/build/assets/[^"\']+\.css#', $html)) {
+        $entrypoints = $isSuperdong
+            ? ['resources/sources/superdong.scss', 'resources/js/superdong.js']
+            : ['resources/sources/main/style.scss'];
+
+        // Gỡ Vite client / HMR / source SCSS-JS (kể cả khi hot trỏ APP_URL không có :5173).
+        $html = preg_replace('#<script\b[^>]*(?:@vite/client|:5173/)[^>]*>\s*</script>#is', '', $html) ?? $html;
+        $html = preg_replace('#<link\b[^>]*:5173/[^>]*\/?>#i', '', $html) ?? $html;
+        $html = preg_replace('#<script\b[^>]*:5173/[^>]*>\s*</script>#is', '', $html) ?? $html;
+        $html = preg_replace(
+            '#<link\b[^>]*(?:href=["\'][^"\']*/resources/sources/[^"\']+\.(?:scss|css)(?:\?[^"\']*)?["\'])[^>]*\/?>#i',
+            '',
+            $html
+        ) ?? $html;
+        $html = preg_replace(
+            '#<script\b[^>]*(?:src=["\'][^"\']*/resources/js/[^"\']+\.js(?:\?[^"\']*)?["\'])[^>]*>\s*</script>#is',
+            '',
+            $html
+        ) ?? $html;
+
+        if ($hasWrongMainCssOnSuperdong) {
+            $html = preg_replace(
+                '#<link\b[^>]*(?:href=["\'][^"\']*/build/assets/style(?:\d*)\.css(?:\?[^"\']*)?["\'])[^>]*\/?>#i',
+                '',
+                $html
+            ) ?? $html;
+            $html = preg_replace(
+                '#<link\b[^>]*(?:href=["\'][^"\']*/build/assets/style(?:\d*)\.css(?:\?[^"\']*)?["\'])[^>]*rel=["\']preload["\'][^>]*\/?>#i',
+                '',
+                $html
+            ) ?? $html;
+        }
+
+        $needsCss = !preg_match('#/build/assets/(?:superdong|style)(?:\d*)\.css#i', $html);
+        $needsJs = $isSuperdong && !preg_match('#/build/assets/(?:superdong|home-v2)(?:\d*)\.js#i', $html);
+
+        if ($needsCss || $needsJs || $hasWrongMainCssOnSuperdong) {
+            $productionTags = $this->renderProductionViteTags($entrypoints);
+            if ($productionTags !== '') {
                 if (preg_match('#<!-- BEGIN: Custom CSS-->#i', $html)) {
                     $html = preg_replace(
                         '#(<!-- BEGIN: Custom CSS-->\s*)#i',
@@ -626,8 +673,14 @@ class HtmlCacheService
             if (empty($manifest[$entry]['file'])) {
                 continue;
             }
-            $href = asset_bust_url($prefix . '/build/' . ltrim((string) $manifest[$entry]['file'], '/'));
-            $tags .= '<link rel="stylesheet" href="' . htmlspecialchars($href, ENT_QUOTES, 'UTF-8') . '" />' . "\n";
+            $file = ltrim((string) $manifest[$entry]['file'], '/');
+            $href = asset_bust_url($prefix . '/build/' . $file);
+            $safe = htmlspecialchars($href, ENT_QUOTES, 'UTF-8');
+            if (str_ends_with(strtolower($file), '.css')) {
+                $tags .= '<link rel="stylesheet" href="' . $safe . '" />' . "\n";
+            } else {
+                $tags .= '<script type="module" src="' . $safe . '"></script>' . "\n";
+            }
             foreach ($manifest[$entry]['css'] ?? [] as $cssFile) {
                 $cssHref = asset_bust_url($prefix . '/build/' . ltrim((string) $cssFile, '/'));
                 $tags .= '<link rel="stylesheet" href="' . htmlspecialchars($cssHref, ENT_QUOTES, 'UTF-8') . '" />' . "\n";

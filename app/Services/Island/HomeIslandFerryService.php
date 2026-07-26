@@ -281,10 +281,17 @@ class HomeIslandFerryService
      */
     private function resolveFromLabels(Ship $ship): array
     {
+        $depName = trim((string) ($ship->departure?->display_name ?: $ship->departure?->name ?: ''));
         $port = trim((string) ($ship->portDeparture?->name ?? ''));
         $district = trim((string) ($ship->departure?->district?->district_name ?? ''));
         $province = trim((string) ($ship->departure?->province?->province_name ?? ''));
-        $depName = trim((string) ($ship->departure?->name ?? ''));
+
+        if ($depName !== '') {
+            return [
+                'from' => $depName,
+                'fromSub' => $port !== '' && $port !== $depName ? $port : ($district !== '' && $district !== $depName ? $district : ''),
+            ];
+        }
 
         if ($port !== '') {
             return [
@@ -300,10 +307,6 @@ class HomeIslandFerryService
                 'from' => $district,
                 'fromSub' => $province !== '' && $province !== $district ? $province : '',
             ];
-        }
-
-        if ($depName !== '') {
-            return ['from' => $depName, 'fromSub' => $province];
         }
 
         return ['from' => $province ?: '—', 'fromSub' => ''];

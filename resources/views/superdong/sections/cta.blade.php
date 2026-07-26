@@ -21,9 +21,12 @@
           </span>
         </div>
 
-        <span class="sd-letter__kicker">{{ $letter['kicker'] ?? 'Thư từ Superdong' }}</span>
-        <h2 class="sd-letter__title" id="sd-letter-title">{{ $letter['title'] ?? '' }}</h2>
-        <p class="sd-letter__lead">{{ $letter['lead'] ?? '' }}</p>
+        <div class="sd-section-head__eyebrow-wrapper sd-letter__kicker-wrapper">
+          <span class="sd-section-head__accent-dot" aria-hidden="true"></span>
+          <span class="sd-section-head__eyebrow">{{ $letter['kicker'] ?? 'Thư từ Superdong' }}</span>
+        </div>
+        <h2 class="sd-section-head__title sd-letter__title" id="sd-letter-title">{!! $letter['title'] ?? '' !!}</h2>
+        <p class="sd-section-head__desc sd-letter__lead">{{ $letter['lead'] ?? '' }}</p>
 
         <form class="sd-letter__form" action="#" method="post" onsubmit="return false;">
           <label class="sd-letter__field">

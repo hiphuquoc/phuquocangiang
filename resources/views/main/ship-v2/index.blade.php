@@ -24,7 +24,7 @@
   'defaultBookingTab' => 'ship',
 ])
 
-<main id="main" class="sd-hotel-detail-page sd-product-detail-page">
+<main id="main" class="sd-hotel-detail-page sd-product-detail-page sd-ship-detail-page">
   @include('main.product-v2.sections.intro', [
     'intro' => $page['intro'] ?? [],
     'gallery' => $page['gallery'] ?? [],
@@ -51,15 +51,14 @@
   @endif
 
   @if(!empty($schedule))
-    @include('main.listing-v2.sections.content-prose', [
+    @include('main.listing-v2.sections.content-simple', [
       'content' => '',
       'articleTop' => $schedule,
       'eyebrow' => t('kicker_ship'),
       'title' => t('ship_schedule_title', ['name' => $shipName]),
       'lede' => '',
       'titleId' => 'ship-schedule-title',
-      'tocSub' => t('kicker_ship'),
-      'sectionClass' => 'sd-listing-content sd-ship-schedule',
+      'sectionClass' => 'sd-listing-content sd-listing-content--simple sd-ship-schedule',
     ])
   @endif
 
@@ -81,13 +80,13 @@
   @endif
 
   @if(!empty($content))
-    @include('main.listing-v2.sections.content-prose', [
+    @include('main.listing-v2.sections.content-simple', [
       'content' => $content,
       'eyebrow' => t('kicker_ship'),
       'title' => t('ship_detail_title', ['name' => $shipName]),
       'lede' => '',
       'titleId' => 'ship-detail-content-title',
-      'tocSub' => t('kicker_ship'),
+      'sectionClass' => 'sd-listing-content sd-listing-content--simple',
     ])
   @endif
 
@@ -116,9 +115,6 @@
 <script type="text/javascript">
 (function () {
   function bootShipDetailPage() {
-    if (typeof window.initContentTocSidebar === 'function') {
-      window.initContentTocSidebar(document);
-    }
     if (typeof window.initHotelDetailGallery === 'function') {
       window.initHotelDetailGallery(document);
     }

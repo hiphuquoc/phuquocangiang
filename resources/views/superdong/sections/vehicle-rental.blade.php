@@ -28,10 +28,15 @@
 @endphp
 <section class="sd-section sd-rental" id="rental" aria-labelledby="sd-rental-title">
   <div class="sd-section__inner">
-    <header class="sd-rental__head" data-reveal>
-      <span class="sd-rental__kicker">Di chuyển trên đảo</span>
-      <h2 class="sd-rental__title" id="sd-rental-title">Thuê xe máy &amp; ô tô Côn Đảo</h2>
-      <p class="sd-rental__desc">Nhận xe nhanh tại trung tâm Côn Sơn — giấy tờ thủ tục nhanh gọn, bảng giá công khai - phù hợp, hỗ trợ bản đồ - tư vấn lộ trình miễn phí.</p>
+    <header class="sd-section-head sd-rental__head" data-reveal>
+      <div class="sd-section-head__main">
+        <div class="sd-section-head__eyebrow-wrapper">
+          <span class="sd-section-head__accent-dot" aria-hidden="true"></span>
+          <span class="sd-section-head__eyebrow">Di chuyển trên đảo</span>
+        </div>
+        <h2 class="sd-section-head__title" id="sd-rental-title">Thuê Xe Máy &amp; Ô Tô {{ island_name() }}</h2>
+        <p class="sd-section-head__desc">Nhận xe nhanh tại trung tâm — giấy tờ thủ tục nhanh gọn, bảng giá công khai niêm yết, hỗ trợ bản đồ &amp; gợi ý lộ trình miễn phí.</p>
+      </div>
     </header>
 
     <div class="sd-rental__body">

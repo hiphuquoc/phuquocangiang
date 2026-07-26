@@ -23,7 +23,10 @@
 <header class="{{ $headClass }}" @if($reveal) data-reveal @endif>
   <div class="sd-section-head__main">
     @if(!empty($eyebrow))
-      <span class="sd-section-head__eyebrow">{{ $eyebrow }}</span>
+      <div class="sd-section-head__eyebrow-wrapper">
+        <span class="sd-section-head__accent-dot" aria-hidden="true"></span>
+        <span class="sd-section-head__eyebrow">{{ $eyebrow }}</span>
+      </div>
     @endif
     <{{ $titleTag }} class="sd-section-head__title"@if(!empty($titleId)) id="{{ $titleId }}"@endif>{!! $title !!}</{{ $titleTag }}>
     @if(!empty($desc))
@@ -31,6 +34,9 @@
     @endif
   </div>
   @if(!empty($linkHref))
-    <a class="sd-section-head__link" href="{{ $linkHref }}">{{ $linkLabel }}</a>
+    <a class="sd-section-head__link" href="{{ $linkHref }}">
+      <span>{{ $linkLabel }}</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
   @endif
 </header>

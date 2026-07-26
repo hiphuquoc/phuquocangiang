@@ -6,36 +6,22 @@
   novalidate
   @if(!empty($defaultTab)) data-default-tab="{{ $defaultTab }}" @endif
 >
-  <div class="sd-booking__head">
-    <div class="sd-booking__head-text">
-      <strong>Tìm &amp; đặt dịch vụ</strong>
-    </div>
-    <span class="sd-booking__head-badge">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
-      Xác nhận tức thì
-    </span>
-  </div>
-
   <div class="sd-booking__tabs" role="tablist" aria-label="Loại dịch vụ">
     <button type="button" class="sd-booking__tab is-active" data-tab="ship" role="tab" aria-selected="true" aria-controls="panel-ship">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 21c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.5 0 2.5 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1M13 4v8m0 0l3-3m-3 3L10 9"/></svg>
-      Vé tàu
+      <span>Vé tàu</span>
     </button>
     <button type="button" class="sd-booking__tab" data-tab="tour" role="tab" aria-selected="false" aria-controls="panel-tour">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-      Tour
+      <span>Tour</span>
     </button>
     <button type="button" class="sd-booking__tab" data-tab="hotel" role="tab" aria-selected="false" aria-controls="panel-hotel">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
-      Khách sạn
-    </button>
-    <button type="button" class="sd-booking__tab" data-tab="combo" role="tab" aria-selected="false" aria-controls="panel-combo">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-6"/><path d="M12 2v10M8 6l4-4 4 4"/></svg>
-      Combo
+      <span>Khách sạn</span>
     </button>
     <button type="button" class="sd-booking__tab" data-tab="ticket" role="tab" aria-selected="false" aria-controls="panel-ticket">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/></svg>
-      Vé vui chơi
+      <span>Vé vui chơi</span>
     </button>
   </div>
 
@@ -74,7 +60,7 @@
         @include('superdong.form.fields.field-passengers', [
           'id' => 'ship-passengers',
           'namePrefix' => 'ship',
-          'label' => 'Hành khách',
+          'label' => 'Số lượng hành khách',
           'adult' => 2,
           'child' => 0,
           'senior' => 0,
@@ -82,7 +68,10 @@
         ])
       </div>
     </div>
-    <button type="submit" class="sd-booking__submit">Tìm chuyến tàu <span aria-hidden="true">→</span></button>
+    <button type="submit" class="sd-booking__submit">
+      <span>Tìm chuyến tàu phù hợp</span>
+      <svg class="sd-booking__submit-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </button>
   </div>
 
   {{-- TOUR --}}
@@ -105,7 +94,7 @@
         @include('superdong.form.fields.field-passengers', [
           'id' => 'tour-passengers',
           'namePrefix' => 'tour',
-          'label' => 'Hành khách',
+          'label' => 'Số lượng khách',
           'adult' => 2,
           'child' => 0,
           'senior' => 0,
@@ -114,7 +103,10 @@
         ])
       </div>
     </div>
-    <button type="submit" class="sd-booking__submit">Xem tour phù hợp <span aria-hidden="true">→</span></button>
+    <button type="submit" class="sd-booking__submit">
+      <span>Tìm tour trải nghiệm</span>
+      <svg class="sd-booking__submit-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </button>
   </div>
 
   {{-- KHÁCH SẠN --}}
@@ -139,7 +131,7 @@
         @include('superdong.form.fields.field-passengers', [
           'id' => 'hotel-passengers',
           'namePrefix' => 'hotel',
-          'label' => 'Hành khách',
+          'label' => 'Số lượng khách',
           'adult' => 2,
           'child' => 0,
           'senior' => 0,
@@ -148,38 +140,10 @@
         ])
       </div>
     </div>
-    <button type="submit" class="sd-booking__submit">Tìm phòng trống <span aria-hidden="true">→</span></button>
-  </div>
-
-  {{-- COMBO --}}
-  <div class="sd-booking__panel" id="panel-combo" data-panel="combo" role="tabpanel" hidden>
-    <div class="sd-booking__body">
-      <div class="sd-booking__row sd-booking__row--full">
-        @include('superdong.form.fields.field-date-picker', [
-          'id' => 'combo-date',
-          'mode' => 'single',
-          'name' => 'combo_date',
-          'label' => 'Ngày đi',
-          'value' => '2026-06-15',
-          'min' => date('Y-m-d'),
-          'full' => true,
-        ])
-      </div>
-
-      <div class="sd-booking__row sd-booking__row--full">
-        @include('superdong.form.fields.field-passengers', [
-          'id' => 'combo-passengers',
-          'namePrefix' => 'combo',
-          'label' => 'Hành khách',
-          'adult' => 2,
-          'child' => 0,
-          'senior' => 0,
-          'maxTotal' => 8,
-          'minAdult' => 2,
-        ])
-      </div>
-    </div>
-    <button type="submit" class="sd-booking__submit">Xem combo tiết kiệm <span aria-hidden="true">→</span></button>
+    <button type="submit" class="sd-booking__submit">
+      <span>Tìm phòng giá tốt nhất</span>
+      <svg class="sd-booking__submit-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </button>
   </div>
 
   {{-- VÉ VUI CHƠI --}}
@@ -201,7 +165,7 @@
         @include('superdong.form.fields.field-passengers', [
           'id' => 'ticket-passengers',
           'namePrefix' => 'ticket',
-          'label' => 'Hành khách',
+          'label' => 'Số lượng khách',
           'adult' => 2,
           'child' => 0,
           'senior' => 0,
@@ -210,6 +174,9 @@
         ])
       </div>
     </div>
-    <button type="submit" class="sd-booking__submit">Đặt vé ngay <span aria-hidden="true">→</span></button>
+    <button type="submit" class="sd-booking__submit">
+      <span>Đặt vé tham quan ngay</span>
+      <svg class="sd-booking__submit-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </button>
   </div>
 </form>

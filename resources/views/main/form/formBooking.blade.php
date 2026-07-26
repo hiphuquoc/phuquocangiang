@@ -10,21 +10,26 @@
 <div class="container">
 	<div class="bookFormSort" onClick="hideShowAround();">
 		<div class="bookFormSort_head">
-			<div {{ !empty($active)&&$active=='ship' ? 'class=active' : null }} data-tab="shipBookingForm" onClick="changeTab(this);">
-				<div class="show-767 maxLine_1"><i class="fa-solid fa-ship"></i>{{ t('tab_ship') }}</div>
-				<div class="hide-767 maxLine_1"><i class="fa-solid fa-ship"></i>{{ t('tab_ship_full') }}</div>
+			<div class="bookFormSort_head_item {{ !empty($active)&&$active=='ship' ? 'active' : null }}" data-tab="shipBookingForm" onClick="changeTab(this);">
+				<i class="fa-solid fa-ship"></i>
+				<span class="show-767">{{ t('tab_ship') }}</span>
+				<span class="hide-767">{{ t('tab_ship_full') }}</span>
 			</div>
-			<div {{ !empty($active)&&$active=='tour' ? 'class=active' : null }} data-tab="tourBookingForm" onClick="changeTab(this);">
-				<div class="maxLine_1"><i class="fa-solid fa-suitcase-rolling"></i>{{ t('tab_tour') }}</div>
+			<div class="bookFormSort_head_item {{ !empty($active)&&$active=='tour' ? 'active' : null }}" data-tab="tourBookingForm" onClick="changeTab(this);">
+				<i class="fa-solid fa-suitcase-rolling"></i>
+				<span>{{ t('tab_tour') }}</span>
 			</div>
-			<div {{ !empty($active)&&$active=='combo' ? 'class=active' : null }} data-tab="comboBookingForm" onClick="changeTab(this);">
-				<div class="maxLine_1"><i class="fa-solid fa-gift"></i>{{ t('tab_combo') }}</div>
+			<div class="bookFormSort_head_item {{ !empty($active)&&$active=='combo' ? 'active' : null }}" data-tab="comboBookingForm" onClick="changeTab(this);">
+				<i class="fa-solid fa-gift"></i>
+				<span>{{ t('tab_combo') }}</span>
 			</div>
-			<div {{ !empty($active)&&$active=='hotel' ? 'class=active' : null }} data-tab="hotelBookingForm" onClick="changeTab(this);">
-				<div class="maxLine_1"><i class="fa-solid fa-bed"></i>{{ t('tab_hotel') }}</div>
+			<div class="bookFormSort_head_item {{ !empty($active)&&$active=='hotel' ? 'active' : null }}" data-tab="hotelBookingForm" onClick="changeTab(this);">
+				<i class="fa-solid fa-bed"></i>
+				<span>{{ t('tab_hotel') }}</span>
 			</div>
-			<div {{ !empty($active)&&$active=='service' ? 'class=active' : null }} data-tab="ticketBookingForm" onClick="changeTab(this);">
-				<div class="maxLine_1"><i class="fa-solid fa-ticket"></i>{{ t('tab_entertainment') }}</div>
+			<div class="bookFormSort_head_item {{ !empty($active)&&$active=='service' ? 'active' : null }}" data-tab="ticketBookingForm" onClick="changeTab(this);">
+				<i class="fa-solid fa-ticket"></i>
+				<span>{{ t('tab_entertainment') }}</span>
 			</div>
 		</div>
 		<div class="bookFormSort_body">
@@ -109,6 +114,23 @@
 			});
 			/* bật tab được chọn */
 			elementContent.css('display', 'block');
+		}
+
+		function swapShipPorts(){
+			const $departure = $('#js_loadShipLocationByShipDeparture_element');
+			const $arrival = $('#js_loadShipLocationByShipDeparture_idWrite');
+			if ($departure.length && $arrival.length) {
+				const depVal = $departure.val();
+				const arrVal = $arrival.val();
+				if (arrVal && $departure.find('option[value="' + arrVal + '"]').length) {
+					$departure.val(arrVal).trigger('change');
+					setTimeout(function(){
+						if ($arrival.find('option[value="' + depVal + '"]').length) {
+							$arrival.val(depVal).trigger('change');
+						}
+					}, 350);
+				}
+			}
 		}
     </script>
 @endpush

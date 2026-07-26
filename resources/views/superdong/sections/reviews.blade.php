@@ -16,9 +16,12 @@
   <div class="sd-section__inner sd-voices__inner">
     <div class="sd-voices__mast">
       <header class="sd-voices__head" data-reveal>
-        <span class="sd-voices__kicker">{{ $reviewsSection['kicker'] ?? 'Khách hàng nói gì' }}</span>
-        <h2 class="sd-voices__title" id="sd-reviews-title">{{ $reviewsSection['title'] ?? 'Hành trình được tin chọn' }}</h2>
-        <p class="sd-voices__desc">{{ $reviewsSection['description'] ?? '' }}</p>
+        <div class="sd-section-head__eyebrow-wrapper">
+          <span class="sd-section-head__accent-dot" aria-hidden="true"></span>
+          <span class="sd-section-head__eyebrow">{{ $reviewsSection['kicker'] ?? 'Khách hàng nói gì' }}</span>
+        </div>
+        <h2 class="sd-section-head__title" id="sd-reviews-title">{!! $reviewsSection['title'] ?? 'Hành trình được tin chọn' !!}</h2>
+        <p class="sd-section-head__desc">{{ $reviewsSection['description'] ?? '' }}</p>
       </header>
 
       <div class="sd-voices__score" data-reveal aria-label="{{ number_format($scoreValue, 1) }} trên 5 sao">

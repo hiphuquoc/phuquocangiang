@@ -15,7 +15,7 @@
         <!-- One column -->
         <div class="bookFormSortService_input_item">
             <div class="inputWithLabelInside location">
-                <label for="ship_port_departure_id">{{ t('form_destination') }}</label>
+                <label for="ship_port_departure_id"><i class="fa-solid fa-location-dot"></i> {{ t('form_destination') }}</label>
                 <select id="js_loadTourByTourLocation_element" class="select2 form-select select2-hidden-accessible" name="tour_location_id" onchange="loadTourByTourLocation(this, 'js_loadTourByTourLocation_idWrite');" tabindex="-1" aria-hidden="true">
                     @foreach($dataTourLocation as $region => $tourLocations)
                         <optgroup label="{{ $region }}, {{ t('country_vietnam') }}">
@@ -33,7 +33,7 @@
         <!-- One column -->
         <div class="bookFormSortService_input_item">
             <div class="inputWithLabelInside">
-                <label for="ship_port_location_id">{{ t('form_tour_list') }}</label>
+                <label for="ship_port_location_id"><i class="fa-solid fa-suitcase"></i> {{ t('form_tour_list') }}</label>
                 <select id="js_loadTourByTourLocation_idWrite" class="select2 form-select select2-hidden-accessible" name="tour_info_id" tabindex="-1" aria-hidden="true">
                     {{-- <option value="">- Lựa chọn -</option> --}}
                 </select>
@@ -42,14 +42,14 @@
         <!-- One column -->
         <div class="bookFormSortService_input_item">
             <div class="inputWithLabelInside date">
-                <label for="bookFormSort_date">{{ t('form_departure_date') }}</label>
+                <label for="bookFormSort_date"><i class="fa-regular fa-calendar-days"></i> {{ t('form_departure_date') }}</label>
                 <input type="text" class="form-control flatpickr-basic flatpickr-input active" name="date" value="{{ date('Y-m-d', time() + 86400) }}" aria-label="{{ t('form_aria_book_tour_date') }}" readonly="readonly" required>
             </div>
         </div>
     </div>
-    <div class="bookFormSortService_button" style="flex:0 0 155px;">
+    <div class="bookFormSortService_button">
         <div class="buttonSecondary" onClick="submitForm('tourBookingSort');">
-            <i class="fa-solid fa-check"></i>{{ t('form_book_tour_now') }}
+            <i class="fa-solid fa-magnifying-glass"></i>{{ t('form_book_tour_now') }}
         </div>
     </div>
 </div>

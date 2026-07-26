@@ -58,10 +58,9 @@ class HomeIslandService
     private function quickAccess(?TourLocation $location, string $name): array
     {
         return [
-            'eyebrow' => 'Dịch vụ trọn đảo',
-            'title' => 'Mọi nhu cầu cho chuyến đi ' . $name . ' chỉ trong <span class="sd-text-grad">một nền tảng</span>',
-            'desc' => 'Từ vé tàu Superdong đến lưu trú, tour khám phá và trải nghiệm biển đảo '
-                . $name . ', toàn bộ hành trình được thiết kế để bạn đặt nhanh và đi nhẹ nhàng.',
+            'eyebrow' => 'Dịch vụ trọn đảo chính hãng',
+            'title' => 'Mọi Nhu Cầu Chuyến Đi ' . $name . ' Trong <span class="sd-text-grad">Một Nền Tảng</span>',
+            'desc' => 'Từ vé tàu cao tốc niêm yết, khách sạn view biển, tour cano hòn đến thuê xe di chuyển — Toàn bộ hành trình được thiết kế chuẩn xác, giữ chỗ 100% và nhận vé QR tức thì.',
             'cards' => $location ? $this->buildQuickCards($location, $name) : [],
         ];
     }
@@ -102,18 +101,18 @@ class HomeIslandService
         $meta = $this->context->excerpt($location->description, '');
 
         if ($meta === '' && $tourCount > 0) {
-            $meta = $tourCount . ' tour khám phá ' . $display;
+            $meta = $tourCount . ' tour khám phá ' . $display . ' hấp dẫn';
         } elseif ($meta === '') {
-            $meta = 'Khám phá trọn vẹn ' . $display;
+            $meta = 'Tour cano 4 hòn, lặn ngắm san hô & lịch trình trọn gói ' . $display;
         }
 
         return [
-            'tag' => 'Tour',
+            'tag' => 'Tour trải nghiệm',
             'label' => 'Tour ' . $display,
             'meta' => $meta,
             'href' => $this->catUrl($location->seo, 'tours'),
             'image' => $this->context->coverImage($location->seo),
-            'cta' => 'Xem tour',
+            'cta' => 'Xem tour ngay',
             'large' => true,
         ];
     }
@@ -128,12 +127,12 @@ class HomeIslandService
         $labelName = $shipLocation->display_name ?: $shipLocation->name;
 
         return [
-            'tag' => 'Vé tàu',
-            'label' => 'Vé tàu cao tốc ' . $labelName,
-            'meta' => $this->context->excerpt($shipLocation->description, 'Đặt vé nhanh · xác nhận ngay'),
+            'tag' => 'Vé tàu cao tốc',
+            'label' => 'Vé Tàu Cao Tốc ' . $labelName,
+            'meta' => $this->context->excerpt($shipLocation->description, 'Lịch tàu chuẩn · Giá niêm yết · Nhận vé QR 30s'),
             'href' => $this->catUrl($shipLocation->seo, 'ferry'),
             'image' => $this->context->coverImage($shipLocation->seo),
-            'cta' => 'Đặt vé ngay',
+            'cta' => 'Đặt vé tàu',
         ];
     }
 
@@ -148,11 +147,11 @@ class HomeIslandService
 
         return [
             'tag' => 'Vé vui chơi',
-            'label' => 'Vé vui chơi ' . $labelName,
-            'meta' => $this->context->excerpt($serviceLocation->description, 'Lặn biển · tour · giải trí'),
+            'label' => 'Vé Vui Chơi & Giải Trí ' . $labelName,
+            'meta' => $this->context->excerpt($serviceLocation->description, 'Cáp treo Hòn Thơm · VinWonders · Lặn biển'),
             'href' => $this->catUrl($serviceLocation->seo, 'services'),
             'image' => $this->context->coverImage($serviceLocation->seo),
-            'cta' => 'Khám phá',
+            'cta' => 'Đặt vé vui chơi',
         ];
     }
 
@@ -170,18 +169,18 @@ class HomeIslandService
 
         $meta = $this->context->excerpt($hotelLocation->description, '');
         if ($meta === '' && $hotelCount > 0) {
-            $meta = $hotelCount . ' lựa chọn lưu trú tại ' . $labelName;
+            $meta = $hotelCount . ' khách sạn & resort view biển tại ' . $labelName;
         } elseif ($meta === '') {
-            $meta = 'Khách sạn & homestay view biển · gần trung tâm';
+            $meta = 'Resort sát biển & khách sạn trung tâm vị trí đắc địa';
         }
 
         return [
-            'tag' => 'Khách sạn',
-            'label' => 'Khách sạn ' . $labelName,
+            'tag' => 'Khách sạn & Resort',
+            'label' => 'Khách Sạn & Resort ' . $labelName,
             'meta' => $meta,
             'href' => $this->catUrl($hotelLocation->seo, 'hotels'),
             'image' => $this->context->coverImage($hotelLocation->seo),
-            'cta' => 'Xem phòng',
+            'cta' => 'Xem phòng tốt',
         ];
     }
 
@@ -196,11 +195,11 @@ class HomeIslandService
 
         return [
             'tag' => 'Vé máy bay',
-            'label' => 'Vé máy bay ' . $labelName,
-            'meta' => $this->context->excerpt($airLocation->description, 'Bay thẳng · giá tốt · đặt online'),
+            'label' => 'Vé Máy Bay ' . $labelName,
+            'meta' => $this->context->excerpt($airLocation->description, 'Bay thẳng đến đảo · Giữ chỗ trực tuyến'),
             'href' => $this->context->pageUrl($airLocation->seo, $this->catUrl(null, 'booking')),
             'image' => $this->context->coverImage($airLocation->seo),
-            'cta' => 'Đặt vé bay',
+            'cta' => 'Săn vé bay',
         ];
     }
 
@@ -212,12 +211,12 @@ class HomeIslandService
         }
 
         return [
-            'tag' => 'Cẩm nang',
-            'label' => 'Cẩm nang ' . ($guide->display_name ?: $guide->name ?: $name),
-            'meta' => $this->context->excerpt($guide->description, 'Lịch trình · kinh nghiệm · mẹo hay'),
+            'tag' => 'Cẩm nang du lịch',
+            'label' => 'Cẩm Nang Du Lịch ' . ($guide->display_name ?: $guide->name ?: $name),
+            'meta' => $this->context->excerpt($guide->description, 'Lịch trình 3N2Đ · Mẹo đi tàu không say · Quán ăn ngon'),
             'href' => $this->context->pageUrl($guide->seo, $this->catUrl(null, 'guide')),
             'image' => $this->context->coverImage($guide->seo),
-            'cta' => 'Đọc ngay',
+            'cta' => 'Đọc cẩm nang',
         ];
     }
 
@@ -229,12 +228,12 @@ class HomeIslandService
         }
 
         return [
-            'tag' => 'Thuê xe',
-            'label' => 'Thuê xe ' . ($carrentalLocation->name ?: $name),
-            'meta' => $this->context->excerpt($carrentalLocation->description ?? null, 'Xe máy · ô tô · đón sân bay'),
+            'tag' => 'Thuê xe di chuyển',
+            'label' => 'Thuê Xe Máy & Ô Tô ' . ($carrentalLocation->name ?: $name),
+            'meta' => $this->context->excerpt($carrentalLocation->description ?? null, 'Giao xe tận bến tàu · Xe mới chất lượng'),
             'href' => $this->catUrl($carrentalLocation->seo, 'rental'),
             'image' => $this->context->coverImage($carrentalLocation->seo),
-            'cta' => 'Xem thêm',
+            'cta' => 'Xem bảng giá xe',
         ];
     }
 
@@ -249,9 +248,9 @@ class HomeIslandService
     private function toursSection(?TourLocation $location, string $name): array
     {
         $head = [
-            'eyebrow' => 'Tour nổi bật',
-            'title' => 'Trải nghiệm không thể bỏ lỡ tại ' . $name,
-            'desc' => 'Tour trong ngày, tour lặn ngắm san hô và hành trình di sản — hướng dẫn viên bản địa am hiểu sâu sắc, nhiệt tình và trung thực.',
+            'eyebrow' => 'Tour trải nghiệm hấp dẫn',
+            'title' => 'Tour Khám Phá Biển Đảo ' . $name . ' Nổi Bật Bật Nhất',
+            'desc' => 'Tour cano 4 hòn, lặn ngắm san hô tự nhiên và hành trình di sản — Hướng dẫn viên bản địa am hiểu, nhiệt tình, giá tour minh bạch 100%.',
             'linkHref' => $location ? $this->catUrl($location->seo, 'tours') : route('main.home') . '#tours',
             'linkLabel' => 'Xem tất cả tour →',
         ];
@@ -278,11 +277,11 @@ class HomeIslandService
         $shipPage = $location?->shipLocations->first()?->infoShipLocation;
 
         $head = [
-            'eyebrow' => 'Superdong Speed Ferry',
-            'title' => 'Vé tàu cao tốc đi ' . $name,
-            'desc' => 'Chọn tuyến phù hợp — thời gian di chuyển minh bạch, giá tốt nhất mỗi ngày.',
+            'eyebrow' => 'Vé tàu cao tốc chính hãng',
+            'title' => 'Lịch Tàu & Bảng Giá Vé Tàu Cao Tốc Đi ' . $name,
+            'desc' => 'Tra cứu lịch tàu chạy liên tục trong ngày — Giá niêm yết chính hãng, giữ chỗ 100% và nhận vé điện tử QR code tức thì trong 30 giây.',
             'linkHref' => $shipPage ? $this->catUrl($shipPage->seo, 'ferry') : route('main.home') . '#ferry',
-            'linkLabel' => 'Xem tất cả tuyến →',
+            'linkLabel' => 'Xem tất cả tuyến tàu →',
         ];
 
         if (!$location) {
@@ -303,11 +302,11 @@ class HomeIslandService
         $servicePage = $location?->serviceLocations->first()?->infoServiceLocation;
 
         $head = [
-            'eyebrow' => 'Giải trí & trải nghiệm',
-            'title' => 'Vé vui chơi & hoạt động biển',
-            'desc' => 'Đặt trước để giữ chỗ — khám phá ' . $name . ' với các hoạt động biển đảo và trải nghiệm địa phương.',
+            'eyebrow' => 'Vé vui chơi & giải trí',
+            'title' => 'Vé Tham Quan & Hoạt Động Biển Đảo ' . $name,
+            'desc' => 'Đặt trước vé cáp treo Hòn Thơm, VinWonders, Safari và trải nghiệm lặn biển — Nhận vé QR quét vào cổng trực tiếp không chờ đợi.',
             'linkHref' => $servicePage ? $this->catUrl($servicePage->seo, 'services') : route('main.home') . '#services',
-            'linkLabel' => 'Xem tất cả →',
+            'linkLabel' => 'Xem tất cả dịch vụ →',
         ];
 
         if (!$location) {
@@ -354,11 +353,11 @@ class HomeIslandService
         $hotelPage = $location?->hotelLocations->first()?->infoHotelLocation;
 
         $head = [
-            'eyebrow' => 'Nghỉ dưỡng',
-            'title' => 'Khách sạn & homestay ' . $name,
-            'desc' => 'View biển, gần trung tâm hoặc yên tĩnh giữa thiên nhiên — chọn mức giá phù hợp hành trình của bạn.',
+            'eyebrow' => 'Lưu trú bãi biển',
+            'title' => 'Khách Sạn & Resort View Biển Đẹp Nhất ' . $name,
+            'desc' => 'Tự do lựa chọn từ resort 5 sao sang trọng đến bungalow sát bãi biển và homestay trung tâm với mức giá ưu đãi tốt nhất.',
             'linkHref' => $hotelPage ? $this->catUrl($hotelPage->seo, 'hotels') : route('main.home') . '#hotels',
-            'linkLabel' => 'Xem tất cả →',
+            'linkLabel' => 'Xem tất cả khách sạn →',
         ];
 
         if (!$location) {

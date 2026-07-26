@@ -16,7 +16,7 @@
                     $idServiceInfo      = 0;
                     if(!empty($item->seo->type)&&$item->seo->type=='service_info') $idServiceInfo  = $item->id;
                 @endphp
-                <label for="service_location_id">{{ t('form_destination') }}</label>
+                <label for="service_location_id"><i class="fa-solid fa-location-dot"></i> {{ t('form_destination') }}</label>
                 <select class="select2 form-select select2-hidden-accessible" id="service_location_id" name="service_location_id" onchange="loadServiceByLocation('js_loadServiceByLocation_idWrite');" tabindex="-1" aria-hidden="true">
                     @foreach($dataServiceLocation as $serviceLocation)
                         @php
@@ -34,7 +34,7 @@
         <!-- One column -->
         <div class="bookFormSortService_input_item">
             <div class="inputWithLabelInside">
-                <label for="service_info_id">{{ t('booking_choose_service') }}</label>
+                <label for="service_info_id"><i class="fa-solid fa-ticket"></i> {{ t('booking_choose_service') }}</label>
                 <select id="js_loadServiceByLocation_idWrite" class="select2 form-select select2-hidden-accessible" name="service_info_id" tabindex="-1" aria-hidden="true">
                 </select>
             </div>
@@ -42,14 +42,14 @@
         <!-- One column -->
         <div class="bookFormSortService_input_item">
             <div class="inputWithLabelInside date">
-                <label for="bookFormSort_date">{{ t('form_departure_date') }}</label>
+                <label for="bookFormSort_date"><i class="fa-regular fa-calendar-days"></i> {{ t('form_departure_date') }}</label>
                 <input type="text" class="form-control flatpickr-basic flatpickr-input active" name="date" value="{{ date('Y-m-d', time() + 86400) }}" aria-label="{{ t('form_aria_book_ship') }}" readonly="readonly" required>
             </div>
         </div>
     </div>
     <div class="bookFormSortService_button">
         <div class="buttonSecondary" onClick="submitForm('serviceBookingSort');">
-            <i class="fa-solid fa-check"></i>{{ t('form_book_ticket_now') }}
+            <i class="fa-solid fa-magnifying-glass"></i>{{ t('form_book_ticket_now') }}
         </div>
     </div>
 </div>
