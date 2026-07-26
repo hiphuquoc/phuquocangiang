@@ -10,6 +10,9 @@ use Intervention\Image\ImageManagerStatic;
 
 class GcsMediaStorageService
 {
+    /** @var array<string, bool> */
+    private array $existsCache = [];
+
     public function diskName(): string
     {
         return (string) config('media.disk', 'gcs');
@@ -56,9 +59,13 @@ class GcsMediaStorageService
             return false;
         }
 
+        $normalized = ltrim(str_replace('\\', '/', $path), '/');
+
         return str_starts_with($path, '/storage')
             || str_starts_with($path, '/images')
-            || str_starts_with($path, 'public/images/upload/');
+            || str_starts_with($normalized, 'storage/images/upload/')
+            || str_starts_with($normalized, 'images/upload/')
+            || str_starts_with($normalized, 'public/images/upload/');
     }
 
     public function isCloudPath(?string $path): bool
@@ -83,8 +90,45 @@ class GcsMediaStorageService
             }
         }
 
-        // Path tương đối không phải legacy/local → coi là object GCS (tương thích prefix mới).
-        return !str_starts_with($path, '/') && str_contains($normalized, '/');
+        return false;
+    }
+
+    /**
+     * Chuẩn hóa path DB (GCS hoặc legacy /storage/images/upload/…) về object path trên GCS nếu có thể.
+     * Legacy: /storage/images/upload/foo-750.webp → media/uploads/foo.webp
+     */
+    public function toCloudObjectPath(?string $path): ?string
+    {
+        if ($path === null || $path === '') {
+            return null;
+        }
+
+        if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
+            return null;
+        }
+
+        if ($this->isCloudPath($path)) {
+            // Giữ nguyên object key trên GCS (kể cả -750/-400/-small đã lưu sẵn).
+            return $this->normalizePath($path);
+        }
+
+        if (!$this->isLegacyLocalPath($path)) {
+            return null;
+        }
+
+        $normalized = ltrim(str_replace('\\', '/', $path), '/');
+        $normalized = preg_replace('#^(storage/)?images/upload/#', '', $normalized) ?? $normalized;
+        $normalized = preg_replace('#^public/images/upload/#', '', $normalized) ?? $normalized;
+        $filename = basename($normalized);
+
+        if ($filename === '' || $filename === '.' || $filename === '..') {
+            return null;
+        }
+
+        $ext = pathinfo($filename, PATHINFO_EXTENSION) ?: $this->extension();
+        $base = $this->extractBaseName($filename);
+
+        return $this->buildUploadPath($base . '.' . $ext);
     }
 
     /**
@@ -200,6 +244,7 @@ class GcsMediaStorageService
 
     /**
      * Resolve path biến thể từ path gốc hoặc path bất kỳ trong set.
+     * Legacy /storage/images/upload/foo-750.webp → thử media/uploads/foo[-small|-medium].webp trên GCS.
      */
     public function resolveVariantPath(?string $storedPath, string $variant = 'original'): ?string
     {
@@ -207,23 +252,28 @@ class GcsMediaStorageService
             return null;
         }
 
-        if (!$this->isCloudPath($storedPath) && !str_starts_with($storedPath, '/storage')) {
+        $cloudPath = $this->toCloudObjectPath($storedPath);
+
+        if ($cloudPath === null) {
+            // Không map được sang GCS — giữ nguyên path (legacy local hoặc URL lạ).
             return $storedPath;
         }
 
-        $normalized = $this->normalizePath($storedPath);
+        $normalized = $this->normalizePath($cloudPath);
         $dir = dirname($normalized);
         $dir = $dir === '.' ? '' : $dir . '/';
         $ext = pathinfo($normalized, PATHINFO_EXTENSION) ?: $this->extension();
         $base = $this->extractBaseName($normalized);
 
+        $original = $dir . $base . '.' . $ext;
+
         if ($variant === 'original') {
-            $original = $dir . $base . '.' . $ext;
             if ($this->exists($original)) {
                 return $original;
             }
 
-            return $normalized;
+            // Path DB đã là cloud nhưng object chưa có (hoặc tên lệch) → trả path đã chuẩn hóa.
+            return $this->isCloudPath($storedPath) ? $normalized : $storedPath;
         }
 
         $suffix = (string) (config("media.variants.{$variant}.suffix") ?? "-{$variant}");
@@ -249,9 +299,12 @@ class GcsMediaStorageService
             }
         }
 
-        $original = $dir . $base . '.' . $ext;
+        if ($this->exists($original)) {
+            return $original;
+        }
 
-        return $this->exists($original) ? $original : $normalized;
+        // Legacy chưa migrate lên GCS → giữ path gốc để fallback /storage hoặc default.
+        return $this->isLegacyLocalPath($storedPath) ? $storedPath : $normalized;
     }
 
     public function deleteImageSet(?string $anyPathInSet): void
@@ -291,13 +344,23 @@ class GcsMediaStorageService
 
     public function exists(string $path): bool
     {
+        $cacheKey = $path;
+        if (array_key_exists($cacheKey, $this->existsCache)) {
+            return $this->existsCache[$cacheKey];
+        }
+
         if ($this->isCloudPath($path)) {
-            return Storage::disk($this->diskName())->exists($this->normalizePath($path));
+            try {
+                return $this->existsCache[$cacheKey] = Storage::disk($this->diskName())
+                    ->exists($this->normalizePath($path));
+            } catch (\Throwable) {
+                return $this->existsCache[$cacheKey] = false;
+            }
         }
 
         $local = $this->localFilesystemPath($path);
 
-        return $local !== null && is_file($local);
+        return $this->existsCache[$cacheKey] = ($local !== null && is_file($local));
     }
 
     public function get(string $path): ?string

@@ -36,6 +36,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(\App\Services\CurrencyManager::class);
         $this->app->singleton(\App\Services\Island\IslandContextService::class);
         $this->app->singleton(\App\Services\Island\IslandNavigationService::class);
+        $this->app->singleton(\App\Services\Media\GcsMediaStorageService::class);
     }
 
     /**

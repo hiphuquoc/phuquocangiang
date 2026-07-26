@@ -305,7 +305,8 @@ if (!function_exists('seo_content_for_admin')) {
 
 if (!function_exists('media_url')) {
     /**
-     * URL hiển thị ảnh — hỗ trợ legacy /storage/... và mọi path GCS (media/uploads, hotels, hero, …).
+     * URL hiển thị ảnh — GCS proxy /media/gcs/… hoặc legacy /storage/….
+     * Legacy /storage/images/upload/foo-750.webp sẽ map sang media/uploads/foo.webp nếu object tồn tại trên GCS.
      */
     function media_url(?string $path): ?string
     {
@@ -320,12 +321,18 @@ if (!function_exists('media_url')) {
         /** @var \App\Services\Media\GcsMediaStorageService $storage */
         $storage = app(\App\Services\Media\GcsMediaStorageService::class);
 
-        if ($storage->isLegacyLocalPath($path)) {
-            return $path;
+        $cloudPath = $storage->toCloudObjectPath($path);
+
+        if ($cloudPath !== null && \Illuminate\Support\Facades\Route::has('media.gcs')) {
+            // Legacy chỉ proxy khi object đã có trên GCS; path cloud thuần luôn proxy.
+            if ($storage->isCloudPath($path) || $storage->exists($cloudPath)) {
+                return route('media.gcs', ['path' => $cloudPath]);
+            }
         }
 
-        if ($storage->isCloudPath($path) && \Illuminate\Support\Facades\Route::has('media.gcs')) {
-            return route('media.gcs', ['path' => $storage->normalizePath($path)]);
+        if ($storage->isLegacyLocalPath($path)) {
+            // Giữ leading slash cho path local cũ.
+            return str_starts_with($path, '/') ? $path : '/' . ltrim($path, '/');
         }
 
         return $path;
