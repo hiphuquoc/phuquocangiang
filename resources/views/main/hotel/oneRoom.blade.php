@@ -2,16 +2,6 @@
 <div class="hotelList_item_gallery" onClick="openCloseModalRoom({{ $price->id }});">
     @if(!empty($price->room->images)&&$price->room->images->isNotEmpty())
         <div class="hotelList_item_gallery_top">
-            {{-- @php
-                $imageContent       = config('admin.images.default_750x460');
-                $contentImage       = Storage::disk('gcs')->get($price->room->images[0]->image);
-                if(!empty($contentImage)){
-                    $thumbnail      = \Intervention\Image\ImageManagerStatic::make($contentImage)->resize(550, null, function ($constraint) {
-                        $constraint->aspectRatio();
-                    })->encode();
-                    $imageContent   = 'data:image/jpeg;base64,'.base64_encode($thumbnail);
-                }
-            @endphp --}}
             <img src="{{ config('main.svg.loading_main') }}" data-google-cloud="{{ $price->room->images[0]->image }}" data-size="500" alt="{{ $price->room->name }}" title="{{ $price->room->name }}" style="aspect-ratio:750/400;" />
         </div>
         <div class="hotelList_item_gallery_bottom">
@@ -23,14 +13,6 @@
                     ++$j;
                     if($j==1) continue;
                     if($j==5) break;
-                    // $imageContent       = config('admin.images.default_750x460');
-                    // $contentImage       = Storage::disk('gcs')->get($image->image);
-                    // if(!empty($contentImage)){
-                    //     $thumbnail      = \Intervention\Image\ImageManagerStatic::make($contentImage)->resize(550, null, function ($constraint) {
-                    //         $constraint->aspectRatio();
-                    //     })->encode();
-                    //     $imageContent   = 'data:image/jpeg;base64,'.base64_encode($thumbnail);
-                    // }
                 @endphp
                 <div class="hotelList_item_gallery_bottom_item">
                     <img src="{{ config('main.svg.loading_main') }}" data-google-cloud="{{ $image->image }}" data-size="100" alt="{{ $price->room->name }}" title="{{ $price->room->name }}" style="aspect-ratio:750/400;" />

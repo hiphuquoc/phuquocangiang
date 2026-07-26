@@ -25,22 +25,7 @@ class HomeIslandGalleryStorageService
         $basename = Str::slug($basename) ?: 'photo';
         $basename = $basename . '-' . now()->format('YmdHis') . '-' . Str::random(4);
 
-        $folderPath = self::FOLDER . '/' . $basename;
-        $extension = $this->media->extension();
-
-        $originalPath = $folderPath . '.' . $extension;
-        $smallPath = $folderPath . '-small.' . $extension;
-        $mediumPath = $folderPath . '-medium.' . $extension;
-
-        $this->media->putOriginal($file, $originalPath, $extension);
-        $this->media->putResized($file, $smallPath, 450, null, $extension);
-        $this->media->putResized($file, $mediumPath, 800, null, $extension);
-
-        return [
-            'original' => $originalPath,
-            'small' => $smallPath,
-            'medium' => $mediumPath,
-        ];
+        return $this->media->uploadImageSet($file, $basename, null, self::FOLDER);
     }
 
     public function deletePhoto(?string $gcsPath): void
@@ -48,4 +33,3 @@ class HomeIslandGalleryStorageService
         $this->media->deleteImageSet($gcsPath);
     }
 }
-

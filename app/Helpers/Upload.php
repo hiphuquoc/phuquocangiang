@@ -3,8 +3,10 @@
 namespace App\Helpers;
 
 use App\Services\Media\GcsMediaStorageService;
-use Intervention\Image\ImageManagerStatic;
 
+/**
+ * Facade upload ảnh CMS — mọi ảnh đều lưu Google Cloud Storage qua GcsMediaStorageService.
+ */
 class Upload {
     private static function storage(): GcsMediaStorageService
     {

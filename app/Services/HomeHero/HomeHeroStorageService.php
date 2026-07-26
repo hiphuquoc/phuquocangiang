@@ -4,14 +4,19 @@ declare(strict_types=1);
 
 namespace App\Services\HomeHero;
 
+use App\Services\Media\GcsMediaStorageService;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\ImageManagerStatic;
 
 class HomeHeroStorageService
 {
+    private const FOLDER = 'hero/backgrounds';
     private const MAX_WIDTH = 2400;
+
+    public function __construct(
+        private readonly GcsMediaStorageService $media,
+    ) {}
 
     public function uploadBackground(UploadedFile $file, string $basename = 'hero'): array
     {
@@ -22,7 +27,8 @@ class HomeHeroStorageService
 
         $encodeAs = in_array($extension, ['png', 'webp'], true) ? $extension : 'jpg';
         $filename = sprintf(
-            'hero/backgrounds/%s-%s.%s',
+            '%s/%s-%s.%s',
+            self::FOLDER,
             Str::slug($basename) ?: 'hero',
             now()->format('YmdHis') . '-' . Str::random(6),
             $encodeAs
@@ -37,24 +43,16 @@ class HomeHeroStorageService
         }
 
         $binary = (string) $image->encode($encodeAs, $encodeAs === 'png' ? 90 : 85);
-        Storage::disk('gcs')->put($filename, $binary, ['visibility' => 'public']);
+        $path = $this->media->put($filename, $binary, ['visibility' => 'public']);
 
         return [
-            'gcs_path' => $filename,
-            'public_url' => Storage::disk('gcs')->url($filename),
+            'gcs_path' => $path,
+            'public_url' => $this->media->publicUrl($path),
         ];
     }
 
     public function deleteBackground(?string $gcsPath): void
     {
-        if (empty($gcsPath)) {
-            return;
-        }
-
-        try {
-            Storage::disk('gcs')->delete($gcsPath);
-        } catch (\Throwable $e) {
-            // Best-effort cleanup — DB row still removed by caller.
-        }
+        $this->media->delete($gcsPath);
     }
 }

@@ -36,4 +36,15 @@ class HotelImage extends Model {
         }
         return $flag;
     }
+
+    /** Object path thô trên GCS (không qua accessor URL). */
+    public function rawImagePath(): ?string
+    {
+        return $this->getRawOriginal('image');
+    }
+
+    public function mediaUrl(): ?string
+    {
+        return media_url($this->rawImagePath());
+    }
 }

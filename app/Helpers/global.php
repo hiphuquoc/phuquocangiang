@@ -305,7 +305,7 @@ if (!function_exists('seo_content_for_admin')) {
 
 if (!function_exists('media_url')) {
     /**
-     * URL hiển thị ảnh — hỗ trợ legacy /storage/... và path GCS (media/uploads/…).
+     * URL hiển thị ảnh — hỗ trợ legacy /storage/... và mọi path GCS (media/uploads, hotels, hero, …).
      */
     function media_url(?string $path): ?string
     {
@@ -317,15 +317,15 @@ if (!function_exists('media_url')) {
             return $path;
         }
 
-        if (str_starts_with($path, '/storage') || str_starts_with($path, '/images')) {
-            return $path;
-        }
-
         /** @var \App\Services\Media\GcsMediaStorageService $storage */
         $storage = app(\App\Services\Media\GcsMediaStorageService::class);
 
+        if ($storage->isLegacyLocalPath($path)) {
+            return $path;
+        }
+
         if ($storage->isCloudPath($path) && \Illuminate\Support\Facades\Route::has('media.gcs')) {
-            return route('media.gcs', ['path' => $path]);
+            return route('media.gcs', ['path' => $storage->normalizePath($path)]);
         }
 
         return $path;

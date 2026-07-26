@@ -1,17 +1,7 @@
 <div id="hotelRoom_{{ $item->id }}" class="hotelRoomBox_item">
     <div class="hotelRoomBox_item_img">
         @foreach($item->images as $image)
-            @php
-                $base64Image       = config('admin.images.default_750x460');
-                $contentImage      = Storage::disk('gcs')->get($image['image']);
-                if(!empty($contentImage)){
-                    $thumbnail     = \Intervention\Image\ImageManagerStatic::make($contentImage)->resize(200, null, function ($constraint) {
-                        $constraint->aspectRatio();
-                    })->encode();
-                    $base64Image   = 'data:image/jpeg;base64,'.base64_encode($thumbnail);
-                }
-            @endphp
-            <img src="{{ $base64Image }}" />
+            <img src="{{ media_url($image->getRawOriginal('image') ?? $image->image) }}" />
         @endforeach
     </div>
     <div class="hotelRoomBox_item_info">

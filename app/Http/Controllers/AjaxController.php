@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\RegistryEmail;
 
-use Illuminate\Support\Facades\Storage;
+use App\Services\Media\GcsMediaStorageService;
 use Intervention\Image\ImageManagerStatic;
 
 class AjaxController extends Controller {
@@ -92,7 +92,7 @@ class AjaxController extends Controller {
             $url                = $request->get('url_google_cloud');
             $size               = $request->get('size') ?? null;
             $response           = config('admin.images.default_750x460');
-            $contentImage       = Storage::disk('gcs')->get($url);
+            $contentImage       = app(GcsMediaStorageService::class)->get($url);
             if(!empty($contentImage)){
                 if(!empty($size)){
                     $thumbnail      = ImageManagerStatic::make($contentImage)->resize($size, null, function ($constraint) {

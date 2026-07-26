@@ -24,6 +24,7 @@ use App\Http\Requests\HotelRequest;
 use App\Jobs\CheckSeo;
 use App\Jobs\DownloadCommentHotelInfo;
 use App\Jobs\DownloadHotelImageToCloudStorage;
+use App\Services\Media\GcsMediaStorageService;
 use App\Models\HotelFacility;
 use App\Models\RelationHotelInfoHotelFacility;
 use Symfony\Component\BrowserKit\HttpBrowser;
@@ -352,7 +353,8 @@ class AdminHotelInfoController extends Controller {
                 /* xóa hotel_content */
                 $infoHotel->contents()->delete();
                 /* xóa ảnh phòng */
-                foreach($infoHotel->images as $image) Storage::disk('gcs')->delete($image->image);
+                $media = app(GcsMediaStorageService::class);
+                foreach($infoHotel->images as $image) $media->delete($image->getRawOriginal('image') ?? $image->image);
                 /* xóa hotel_contact */
                 $infoHotel->contacts()->delete();
                 /* xóa relation staff */
@@ -393,8 +395,9 @@ class AdminHotelInfoController extends Controller {
                                 ->with('images')
                                 ->first();
             /* xóa trong storage */
+            $media = app(GcsMediaStorageService::class);
             foreach($hotelInfo->images as $image){
-                Storage::disk('gcs')->delete($image->image);
+                $media->delete($image->getRawOriginal('image') ?? $image->image);
             }
             /* xóa trong database */
             $flag           = $hotelInfo->images()->delete();
@@ -748,13 +751,12 @@ class AdminHotelInfoController extends Controller {
     public static function saveImage($imageName, $referenceId, $urlImages, $referenceType = 'hotel_info'){
         $i                  = 0;
         $imageAlreadyUpload = [];
+        $media              = app(GcsMediaStorageService::class);
+        $folderUpload       = trim((string) config('admin.images.folderHotel', 'hotels'), '/');
         foreach ($urlImages as $urlImage) {
-            /*  folder upload */
-            $folderUpload   = config('admin.images.folderHotel');
-            /* upload ảnh normal */
             $extension      = config('admin.images.extension');
             $name           = $imageName.'-'.$i.'-'.time();
-            $fileName       = $folderUpload.$name.'.'.$extension;
+            $fileName       = $media->buildPath($folderUpload, $name.'.'.$extension);
             /* đưa vào job */
             $data           = [
                 'url_image'         => $urlImage,

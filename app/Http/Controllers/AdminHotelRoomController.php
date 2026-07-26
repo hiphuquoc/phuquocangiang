@@ -13,7 +13,7 @@ use App\Models\HotelBed;
 use App\Models\RelationHotelPriceHotelBed;
 use App\Models\RelationHotelRoomHotelRoomFacility;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
+use App\Services\Media\GcsMediaStorageService;
 
 // use Goutte\Client;
 // use Symfony\Component\BrowserKit\CookieJar;
@@ -333,7 +333,8 @@ class AdminHotelRoomController extends Controller {
                                 ->where('id', $idHotelImage)
                                 ->first();
             /* xóa ảnh trên cloud */
-            $flag           = Storage::disk('gcs')->delete($infoHotelImage->image);
+            $rawPath        = $infoHotelImage->getRawOriginal('image') ?? $infoHotelImage->image;
+            $flag           = app(GcsMediaStorageService::class)->delete($rawPath);
             if($flag) $infoHotelImage->delete();
         }
         return $flag;

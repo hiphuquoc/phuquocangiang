@@ -22,18 +22,8 @@ class MediaController extends Controller
             abort(404);
         }
 
-        $extension = strtolower(pathinfo($path, PATHINFO_EXTENSION));
-
-        $mime = match ($extension) {
-            'webp' => 'image/webp',
-            'png' => 'image/png',
-            'gif' => 'image/gif',
-            'svg' => 'image/svg+xml',
-            default => 'image/jpeg',
-        };
-
         return response($content, 200, [
-            'Content-Type' => $mime,
+            'Content-Type' => $storage->mimeForPath($path),
             'Cache-Control' => 'public, max-age=31536000, immutable',
         ]);
     }

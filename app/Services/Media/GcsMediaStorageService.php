@@ -20,6 +20,20 @@ class GcsMediaStorageService
         return trim((string) config('media.upload_prefix', 'media/uploads'), '/');
     }
 
+    /**
+     * @return list<string>
+     */
+    public function cloudPrefixes(): array
+    {
+        $prefixes = (array) config('media.cloud_prefixes', []);
+        $prefixes[] = $this->uploadPrefix();
+
+        return array_values(array_unique(array_filter(array_map(
+            static fn ($prefix) => trim((string) $prefix, '/'),
+            $prefixes
+        ))));
+    }
+
     public function extension(): string
     {
         return (string) config('admin.images.extension', 'webp');
@@ -36,6 +50,17 @@ class GcsMediaStorageService
         return $path;
     }
 
+    public function isLegacyLocalPath(?string $path): bool
+    {
+        if ($path === null || $path === '') {
+            return false;
+        }
+
+        return str_starts_with($path, '/storage')
+            || str_starts_with($path, '/images')
+            || str_starts_with($path, 'public/images/upload/');
+    }
+
     public function isCloudPath(?string $path): bool
     {
         if ($path === null || $path === '') {
@@ -46,16 +71,20 @@ class GcsMediaStorageService
             return false;
         }
 
-        if (str_starts_with($path, '/storage') || str_starts_with($path, '/images')) {
+        if ($this->isLegacyLocalPath($path)) {
             return false;
         }
 
-        $prefix = $this->uploadPrefix();
+        $normalized = $this->normalizePath($path);
 
-        return str_starts_with($path, $prefix . '/')
-            || str_starts_with($path, 'hotels/')
-            || str_starts_with($path, 'hero/')
-            || str_starts_with($path, 'island-gallery/');
+        foreach ($this->cloudPrefixes() as $prefix) {
+            if ($normalized === $prefix || str_starts_with($normalized, $prefix . '/')) {
+                return true;
+            }
+        }
+
+        // Path tương đối không phải legacy/local → coi là object GCS (tương thích prefix mới).
+        return !str_starts_with($path, '/') && str_contains($normalized, '/');
     }
 
     /**
@@ -63,14 +92,19 @@ class GcsMediaStorageService
      *
      * @return array{original: string, small: string, medium: string}
      */
-    public function uploadImageSet(UploadedFile $file, string $basename, ?string $extension = null): array
-    {
+    public function uploadImageSet(
+        UploadedFile $file,
+        string $basename,
+        ?string $extension = null,
+        ?string $prefix = null,
+    ): array {
         $extension ??= $this->extension();
         $basename = $this->sanitizeBasename($basename);
+        $folder = trim((string) ($prefix ?? $this->uploadPrefix()), '/');
 
-        $originalPath = $this->buildUploadPath("{$basename}.{$extension}");
-        $smallPath = $this->buildUploadPath("{$basename}-small.{$extension}");
-        $mediumPath = $this->buildUploadPath("{$basename}-medium.{$extension}");
+        $originalPath = $this->buildPath($folder, "{$basename}.{$extension}");
+        $smallPath = $this->buildPath($folder, "{$basename}-small.{$extension}");
+        $mediumPath = $this->buildPath($folder, "{$basename}-medium.{$extension}");
 
         $this->putOriginal($file, $originalPath, $extension);
         $this->putResized($file, $smallPath, (int) config('media.variants.small.width', 450), null, $extension);
@@ -89,6 +123,24 @@ class GcsMediaStorageService
         Storage::disk($this->diskName())->put($path, $binary, $options);
 
         return $path;
+    }
+
+    /**
+     * Tải ảnh từ URL remote rồi lưu lên GCS (vd. crawler hotel).
+     */
+    public function putFromUrl(string $url, string $objectPath, ?string $extension = null): bool
+    {
+        $extension ??= pathinfo($this->normalizePath($objectPath), PATHINFO_EXTENSION) ?: $this->extension();
+        $quality = (int) config('media.quality', 90);
+
+        try {
+            $binary = (string) ImageManagerStatic::make($url)->encode($extension, $quality);
+            $this->put($objectPath, $binary);
+
+            return true;
+        } catch (\Throwable) {
+            return false;
+        }
     }
 
     public function putResized(
@@ -126,6 +178,24 @@ class GcsMediaStorageService
             ->encode($extension, $quality);
 
         return $this->put($objectPath, $binary);
+    }
+
+    public function publicUrl(string $objectPath): string
+    {
+        return Storage::disk($this->diskName())->url($this->normalizePath($objectPath));
+    }
+
+    public function mimeForPath(string $path): string
+    {
+        $extension = strtolower(pathinfo($this->normalizePath($path), PATHINFO_EXTENSION));
+
+        return match ($extension) {
+            'webp' => 'image/webp',
+            'png' => 'image/png',
+            'gif' => 'image/gif',
+            'svg' => 'image/svg+xml',
+            default => 'image/jpeg',
+        };
     }
 
     /**
@@ -232,12 +302,20 @@ class GcsMediaStorageService
 
     public function get(string $path): ?string
     {
-        if (!$this->exists($path)) {
-            return null;
+        if ($this->isCloudPath($path)) {
+            try {
+                if (!Storage::disk($this->diskName())->exists($this->normalizePath($path))) {
+                    return null;
+                }
+
+                return Storage::disk($this->diskName())->get($this->normalizePath($path));
+            } catch (\Throwable) {
+                return null;
+            }
         }
 
-        if ($this->isCloudPath($path)) {
-            return Storage::disk($this->diskName())->get($this->normalizePath($path));
+        if (!$this->exists($path)) {
+            return null;
         }
 
         $local = $this->localFilesystemPath($path);
@@ -245,35 +323,35 @@ class GcsMediaStorageService
         return $local !== null ? (string) file_get_contents($local) : null;
     }
 
-    public function delete(?string $path): void
+    public function delete(?string $path): bool
     {
         if ($path === null || $path === '') {
-            return;
+            return false;
         }
 
         if ($this->isCloudPath($path)) {
             try {
-                Storage::disk($this->diskName())->delete($this->normalizePath($path));
+                return (bool) Storage::disk($this->diskName())->delete($this->normalizePath($path));
             } catch (\Throwable) {
-                // Best-effort cleanup.
+                return false;
             }
-
-            return;
         }
 
         $local = $this->localFilesystemPath($path);
         if ($local !== null && is_file($local)) {
-            @unlink($local);
+            return @unlink($local);
         }
+
+        return false;
     }
 
     /**
      * @return array<int, string> GCS object paths
      */
-    public function listUploads(?string $search = null): array
+    public function listUploads(?string $search = null, ?string $prefix = null): array
     {
-        $prefix = $this->uploadPrefix() . '/';
-        $files = Storage::disk($this->diskName())->files($prefix);
+        $folder = trim((string) ($prefix ?? $this->uploadPrefix()), '/') . '/';
+        $files = Storage::disk($this->diskName())->files($folder);
 
         if ($search !== null && $search !== '') {
             $needle = mb_strtolower($search);
@@ -314,7 +392,12 @@ class GcsMediaStorageService
 
     public function buildUploadPath(string $filename): string
     {
-        return $this->uploadPrefix() . '/' . ltrim($filename, '/');
+        return $this->buildPath($this->uploadPrefix(), $filename);
+    }
+
+    public function buildPath(string $prefix, string $filename): string
+    {
+        return trim($prefix, '/') . '/' . ltrim($filename, '/');
     }
 
     public function extractBaseName(string $path): string

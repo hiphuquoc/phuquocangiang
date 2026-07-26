@@ -8,9 +8,9 @@ return [
 
     /* Định dạng hình ảnh Upload */
     'images'    => [
-        /* Legacy local path — upload mới lưu GCS prefix `media/uploads/` (config/media.php) */
+        /* Legacy local path — không dùng cho upload mới; mọi ảnh mới lưu GCS (config/media.php) */
         'folderUpload'          => 'public/images/upload/',
-        'folderHotel'           => 'hotels/', /* google cloud storage */
+        'folderHotel'           => 'hotels/', /* GCS prefix — dùng qua GcsMediaStorageService */
         'normalResize_width'    => 750,
         'normalResize_height'   => 460,
         'smallResize_width'     => 400,

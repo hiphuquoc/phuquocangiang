@@ -23,7 +23,7 @@ class HomeReviewsStorageService
         $basename = $basename . '-' . now()->format('YmdHis') . '-' . Str::random(4);
 
         $extension = $this->media->extension();
-        $objectPath = self::FOLDER . '/' . $basename . '-small.' . $extension;
+        $objectPath = $this->media->buildPath(self::FOLDER, $basename . '-small.' . $extension);
 
         $this->media->putResized($file, $objectPath, 120, 120, $extension);
 

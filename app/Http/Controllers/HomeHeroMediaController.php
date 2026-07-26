@@ -5,35 +5,25 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Models\HomeHeroBackground;
+use App\Services\Media\GcsMediaStorageService;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Storage;
 
 class HomeHeroMediaController extends Controller
 {
-    public function background(HomeHeroBackground $background): Response
+    public function background(HomeHeroBackground $background, GcsMediaStorageService $storage): Response
     {
         $path = $background->gcs_path;
-        if (empty($path)) {
+        if (empty($path) || !$storage->exists($path)) {
             abort(404);
         }
 
-        $disk = Storage::disk('gcs');
-        if (!$disk->exists($path)) {
+        $content = $storage->get($path);
+        if ($content === null) {
             abort(404);
         }
-
-        $content = $disk->get($path);
-        $extension = strtolower(pathinfo($path, PATHINFO_EXTENSION));
-
-        $mime = match ($extension) {
-            'webp' => 'image/webp',
-            'png' => 'image/png',
-            'gif' => 'image/gif',
-            default => 'image/jpeg',
-        };
 
         return response($content, 200, [
-            'Content-Type' => $mime,
+            'Content-Type' => $storage->mimeForPath($path),
             'Cache-Control' => 'public, max-age=31536000, immutable',
         ]);
     }
