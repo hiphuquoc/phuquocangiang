@@ -18,6 +18,10 @@ Deliverable:
 
 ## Phase 1 - Token + pattern codification
 
+- **Responsive token cascade (v2 stack — hoàn tất 2026-07-28):**
+  - `foundations/_responsive-tokens.scss` — 5 breakpoint CSS vars
+  - Utility: `.sd-gap`, `.sd-stack`, `.sd-card-body`, `.sd-body-text`
+  - Docs: [responsive-tokens.md](./responsive-tokens.md)
 - Trich style dung chung thanh pattern ro:
   - price + CTA
   - sale badge

@@ -9,6 +9,15 @@
 
   & + & {
     border-top: 1px solid rgba($sd-slate-900, 0.06);
+    padding-top: 0;
+  }
+
+  &--spaced-top {
+    padding-top: var(--sd-space-section-y);
+  }
+
+  &--sm.sd-section--spaced-top {
+    padding-top: var(--sd-space-section-y-sm);
   }
 
   &--alt {

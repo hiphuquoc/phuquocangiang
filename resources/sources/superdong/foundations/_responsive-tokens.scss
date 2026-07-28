@@ -1,0 +1,240 @@
+// Super Dong — Responsive CSS custom properties
+// Cascade 5 mốc max-width (đồng bộ vitravel.dev docs/04-design-system.md §3.2)
+// @see docs/design/responsive-tokens.md
+
+:root {
+  --sd-bp-xl: 1199px;
+  --sd-bp-lg: 1023px;
+  --sd-bp-md-plus: 990px;
+  --sd-bp-md: 768px;
+  --sd-bp-sm: 567px;
+
+  /* Gutter / khung */
+  --sd-space-gutter: 2rem;
+
+  /* Gap lưới */
+  --sd-space-gap-sm: 0.75rem;
+  --sd-space-gap: 1.25rem;
+  --sd-space-gap-lg: 2rem;
+
+  /* Nhịp dọc section */
+  --sd-space-section-y: 4.5rem;
+  --sd-space-section-y-sm: 3rem;
+  --sd-space-section-feature: 5rem;
+  --sd-space-stack: 1.5rem;
+  --sd-space-stack-lg: 2.5rem;
+  --sd-space-heading-mb: 2.25rem;
+
+  /* Card inner */
+  --sd-space-card: 1.5rem;
+  --sd-space-card-stack: 0.75rem;
+  --sd-space-card-stack-lg: 1rem;
+
+  /* Hit area / buttons */
+  --sd-space-hit: 2.75rem;
+  --sd-btn-pad-x: 1.35rem;
+  --sd-btn-pad-y: 0.65rem;
+  --sd-btn-pad-x-sm: 1rem;
+  --sd-btn-pad-y-sm: 0.5rem;
+  --sd-btn-pad-x-chip: 0.85rem;
+  --sd-btn-pad-y-chip: 0.42rem;
+  --sd-btn-gap: 0.45rem;
+
+  /* Layout đặc thù Super Dong */
+  --sd-hero-pad-bottom: 9rem;
+  --sd-trust-overlap: -7.25rem;
+  --sd-trust-gap: 0.9rem;
+  --sd-split-gap: 3.5rem;
+  --sd-footer-pad-top: 6.75rem;
+
+  /* Typography */
+  --sd-fs-html: 100%;
+  --sd-fs-body: 1rem;
+  --sd-fs-meta: 0.875rem;
+  --sd-fs-kicker: 0.75rem;
+  --sd-lh-body: 1.6;
+  --sd-fs-section-title: clamp(1.75rem, 1.35rem + 1.5vw, 2.5rem);
+  --sd-fs-section-body: clamp(0.95rem, 0.9rem + 0.15vw, 1rem);
+  --sd-fs-card-title: clamp(1rem, 0.95rem + 0.15vw, 1.05rem);
+  --sd-fs-card-title-lg: clamp(1.25rem, 1.12rem + 0.45vw, 1.45rem);
+  --sd-fs-hero: clamp(2.25rem, 1.5rem + 2.8vw, 3.5rem);
+  --sd-fs-footer-brand: clamp(1.35rem, 1.15rem + 0.45vw, 1.75rem);
+  --sd-fs-item-title: clamp(1rem, 0.95rem + 0.15vw, 1.05rem);
+  --sd-size-rating-badge: 2.25rem;
+}
+
+@media (max-width: 1199px) {
+  :root {
+    --sd-space-gutter: 1.25rem;
+    --sd-space-gap-sm: 0.7rem;
+    --sd-space-gap: 1.1rem;
+    --sd-space-gap-lg: 1.75rem;
+    --sd-space-section-y: 4rem;
+    --sd-space-section-y-sm: 2.75rem;
+    --sd-space-section-feature: 4.5rem;
+    --sd-space-stack: 1.25rem;
+    --sd-space-stack-lg: 2.15rem;
+    --sd-space-heading-mb: 2rem;
+    --sd-space-card: 1.25rem;
+    --sd-space-card-stack: 0.7rem;
+    --sd-space-card-stack-lg: 0.9rem;
+    --sd-space-hit: 2.65rem;
+    --sd-btn-pad-x: 1.25rem;
+    --sd-btn-pad-y: 0.6rem;
+    --sd-btn-pad-x-sm: 0.95rem;
+    --sd-btn-pad-y-sm: 0.48rem;
+    --sd-hero-pad-bottom: 8rem;
+    --sd-trust-overlap: -6.5rem;
+    --sd-trust-gap: 0.85rem;
+    --sd-split-gap: 3rem;
+    --sd-footer-pad-top: 6.25rem;
+    --sd-fs-body: 0.9875rem;
+    --sd-fs-meta: 0.859375rem;
+    --sd-fs-kicker: 0.734375rem;
+    --sd-fs-hero: clamp(2.1rem, 1.45rem + 2.2vw, 3.1rem);
+    --sd-fs-footer-brand: clamp(1.3rem, 1.12rem + 0.4vw, 1.65rem);
+    --sd-size-rating-badge: 2.15rem;
+  }
+}
+
+@media (max-width: 1023px) {
+  :root {
+    --sd-space-gutter: 1rem;
+    --sd-space-gap-sm: 0.65rem;
+    --sd-space-gap: 1rem;
+    --sd-space-gap-lg: 1.5rem;
+    --sd-space-section-y: 3.25rem;
+    --sd-space-section-y-sm: 2.15rem;
+    --sd-space-section-feature: 4rem;
+    --sd-space-stack: 1.15rem;
+    --sd-space-stack-lg: 1.75rem;
+    --sd-space-heading-mb: 1.65rem;
+    --sd-space-card: 1.15rem;
+    --sd-space-card-stack: 0.65rem;
+    --sd-space-card-stack-lg: 0.85rem;
+    --sd-space-hit: 2.55rem;
+    --sd-btn-pad-x: 1.15rem;
+    --sd-btn-pad-y: 0.55rem;
+    --sd-btn-pad-x-sm: 0.9rem;
+    --sd-btn-pad-y-sm: 0.45rem;
+    --sd-hero-pad-bottom: 7.25rem;
+    --sd-trust-overlap: -6rem;
+    --sd-trust-gap: 0.8rem;
+    --sd-split-gap: 2.5rem;
+    --sd-footer-pad-top: 5.75rem;
+    --sd-fs-body: 0.96875rem;
+    --sd-fs-meta: 0.84375rem;
+    --sd-fs-kicker: 0.71875rem;
+    --sd-lh-body: 1.58;
+    --sd-fs-hero: clamp(1.95rem, 1.35rem + 1.8vw, 2.75rem);
+    --sd-fs-footer-brand: clamp(1.25rem, 1.08rem + 0.35vw, 1.55rem);
+    --sd-size-rating-badge: 2.05rem;
+  }
+}
+
+@media (max-width: 990px) {
+  :root {
+    --sd-space-gutter: 1rem;
+    --sd-space-gap-sm: 0.6rem;
+    --sd-space-gap: 0.95rem;
+    --sd-space-gap-lg: 1.35rem;
+    --sd-space-section-y: 2.85rem;
+    --sd-space-section-y-sm: 1.85rem;
+    --sd-space-section-feature: 3.5rem;
+    --sd-space-stack: 1.05rem;
+    --sd-space-stack-lg: 1.55rem;
+    --sd-space-heading-mb: 1.45rem;
+    --sd-space-card: 1.1rem;
+    --sd-space-card-stack: 0.6rem;
+    --sd-space-card-stack-lg: 0.8rem;
+    --sd-space-hit: 2.5rem;
+    --sd-btn-pad-x: 1.05rem;
+    --sd-btn-pad-y: 0.52rem;
+    --sd-hero-pad-bottom: 6.75rem;
+    --sd-trust-overlap: -5.75rem;
+    --sd-split-gap: 2.15rem;
+    --sd-footer-pad-top: 5.25rem;
+    --sd-fs-body: 0.9375rem;
+    --sd-fs-meta: 0.8125rem;
+    --sd-fs-kicker: 0.6875rem;
+    --sd-lh-body: 1.55;
+    --sd-fs-hero: clamp(1.85rem, 1.3rem + 1.5vw, 2.5rem);
+    --sd-fs-footer-brand: clamp(1.2rem, 1.05rem + 0.3vw, 1.45rem);
+    --sd-size-rating-badge: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --sd-space-gutter: 0.75rem;
+    --sd-space-gap-sm: 0.5rem;
+    --sd-space-gap: 0.85rem;
+    --sd-space-gap-lg: 1.15rem;
+    --sd-space-section-y: 2.15rem;
+    --sd-space-section-y-sm: 1.45rem;
+    --sd-space-section-feature: 3rem;
+    --sd-space-stack: 0.9rem;
+    --sd-space-stack-lg: 1.25rem;
+    --sd-space-heading-mb: 1.15rem;
+    --sd-space-card: 1rem;
+    --sd-space-card-stack: 0.55rem;
+    --sd-space-card-stack-lg: 0.75rem;
+    --sd-space-hit: 2.45rem;
+    --sd-btn-pad-x: 1rem;
+    --sd-btn-pad-y: 0.5rem;
+    --sd-btn-pad-x-sm: 0.85rem;
+    --sd-btn-pad-y-sm: 0.42rem;
+    --sd-hero-pad-bottom: 6.5rem;
+    --sd-trust-overlap: -5.25rem;
+    --sd-trust-gap: 0.7rem;
+    --sd-split-gap: 1.85rem;
+    --sd-footer-pad-top: 4.75rem;
+    --sd-fs-body: 0.90625rem;
+    --sd-fs-meta: 0.796875rem;
+    --sd-fs-kicker: 0.671875rem;
+    --sd-lh-body: 1.52;
+    --sd-fs-section-title: 1.75rem;
+    --sd-fs-hero: clamp(1.75rem, 1.3rem + 1.2vw, 2.25rem);
+    --sd-fs-footer-brand: clamp(1.15rem, 1rem + 0.25vw, 1.35rem);
+    --sd-size-rating-badge: 1.95rem;
+  }
+}
+
+@media (max-width: 567px) {
+  :root {
+    --sd-space-gutter: 0.75rem;
+    --sd-space-gap-sm: 0.5rem;
+    --sd-space-gap: 0.75rem;
+    --sd-space-gap-lg: 1rem;
+    --sd-space-section-y: 1.75rem;
+    --sd-space-section-y-sm: 1.2rem;
+    --sd-space-section-feature: 2.5rem;
+    --sd-space-stack: 0.8rem;
+    --sd-space-stack-lg: 1.1rem;
+    --sd-space-heading-mb: 1rem;
+    --sd-space-card: 0.85rem;
+    --sd-space-card-stack: 0.5rem;
+    --sd-space-card-stack-lg: 0.65rem;
+    --sd-space-hit: 2.4rem;
+    --sd-btn-pad-x: 0.95rem;
+    --sd-btn-pad-y: 0.48rem;
+    --sd-btn-pad-x-sm: 0.8rem;
+    --sd-btn-pad-y-sm: 0.38rem;
+    --sd-btn-pad-x-chip: 0.75rem;
+    --sd-btn-pad-y-chip: 0.35rem;
+    --sd-hero-pad-bottom: 5.75rem;
+    --sd-trust-overlap: -4.75rem;
+    --sd-trust-gap: 0.65rem;
+    --sd-split-gap: 1.5rem;
+    --sd-footer-pad-top: 4.25rem;
+    --sd-fs-body: 0.875rem;
+    --sd-fs-meta: 0.78125rem;
+    --sd-fs-kicker: 0.65625rem;
+    --sd-lh-body: 1.5;
+    --sd-fs-section-title: 1.6rem;
+    --sd-fs-hero: clamp(1.6rem, 1.2rem + 1vw, 1.95rem);
+    --sd-fs-footer-brand: 1.125rem;
+    --sd-fs-item-title: 0.9rem;
+    --sd-size-rating-badge: 1.85rem;
+  }
+}

@@ -2,7 +2,8 @@
 
 > Phạm vi: `superdong.dev` (marketing, listing, booking, trang chủ).  
 > Tông: **xanh da trời / bầu trời** — tươi, tin cậy, du lịch biển đảo.  
-> SCSS tokens: `resources/sources/main/home-v2/_tokens.scss`  
+> SCSS tokens: `resources/sources/superdong/foundations/_tokens.scss` + `_responsive-tokens.scss`  
+> Responsive guide: [responsive-tokens.md](./responsive-tokens.md)  
 > Prototype: `public/prototype/home-v2/`
 
 ---
@@ -21,16 +22,20 @@
 
 ## 2. Breakpoints (đồng bộ)
 
+> Chi tiết cascade token: [responsive-tokens.md](./responsive-tokens.md) §2.
+
 | Token | Min-width | Container | Ghi chú |
 |-------|-----------|-----------|---------|
-| `xs` | — | 100% − 2.5rem | Mobile default |
-| `sm` | **576px** | idem | Form 2 cột nhỏ |
-| `md` | **768px** | idem | Tablet, trust 4 cột |
-| `lg` | **992px** | idem | Grid 2 cột listing |
+| `xs` | — | 100% − gutter | Mobile default |
+| `sm` | **568px** | idem | Form 2 cột nhỏ |
+| `md` | **769px** | idem | Tablet, trust 4 cột |
+| `lg` | **991px** | idem | Grid 2 cột listing |
+| `nav` | **1024px** | — | Desktop nav hiện |
 | `xl` | **1200px** | max **1240px** | Desktop chuẩn |
 | `2xl` | **1440px** | max **1240px** | Wide — không nới container |
 
-SCSS mixin: `@include sd-bp($md) { ... }` hoặc `@media (min-width: $sd-bp-md)`.
+SCSS mixin max-width: `@include sd-bp-lg-max { ... }`  
+SCSS mixin min-width: `@include sd-bp($sd-bp-md) { ... }`
 
 ---
 

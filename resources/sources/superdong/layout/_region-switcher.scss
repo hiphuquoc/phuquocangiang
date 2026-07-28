@@ -573,7 +573,7 @@
     /* =========================================================
        Responsive
        ========================================================= */
-    @media (max-width: 1199px) {
+    @include sd-bp-xl-max {
         .regionSwitcher_menu { width: 680px; }
     }
     @include sd-bp-max($sd-bp-lg) {

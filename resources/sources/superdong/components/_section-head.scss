@@ -5,8 +5,8 @@
   flex-wrap: wrap;
   align-items: flex-end;
   justify-content: space-between;
-  gap: 1.25rem 1.5rem;
-  margin-bottom: 2.25rem;
+  gap: var(--sd-space-gap) var(--sd-space-gap-lg);
+  margin-bottom: var(--sd-space-heading-mb);
 
   &__main {
     position: relative;
@@ -74,7 +74,7 @@
 
   &__title {
     font-family: $sd-font-heading;
-    font-size: clamp(1.65rem, 1.4rem + 1.2vw, 2.25rem);
+    font-size: var(--sd-fs-section-title);
     font-weight: 800;
     color: #0f172a;
     line-height: 1.22;
@@ -90,11 +90,11 @@
   }
 
   &__desc {
-    font-size: clamp(0.92rem, 0.88rem + 0.15vw, 1rem);
-    line-height: 1.6;
+    font-size: var(--sd-fs-section-body);
+    line-height: var(--sd-lh-body);
     color: #475569;
     font-weight: 400;
-    margin-top: 0.55rem;
+    margin-top: var(--sd-space-card-stack);
     margin-bottom: 0;
     max-width: 42rem;
   }

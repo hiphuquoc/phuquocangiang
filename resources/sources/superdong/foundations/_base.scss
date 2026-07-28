@@ -10,14 +10,17 @@ html {
   scroll-behavior: smooth;
   width: 100%;
   overflow-x: clip;
+  font-size: var(--sd-fs-html);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body.sd-home-v2 {
   width: 100%;
   margin: 0;
   font-family: $sd-font-body;
-  font-size: 16px;
-  line-height: 1.5;
+  font-size: var(--sd-fs-body);
+  line-height: var(--sd-lh-body);
   color: $sd-slate-700;
   background: $sd-cloud-50;
   -webkit-font-smoothing: antialiased;

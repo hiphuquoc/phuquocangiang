@@ -103,7 +103,7 @@
     }
   }
 
-  @media (max-width: 600px) {
+  @include sd-bp-sm-max {
     font-size: 0.72rem;
 
     &__promo {

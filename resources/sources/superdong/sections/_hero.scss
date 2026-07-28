@@ -121,8 +121,8 @@
     @include sd-bp-max($sd-bp-md) {
       min-height: clamp(520px, calc(100svh - #{$sd-topbar-h} - 2rem), 720px);
       min-height: clamp(520px, calc(100dvh - #{$sd-topbar-h} - 2rem), 720px);
-      padding-top: calc(#{$sd-header-h} + #{$sd-space-4});
-      padding-bottom: clamp(5.5rem, 18vw, 7.5rem);
+      padding-top: calc(#{$sd-header-h} + var(--sd-space-card));
+      padding-bottom: var(--sd-hero-pad-bottom);
     }
   }
 
@@ -203,7 +203,7 @@
     max-width: 100%;
     overflow-wrap: break-word;
     font-family: $sd-font-heading;
-    font-size: clamp(2rem, 1.5rem + 2.2vw, 3.4rem);
+    font-size: var(--sd-fs-hero);
     font-weight: 800;
     line-height: 1.1;
     letter-spacing: -0.035em;

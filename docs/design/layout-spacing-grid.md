@@ -1,24 +1,33 @@
 # Layout, Spacing, and Grid (Execution Guide)
 
+> **Hệ responsive đầy đủ:** [responsive-tokens.md](./responsive-tokens.md) — cascade 5 breakpoint, CSS vars, utility class.  
+> File này giữ quy tắc thực thi cụ thể cho listing/card/home.
+
 ## 1) Breakpoints
 
-- `xs`: < 576  
-- `sm`: >= 576  
-- `md`: >= 768  
-- `lg`: >= 992  
-- `xl`: >= 1200  
-- `2xl`: >= 1440  
+**Chuẩn bắt buộc (max-width cascade):** `1199` → `1023` → `990` → `768` → `567` px.
+
+**Min-width (layout grid):**
+
+| Token SCSS | Min-width | Ghi chú |
+|---|---|---|
+| `$sd-bp-sm` | **568px** | = BP-SM + 1 |
+| `$sd-bp-md` | **769px** | Tablet |
+| `$sd-bp-lg` | **991px** | = BP-MD+ + 1 |
+| `$sd-bp-nav` | **1024px** | Desktop nav |
+| `$sd-bp-xl` | **1200px** | Container desktop |
+| `$sd-bp-2xl` | **1440px** | Wide — không nới container |
 
 Container khuyến nghị:
 
-- Listing dày (tour / vé / combo): 1280–1320  
-- Nội dung đọc dài: 760–860  
+- Listing dày (tour / vé / combo): **1240px** (`$sd-container`)
+- Nội dung đọc dài: 760–860px
 
-## 2) Spacing tokens (4pt)
+## 2) Spacing tokens
 
-4, 8, 12, 16, 20, 24, 32, 40, 48, 64.
+**Responsive (ưu tiên):** `--sd-space-gutter`, `--sd-space-gap*`, `--sd-space-section-y`, `--sd-space-card*` — xem [responsive-tokens.md](./responsive-tokens.md) §3.
 
-Rule:
+**Static 4pt (compile-time):** `$sd-space-1` … `$sd-space-16` trong `_tokens.scss` — chỉ dùng cho micro-spacing trong component (icon offset, badge inset).
 
 - Trong một component tối đa ~3 mức spacing khác nhau.
 - Tránh nhảy spacing ngẫu nhiên giữa các card cùng loại.

@@ -132,7 +132,7 @@
   &__nav {
     display: none;
 
-    @media (min-width: 1024px) {
+    @include sd-bp($sd-bp-nav) {
       display: flex;
       align-items: center;
       gap: 0.25rem;
@@ -322,7 +322,7 @@
       }
     }
 
-    @media (max-width: 640px) {
+    @include sd-bp-sm-max {
       span {
         display: none;
       }
@@ -342,7 +342,7 @@
     background: rgba($sd-white, 0.08);
     cursor: pointer;
 
-    @media (min-width: 1024px) {
+    @include sd-bp($sd-bp-nav) {
       display: none;
     }
 

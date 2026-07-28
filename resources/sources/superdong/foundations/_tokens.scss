@@ -12,12 +12,20 @@ $sd-fw-semibold: 600;
 $sd-fw-bold: 700;
 $sd-fw-extrabold: 800;
 
-// Breakpoints
-$sd-bp-sm: 576px;
-$sd-bp-md: 768px;
-$sd-bp-lg: 992px;
+// Breakpoints — min-width (layout grid)
+$sd-bp-sm: 568px;   // = max-width 567 + 1 (đồng bộ vitravel BP-SM)
+$sd-bp-md: 769px;   // = max-width 768 + 1
+$sd-bp-lg: 991px;   // = max-width 990 + 1 (BP-MD+)
 $sd-bp-xl: 1200px;
 $sd-bp-2xl: 1440px;
+
+// Breakpoints — max-width cascade (responsive tokens)
+$sd-bp-xl-max: 1199px;
+$sd-bp-lg-max: 1023px;
+$sd-bp-md-plus-max: 990px;
+$sd-bp-md-max: 768px;
+$sd-bp-sm-max: 567px;
+$sd-bp-nav: 1024px; // Desktop nav cutoff (đồng bộ vitravel BP-LG)
 
 // Sky brand
 $sd-sky-950: #0c1929;
@@ -86,20 +94,21 @@ $sd-header-h: 72px;
 $sd-topbar-h: 38px;
 $sd-dock-h: 56px;
 
-// Layout rhythm — @see docs/design/layout-spacing-grid.md
-$sd-section-pad-start: clamp(1.65rem, 3.4vw, 2.45rem);
-$sd-section-pad-end: clamp(2rem, 4vw, 3rem);
-$sd-section-pad-feature: clamp(3rem, 6vw, 5rem);
-$sd-section-head-mb: clamp(#{$sd-space-6}, 2.8vw, #{$sd-space-8});
-$sd-section-stack: clamp(#{$sd-space-6}, 3vw, #{$sd-space-8});
-$sd-gutter-inline: clamp(1rem, 3vw, 1.25rem);
-$sd-grid-gap: clamp(#{$sd-space-3}, 1.2vw, #{$sd-space-5});
-$sd-split-gap: clamp(#{$sd-space-8}, 4vw, 3.5rem);
-$sd-split-gap-wide: clamp(#{$sd-space-8}, 5vw, 4rem);
-$sd-mast-stack-mb: clamp(#{$sd-space-8}, 4vw, #{$sd-space-10});
-$sd-hero-pad-bottom: clamp(6.5rem, 11vw, 9rem);
-$sd-trust-overlap: clamp(-5.5rem, -10vw, -7.25rem);
-$sd-trust-gap: clamp(#{$sd-space-3}, 1.4vw, 0.9rem);
+// Layout rhythm — map vào CSS vars (responsive cascade)
+// @see docs/design/responsive-tokens.md
+$sd-section-pad-start: var(--sd-space-section-y);
+$sd-section-pad-end: var(--sd-space-section-y);
+$sd-section-pad-feature: var(--sd-space-section-feature);
+$sd-section-head-mb: var(--sd-space-heading-mb);
+$sd-section-stack: var(--sd-space-stack);
+$sd-gutter-inline: var(--sd-space-gutter);
+$sd-grid-gap: var(--sd-space-gap);
+$sd-split-gap: var(--sd-split-gap);
+$sd-split-gap-wide: var(--sd-split-gap);
+$sd-mast-stack-mb: var(--sd-space-stack-lg);
+$sd-hero-pad-bottom: var(--sd-hero-pad-bottom);
+$sd-trust-overlap: var(--sd-trust-overlap);
+$sd-trust-gap: var(--sd-trust-gap);
 
 @mixin sd-bp($min) {
   @media (min-width: $min) {
@@ -109,6 +118,36 @@ $sd-trust-gap: clamp(#{$sd-space-3}, 1.4vw, 0.9rem);
 
 @mixin sd-bp-max($max) {
   @media (max-width: #{$max - 1px}) {
+    @content;
+  }
+}
+
+@mixin sd-bp-xl-max {
+  @media (max-width: $sd-bp-xl-max) {
+    @content;
+  }
+}
+
+@mixin sd-bp-lg-max {
+  @media (max-width: $sd-bp-lg-max) {
+    @content;
+  }
+}
+
+@mixin sd-bp-md-plus-max {
+  @media (max-width: $sd-bp-md-plus-max) {
+    @content;
+  }
+}
+
+@mixin sd-bp-md-max {
+  @media (max-width: $sd-bp-md-max) {
+    @content;
+  }
+}
+
+@mixin sd-bp-sm-max {
+  @media (max-width: $sd-bp-sm-max) {
     @content;
   }
 }
@@ -200,7 +239,7 @@ $sd-trust-gap: clamp(#{$sd-space-3}, 1.4vw, 0.9rem);
 
 @mixin sd-type-h2-section {
   font-family: $sd-font-heading;
-  font-size: clamp(1.75rem, 1.35rem + 1.5vw, 2.5rem);
+  font-size: var(--sd-fs-section-title);
   font-weight: $sd-fw-bold;
   line-height: 1.12;
   letter-spacing: -0.02em;
@@ -209,15 +248,15 @@ $sd-trust-gap: clamp(#{$sd-space-3}, 1.4vw, 0.9rem);
 
 @mixin sd-type-body-section {
   font-family: $sd-font-body;
-  font-size: clamp(0.95rem, 0.9rem + 0.15vw, 1rem);
+  font-size: var(--sd-fs-section-body);
   font-weight: $sd-fw-regular;
-  line-height: 1.6;
+  line-height: var(--sd-lh-body);
   color: $sd-slate-500;
 }
 
 @mixin sd-type-card-title($weight: $sd-fw-bold) {
   font-family: $sd-font-heading;
-  font-size: clamp(1rem, 0.95rem + 0.15vw, 1.05rem);
+  font-size: var(--sd-fs-card-title);
   font-weight: $weight;
   line-height: 1.35;
   letter-spacing: -0.01em;
@@ -225,7 +264,7 @@ $sd-trust-gap: clamp(#{$sd-space-3}, 1.4vw, 0.9rem);
 
 @mixin sd-type-card-title-lg($weight: $sd-fw-bold) {
   font-family: $sd-font-heading;
-  font-size: clamp(1.25rem, 1.12rem + 0.45vw, 1.45rem);
+  font-size: var(--sd-fs-card-title-lg);
   font-weight: $weight;
   line-height: 1.22;
   letter-spacing: -0.02em;
@@ -233,17 +272,25 @@ $sd-trust-gap: clamp(#{$sd-space-3}, 1.4vw, 0.9rem);
 
 @mixin sd-type-meta {
   font-family: $sd-font-body;
-  font-size: clamp(0.82rem, 0.78rem + 0.12vw, 0.88rem);
+  font-size: var(--sd-fs-meta);
   font-weight: $sd-fw-regular;
   line-height: 1.5;
 }
 
 @mixin sd-type-cta-card($weight: $sd-fw-bold) {
   font-family: $sd-font-heading;
-  font-size: clamp(0.88rem, 0.85rem + 0.1vw, 0.92rem);
+  font-size: var(--sd-fs-body);
   font-weight: $weight;
   line-height: 1.2;
   letter-spacing: 0.01em;
+}
+
+@mixin sd-type-body {
+  font-family: $sd-font-body;
+  font-size: var(--sd-fs-body);
+  font-weight: $sd-fw-regular;
+  line-height: var(--sd-lh-body);
+  color: $sd-slate-700;
 }
 
 @mixin sd-section-head {
@@ -252,12 +299,12 @@ $sd-trust-gap: clamp(#{$sd-space-3}, 1.4vw, 0.9rem);
 
   .sd-eyebrow {
     @include sd-type-eyebrow;
-    margin-bottom: $sd-space-4;
+    margin-bottom: var(--sd-space-card-stack-lg);
   }
 
   h2 {
     @include sd-type-h2-section;
-    margin: 0 0 $sd-space-3;
+    margin: 0 0 var(--sd-space-card-stack);
   }
 
   p {

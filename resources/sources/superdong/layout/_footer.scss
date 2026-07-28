@@ -6,9 +6,9 @@
  * =========================================================================== */
 
 @mixin sd-footer-col-title {
-  margin: 0 0 $sd-space-4;
+  margin: 0 0 var(--sd-space-card-stack-lg);
   font-family: $sd-font-heading;
-  font-size: clamp(0.82rem, 0.76rem + 0.2vw, 0.95rem);
+  font-size: var(--sd-fs-kicker);
   font-weight: $sd-fw-extrabold;
   line-height: 1.25;
   letter-spacing: 0.1em;
@@ -20,9 +20,9 @@
   display: inline-flex;
   padding-block: 0.15rem;
   font-family: $sd-font-body;
-  font-size: clamp(0.95rem, 0.9rem + 0.12vw, 1rem);
+  font-size: var(--sd-fs-body);
   font-weight: $sd-fw-regular;
-  line-height: 1.65;
+  line-height: var(--sd-lh-body);
   color: $sd-slate-700;
   text-decoration: none;
   transition: color 0.2s ease;

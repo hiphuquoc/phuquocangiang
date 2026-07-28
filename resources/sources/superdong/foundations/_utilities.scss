@@ -1,5 +1,105 @@
 @use "tokens" as *;
 
+// ─── Typography utilities ────────────────────────────────────────────────────
+
+.sd-body-text {
+  @include sd-type-body;
+  color: $sd-slate-500;
+}
+
+.sd-item-title {
+  font-family: $sd-font-heading;
+  font-size: var(--sd-fs-item-title);
+  font-weight: $sd-fw-bold;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: $sd-slate-900;
+}
+
+// ─── Spacing utilities (token-based) ─────────────────────────────────────────
+
+.sd-gap {
+  gap: var(--sd-space-gap);
+}
+
+.sd-gap-sm {
+  gap: var(--sd-space-gap-sm);
+}
+
+.sd-gap-lg {
+  gap: var(--sd-space-gap-lg);
+}
+
+.sd-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sd-space-stack);
+}
+
+.sd-stack-lg {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sd-space-stack-lg);
+}
+
+.sd-mt {
+  margin-top: var(--sd-space-stack);
+}
+
+.sd-mt-lg {
+  margin-top: var(--sd-space-stack-lg);
+}
+
+.sd-mb {
+  margin-bottom: var(--sd-space-stack);
+}
+
+.sd-pad {
+  padding: var(--sd-space-card);
+}
+
+.sd-pad-x {
+  padding-inline: var(--sd-space-gutter);
+}
+
+.sd-pad-y {
+  padding-block: var(--sd-space-card);
+}
+
+// ─── Card inner utilities ────────────────────────────────────────────────────
+
+.sd-card-body {
+  padding: var(--sd-space-card);
+}
+
+.sd-card-inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sd-space-card-stack);
+}
+
+.sd-card-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sd-space-gap-sm) var(--sd-space-gap);
+}
+
+.sd-card-footer {
+  margin-top: var(--sd-space-card-stack-lg);
+  padding-top: var(--sd-space-card-stack-lg);
+}
+
+.sd-card-footer-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sd-space-card-stack-lg);
+}
+
+// ─── Text color utilities ────────────────────────────────────────────────────
+
 .sd-text--white {
   color: $sd-text-white;
 }
@@ -11,6 +111,8 @@
 .sd-text--highlight-strong {
   color: $sd-text-highlight-strong;
 }
+
+// ─── Line clamp ──────────────────────────────────────────────────────────────
 
 .maxLine_1 {
   display: -webkit-box;
