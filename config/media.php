@@ -21,11 +21,10 @@ return [
     | Để trống → tự ghép https://storage.googleapis.com/{GOOGLE_CLOUD_STORAGE_BUCKET}
     */
     'public_base_url' => rtrim((string) (
-        env('GCS_PUBLIC_BASE_URL')
-        ?: env('GOOGLE_CLOUD_STORAGE_API_URI')
+        config('services.gcs.public_url')
         ?: (
-            env('GOOGLE_CLOUD_STORAGE_BUCKET')
-                ? 'https://storage.googleapis.com/' . trim((string) env('GOOGLE_CLOUD_STORAGE_BUCKET'), '/')
+            ($bucket = config('services.gcs.bucket'))
+                ? 'https://storage.googleapis.com/' . trim((string) $bucket, '/')
                 : ''
         )
     ), '/'),

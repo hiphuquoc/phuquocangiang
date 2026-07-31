@@ -5,6 +5,8 @@
 /public/storage
 /public/upload
 /storage/*.key
+/storage/app/gcs-credentials.json
+/storage/app/credentials.json
 /vendor
 .env
 .env.example
